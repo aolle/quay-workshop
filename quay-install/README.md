@@ -92,25 +92,8 @@ You can use the OpenShift Container Platform web console to suscribe and deploy 
 
 ![Quay creation configuration](img/quay-create.png)
 
-### Register a new user
-
-1. From the Administrator perspective, click Operators → Installed Operators. Project: `quay-workshop`. Select Red Hat Quay operator.
-
-2. Select Quay Registry tab and click on the recenlty created registry.
-
-3. Open the Registry Endpoint.
-
-![Quay Registries](img/quay-registries.png)
-
-4. Create Account.
-
-![Quay Sign in page](img/quay-create-account.png)
-
-
-5. Fill the data, create an account and sign in.
-
 ### Troubleshooting
 
 #### The init containers hungs when I try to deploy the Quay registry.
 
-Delete or reconfigure the LimitRange in your project. The demo environment creates it automatically.
+Check the LimitRange in your project. The RHPDS environment creates it automatically.
