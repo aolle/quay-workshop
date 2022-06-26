@@ -22,3 +22,10 @@ To create a new user for our Red Hat Quay instance:
 
 The organization allows sharing repositories of container images. To create a new organization:
 
+1. While logged in, click `Create New Organization`.
+
+![Quay Create Organization](img/quay-create-org.png)
+
+2. Type the name of the organization. Click `Create Organization`.
+
+![Quay user organization](img/org.png)
