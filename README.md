@@ -4,5 +4,7 @@
 
 [Quay Installation](quay-install/README.md)
 
-[Quay Users and Organizations](quay-orgs/README.md)
+[Quay Users and Organizations](quay-organizations/README.md)
+
+[Quay Repositories](quay-repository/README.md)
 
