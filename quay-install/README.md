@@ -1,8 +1,8 @@
 # Quay Installation
 
-OCP version:  4.10.18
-Quay version: 3.7
-ODF version:  4.10
+* OCP version:  4.10.18
+* Quay version: 3.7
+* ODF version:  4.10
 
 ## Quay Operator Installation
 
@@ -100,11 +100,11 @@ You can use the OpenShift Container Platform web console to suscribe and deploy 
 
 3. Open the Registry Endpoint.
 
-![Quay Registries](quay-registries.png)
+![Quay Registries](img/quay-registries.png)
 
 4. Create Account.
 
-![Quay Sign in page](quay-create-account.png)
+![Quay Sign in page](img/quay-create-account.png)
 
 
 5. Fill the data, create an account and sign in.
