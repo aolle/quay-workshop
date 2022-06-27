@@ -2,7 +2,7 @@
 
 ## Creating an image repository
 
-1. Click `Create New Repostory`.
+1. Click `Create New Repository`.
 
 ![Quay Create Repository](img/create-repo.png)
 
