@@ -12,4 +12,4 @@
 
 [Quay Security Scanning with Clair](quay-clair/README.md)
 
-[Container Security Operator](quay-cso/README.md)
+[Quay Container Security Operator](quay-cso/README.md)

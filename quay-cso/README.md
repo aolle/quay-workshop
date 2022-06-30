@@ -57,6 +57,10 @@ podman push [quayregistry-cr-name]-quay-[ocp-namespace].[ocp-domain-name]/useror
 
 ![Vulnerabilities tab](img/vuln-tab.png)
 
+9. Click con the security scan results.
+
+![Image Manifest Vulnerabilities](img/vulnimgmanifest.png)
+
 Additionally, after installing the CSO operator, a new status related to Image Vulnerabilities is shown on the cluster overview.
 
 ![Cluster Overview](img/overview.png)
