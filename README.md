@@ -13,3 +13,5 @@
 [Quay Security Scanning with Clair](quay-clair/README.md)
 
 [Quay Container Security Operator](quay-cso/README.md)
+
+[Quay Repository Notifications](quay-notifications/README.md)
