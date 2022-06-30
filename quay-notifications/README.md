@@ -16,6 +16,8 @@ Quay supports adding notifications to a repository for various events that occur
 
 * Under the `Then issue a notification` drop down, select `Red Hat Quay Notification`.
 
+![Quay Notification Actions](img/notification-actions.png)
+
 * In the `Recipient` drop down, select `owners`.
 
 * In the `Notification title` text field, type `A new image has been pushed into the repository`.
