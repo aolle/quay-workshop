@@ -31,10 +31,10 @@ The Container Security Operator (CSO) brings Quay and Clair metadata to Kubernet
 podman pull registry.redhat.io/rhel8/httpd-24:1-30
 
 # Tag the image
-podman tag registry.redhat.io/rhel8/httpd-24:1-30 [quayregistry-cr-name]-quay-[ocp-namespace].[ocp-domain-name]/userorg/httpd-24:1-30
+podman tag registry.redhat.io/rhel8/httpd-24:1-30 <QUAY_HOSTNAME>/userorg/httpd-24:1-30
 
 # Push it to our Quay registry
-podman push [quayregistry-cr-name]-quay-[ocp-namespace].[ocp-domain-name]/userorg/httpd-24:1-30
+podman push <QUAY_HOSTNAME>/userorg/httpd-24:1-30
 ```
 
 2. Navigate to the Quay Registry Endpoint and select the `userorg/httpd-24` repository that has been created automatically when we pulled the image before.

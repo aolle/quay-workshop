@@ -28,9 +28,9 @@ Push a new image into the repository or add a new tag the current one.
 
 ```sh
 podman pull quay.io/strimzi/kafka:latest-kafka-3.0.0
-podman tag quay.io/strimzi/kafka:latest-kafka-3.0.0 [quayregistry-cr-name]-quay-[ocp-namespace].[ocp-domain-name]/userorg/kafka:3.0.0
-podman login [quayregistry-cr-name]-quay-[ocp-namespace].[ocp-domain-name]
-podman push [quayregistry-cr-name]-quay-[ocp-namespace].[ocp-domain-name]/userorg/kafka:3.0.0
+podman tag quay.io/strimzi/kafka:latest-kafka-3.0.0 <QUAY_HOSTNAME>/userorg/kafka:3.0.0
+podman login <QUAY_HOSTNAME>
+podman push <QUAY_HOSTNAME>/userorg/kafka:3.0.0
 ```
 
 After a while, we will see the notification in the top of our dashboard.
