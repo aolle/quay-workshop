@@ -1,4 +1,4 @@
-# Quay 3.7 Workshop
+# Quay Workshop
 
 ## Workshop outline
 
