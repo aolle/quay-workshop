@@ -15,3 +15,5 @@
 [Quay Container Security Operator](quay-cso/README.md)
 
 [Quay Repository Notifications](quay-notifications/README.md)
+
+[Quay Observability](quay-observability/README.md)
