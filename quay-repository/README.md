@@ -65,37 +65,3 @@ podman push <QUAY_HOSTNAME>/userorg/kafka:3.1.0
 ![Fetch Tag](img/fetchtag.png)
 
 5. Switch to a terminal, paste and execute the command on it. Docker or podman is required. If we're using podman, we have to replace the `docker` with `podman` before execute the command.
-
-## OCI-based Artifacts Repository - Helm Charts Repository Example
-
-Quay can be used to store OCI-based artifacts like Helm charts. As an example, we are going to create a Helm charts repository on it.
-
-1. Login to Quay registry with helm.
-
-```sh
-helm registry login <QUAY_HOSTNAME>
-```
-
-2. Pull a chart.
-
-```sh
-helm pull https://redhat-developer.github.io/redhat-helm-charts/charts/quarkus-0.0.3.tgz
-```
-
-3. Push the chart into Quay repository.
-
-```sh
-helm push quarkus-0.0.3.tgz oci://<QUAY_HOSTNAME>/userorg/helm
-```
-
-4. Open the Quay Dashboard and open the `userorg/helm/quarkus` and go to `Tags`.
-
-![Quay Helm Repository](img/helmrepo.png)
-
-The Helm chart is published to Quay as an OCI image.
-
-5. The Helm chart can be installed directly from the repository.
-
-```sh
-helm install quarkus oci://<QUAY_HOSTNAME>/userorg/helm/quarkus --version=0.0.3
-```

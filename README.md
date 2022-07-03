@@ -8,6 +8,8 @@
 
 [Quay Repositories](quay-repository/README.md)
 
+[Quay OCI artifacts](quay-oci/README.md)
+
 [Quay Repository Mirroring](quay-repository-mirroring/README.md)
 
 [Quay Security Scanning with Clair](quay-clair/README.md)
