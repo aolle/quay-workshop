@@ -4,19 +4,21 @@
 
 To create a new user for our Red Hat Quay instance:
 
-1. From the Administrator perspective, click Operators → Installed Operators. Project: `quay-workshop`. Select Red Hat Quay operator.
+1. Open a browser window and log in to the OpenShift Container Platform web console.
 
-2. Select Quay Registry tab and click on the recenlty created registry.
+2. From the Administrator perspective, click Operators → Installed Operators. Project: `quay-workshop`. Select Red Hat Quay operator.
 
-3. Open the Registry Endpoint.
+3. Select Quay Registry tab and click on the recenlty created registry.
+
+4. Open the Registry Endpoint.
 
 ![Quay Registries](img/quay-registries.png)
 
-4. Create Account.
+5. Create Account.
 
 ![Quay Sign in page](img/quay-create-account.png)
 
-5. Fill the data, create an account and sign in.
+6. Fill the data, create an account and sign in.
 
 ## Creating Organization accounts
 
