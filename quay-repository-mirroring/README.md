@@ -4,7 +4,7 @@ Quay Repository mirroring lets us mirror images from external container registri
 
 ## Create a repository to mirror from
 
-1. Click `Create New Repostory`.
+1. Click `Create New Repository`.
 
 2. Select the organization in the drop down list, name the repository `apache/httpd-mirror` and set `Public` visibility.
 
