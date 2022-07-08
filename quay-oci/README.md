@@ -4,7 +4,7 @@ Quay can be used to store OCI-based artifacts like Helm charts, encrypted contai
 
 ## Configuring Allowed OCI Artifact Types
 
-Some of the oci artifats that we are going to use on the next sections are not allowed by default. For example, the Helm charts are allowed by default, but the encrypted container images not (at least at the time of this writing).
+Some of the oci artifats that we are going to use on the next sections are not allowed by default. For example, the Helm charts and signed images are allowed by default, but the encrypted container images not (at least at the time of this writing). Follow this step if you want to upload encrypted images to Quay.
 
 As a previous step, we are going to configure the ALLOWED_OCI_ARTIFACT_TYPES environment variable for allowing some of the oci artifacts that we will use soon.
 
@@ -69,9 +69,60 @@ The Helm chart is published to Quay as an OCI image.
 helm install quarkus oci://<QUAY_HOSTNAME>/userorg/helm/quarkus --version=0.0.3
 ```
 
+## Signed Container Images
+
+Image signing ensures the integrity of our image deployments. Quay will store the signature as an OCI artifact.
+
+1. Download cosign and set execution permissions.
+
+```sh
+curl https://github.com/sigstore/cosign/releases/download/v1.9.0/cosign-linux-amd64 -L -o cosign
+chmod +x cosign
+```
+
+2. Generate the key pair.
+
+```sh
+./cosign generate-key-pair
+
+```
+
+3. Sign an image and pull it to Quay.
+
+```sh
+# Pull the image
+podman pull registry.redhat.io/rhel8/httpd-24:1-30
+
+# Tag and push the image
+podman tag registry.redhat.io/rhel8/httpd-24:1-30 <QUAY_HOSTNAME>/userorg/httpd-24:1-30
+podman push <QUAY_HOSTNAME>/userorg/httpd-24:1-30
+
+# Login
+# If we already signed in with podman or docker, the password parameter is not required, as it will use config.json file
+./cosign login <QUAY_HOSTNAME> -u <USER> -p <PASSWORD>
+
+# Sign and push the signature
+./cosign sign --key cosign.key <QUAY_HOSTNAME>/userorg/httpd-24:1-30
+```
+
+4. Navigate to the Quay Registry Dashboard, `userorg/httpd-24` repository.
+
+5. Click `Tags`.
+
+We will see our signature stored in it.
+
+![Signature Stored in Quay Repository](img/signature.png)
+
+
 ## Encrypted Container Images
 
 An image can be encrypted with a key or multiple keys. Also, we can encrypt the full image layers or some specific layer instead; also, we can encrypt all image layers or only some layer. In any case, we can store the container image into Quay.
+
+The encrypted images are used when we want to protect private and sensitive content from our images, for example, in case of our registry is compromised.
+
+Usually the image decrypting key is stored in a secret into our OCP cluster master node.
+
+### Encrypted Container Images with JSON Web Encryption (JWE) (RFC7516)
 
 1. Generate the encryption RSA keys with openssl.
 
@@ -108,3 +159,7 @@ skopeo copy oci:/tmp/local-httpd24-encrypted:latest docker://<QUAY_HOSTNAME>/use
 We will see our encrypted image stored in it.
 
 ![Encrypted Image Stored in Quay Repository](img/encrypted-img-into-repo.png)
+
+
+### Encrypted Container Images with PGP (RFC4880)
+
