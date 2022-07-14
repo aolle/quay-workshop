@@ -149,7 +149,7 @@ skopeo copy --encryption-key jwe:/tmp/public-key.pem oci:/tmp/local-httpd24:late
 4. Push the image to Quay.
 
 ```sh
-skopeo copy oci:/tmp/local-httpd24-encrypted:latest docker://<QUAY_HOSTNAME>/userorg/httpd-24:encrypted
+skopeo copy oci:/tmp/local-httpd24-encrypted:latest docker://<QUAY_HOSTNAME>/userorg/httpd-24-encrypted:latest
 ```
 
 5. Navigate to the Quay Registry Dashboard, `userorg/httpd-24` repository.
@@ -158,8 +158,41 @@ skopeo copy oci:/tmp/local-httpd24-encrypted:latest docker://<QUAY_HOSTNAME>/use
 
 We will see our encrypted image stored in it.
 
-![Encrypted Image Stored in Quay Repository](img/encrypted-img-into-repo.png)
-
-
 ### Encrypted Container Images with PGP (RFC4880)
 
+1. Generate the PGP keys.
+
+```sh
+gpg --full-generate-key
+<..>
+Real name: Angel
+Email address: angel@example.com
+Comment:
+You selected this USER-ID:
+    "Angel <angel@example.com>"
+<..>
+```
+
+2. Copy the image that we want to encrypt.
+
+```sh
+skopeo copy docker://quay.io/centos7/httpd-24-centos7:latest oci:/tmp/local-httpd24:latest
+```
+
+3. Encrypt the image.
+
+```sh
+skopeo copy --encryption-key pgp:angel@example.com oci:/tmp/local-httpd24:latest oci:/tmp/local-httpd24-encrypted:latest
+```
+
+4. Push the image to Quay.
+
+```sh
+skopeo copy oci:/tmp/local-httpd24-encrypted:latest docker://<QUAY_HOSTNAME>/userorg/httpd-24-encrypted:latest
+```
+
+5. Navigate to the Quay Registry Dashboard, `userorg/httpd-24` repository.
+
+6. Click `Tags`.
+
+We will see our encrypted image stored in it.
