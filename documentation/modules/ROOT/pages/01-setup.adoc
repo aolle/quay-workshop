@@ -1,29 +1,104 @@
-= Setup
+= Environment Setup
 include::_attributes.adoc[]
 
-[#prerequisite]
-== Prerequisite CLI tools
+[#tools]
+== Container Management Tools
 
-include::https://raw.githubusercontent.com/redhat-developer-demos/rhd-tutorial-common/master/prerequisites-kubernetes.adoc[]
-|===
+The following tools are required for running the exercises in this tutorial. 
+Please have them installed and configured before you get started with any of the tutorial chapters.
 
-include::https://raw.githubusercontent.com/redhat-developer-demos/rhd-tutorial-common/master/optional-requisites.adoc[]
-|===
+include::partial$tools.adoc[]
 
-[#minikube]
-== Setup Kubernetes
+[#quay]
+== Red Hat Quay Prerequisites
 
-:profile: my_profile
+[#odf]
+== ODF Operator
 
-include::https://raw.githubusercontent.com/redhat-developer-demos/rhd-tutorial-common/master/kubernetes-setup.adoc[]
+You can use the OpenShift Container Platform web console to install Quay prerequisites.
 
-And then you are ready for start using Kubernetes:
+* Open a browser window and log in to the OpenShift Container Platform web console.
 
-image::kubelogo.png[]
+* From the Administrator perspective, click Operators → OperatorHub.
 
-[#downloadtutorial]
-== Get tutorial sources
+* In the Filter by keyword field, type `ODF`.
 
-:tutorial-url: https://github.com/redhat-developer-demos/rhd-tutorial-common.git
-:folder: my_folder
-include::https://raw.githubusercontent.com/redhat-developer-demos/rhd-tutorial-common/master/download-sources.adoc[]
+image::install/operatorhub-odf.png[]
+
+* Select the OpenShift Data Foundation tile and click Install.
+
+image::install/odf-install.png[]
+
+* On the Install Operator page select `stable-4.10` from the list of available Update Channel options. Choose `A specific namespace on the cluster` and leave the default vaule of Installed Namespace as `openshift-storage`. Update approval `Automatic`. Console plugin `Enable`.
+
+image::install/odfoperator-install-opts.png[]
+
+* Click `Install`.
+
+[#storage]
+== Creating the StorageSystem instance
+
+To use the ODF Operator a StorageSystem instance is required. This is an example for an OCP standard and fresh installation (RHPDS) and may vary depending on your environment.
+
+* From the Administrator perspective, click Operators → Installed Operators.
+
+* Select `openshift-storage` project and OpenShift Data Foundation.
+
+* Click on `Create StorageSystem` button.
+
+image::install/odf-storagesystem-b.png[]
+
+* On the Create StorageSystem select `Use an existing StorageClass` and the `gp2` storage class. Click Next.
+
+image::install/odf-storagesystem-gp2.png[]
+
+* Select the capacity and the nodes. The selected nodes will be labeled with `cluster.ocs.openshift.io/openshift-storage=""`. Click Next.
+
+image::install//odf-storagesystem-capacity-request.png[]
+
+* Data encryption is not needed for this workshop. Click Next.
+
+image::install/odf-dataenc.png[]
+
+* Click on `Create StorageSystem`.
+
+[#quayoperator]
+== Installing Quay Operator
+
+You can use the OpenShift Container Platform web console to suscribe and deploy the `Red Hat Quay Operator`.
+
+* Open a browser window and log in to the OpenShift Container Platform web console.
+
+* From the Administrator perspective, click Operators → OperatorHub.
+
+* In the Filter by keyword field, type Red Hat Quay.
+
+image::install/operatorhub-quay.png[]
+
+* Select the Red Hat Quay tile and click Install.
+
+image::install/quayoperator-install.png[]
+
+* On the Install Operator page select `stable-3.7` from the list of available Update Channel options. Choose `All namespaces on the cluster (default)` as installation mode. Choose `Automatic` update approval.
+
+image::install/quayoperator-opts.png[]
+
+* Click `Install`.
+
+[#quayinstance]
+== Deploying Quay
+
+* Create a `quay-workshop` project.
+
+* From the Administrator perspective, click Operators → Installed Operators. Project: `quay-workshop`. Select Red Hat Quay operator.
+
+* Click on Create instance (Quay Registry).
+
+image::install/create-quay-instance.png[]
+
+* Change the Name if desired. Click on Create.
+
+image::install/quay-create.png[]
+
+IMPORTANT: If the init container fails when deploying the Quay registry, check if a LimitRange exist in the OCP project. The RHPDS environment creates one automatically.
+

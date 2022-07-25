@@ -1,0 +1,15 @@
+[cols="4*^,4*.",options="header,+attributes"]
+|===
+|**Tool**|**Fedora**|**Debian**|**macOS**
+
+| `podman`
+| `dnf install podman`
+| `apt install podman`
+| https://podman.io/getting-started/installation[Podman for Mac]
+
+| `skopeo`
+| `dnf install skopeo`
+| `apt install skopeo`
+| `brew install skopeo`
+
+|===
