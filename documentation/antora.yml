@@ -1,5 +1,5 @@
-name: quay-workshop
-title: Quay Workshop
+name: ROOT
+title: Red Hat Quay Workshop
 version: master
 nav:
   - modules/ROOT/nav.adoc

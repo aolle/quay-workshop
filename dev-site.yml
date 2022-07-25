@@ -3,7 +3,7 @@ runtime:
 
 site:
   title: Red Hat Quay Workshop (Dev Mode)
-  url: http://localhost:3000/rhs-build-course/index.html
+  url: http://localhost:8080/quay-workshop
   start_page: quay-workshop::index.adoc
 
 content:
