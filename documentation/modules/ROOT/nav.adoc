@@ -5,3 +5,8 @@
 *** xref:01-setup.adoc#storage[1.2.2. Creating the StorageSystem instance]
 *** xref:01-setup.adoc#quayoperator[1.2.3. Installing Quay Operator]
 *** xref:01-setup.adoc#quayinstance[1.2.3. Deploying Quay]
+
+* 2. Red Hat Quay
+** xref:02-quay-orgs.adoc[2.1 Users and Organizations]
+*** xref:02-quay-orgs.adoc#useraccounts[2.1.1 Creating user accounts]
+*** xref:02-quay-orgs.adoc#orgaccounts[2.1.2 Creating organization accounts]

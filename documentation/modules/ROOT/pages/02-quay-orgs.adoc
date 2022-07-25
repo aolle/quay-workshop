@@ -1,0 +1,36 @@
+= Users and Organizations
+include::_attributes.adoc[]
+
+[#useraccounts]
+== Creating user accounts
+
+To create a new user for our Red Hat Quay instance:
+
+* Open a browser window and log in to the OpenShift Container Platform web console.
+
+* From the Administrator perspective, click Operators → Installed Operators. Project: `quay-workshop`. Select Red Hat Quay operator.
+
+* Select Quay Registry tab and click on the recenlty created registry.
+
+* Open the Registry Endpoint.
+
+image::organizations/quay-registries.png[]
+
+* Create Account.
+
+image::organizations/quay-create-account.png[]
+
+* Fill the data, create an account and sign in.
+
+[#orgaccounts]
+== Creating Organization accounts
+
+The organization allows sharing repositories of container images. To create a new organization:
+
+* While logged in, click `Create New Organization`.
+
+image::organizations/quay-create-org.png[]
+
+* Type the name of the organization. Click `Create Organization`.
+
+image::organizations/org.png[]
