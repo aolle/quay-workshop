@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Environment Setup :: Red Hat Quay Workshop</title>
+    <link rel="canonical" href="https://olleb.com/quay-workshop/01-setup.html">
+    <link rel="prev" href="index.html">
+    <link rel="next" href="02-quay-orgs.html">
+    <meta name="generator" content="Antora 3.0.3">
+    <link rel="stylesheet" href="./_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="./_/img/NewRHDFullLogo_4-color_white-wordmark.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="https://olleb.com/quay-workshop">Red Hat Quay Workshop</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
+        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
+        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/kubernetes-tutorial/" target="_blank">Kubernetes</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/istio-tutorial/" target="_blank">Istio</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/tekton-tutorial/" target="_blank">Tekton</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html"></a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-setup.html">1. Environment Setup</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#tools">1.1. Container Management Tools</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#quay">1.2. Red Hat Quay Prerequisites</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#odf">1.2.1. ODF Operator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#storage">1.2.2. Creating the StorageSystem instance</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#quayoperator">1.2.3. Installing Quay Operator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#quayinstance">1.2.3. Deploying Quay</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">2. Red Hat Quay</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-quay-orgs.html">2.1 Users and Organizations</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="02-quay-orgs.html#useraccounts">2.1.1 Creating user accounts</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="02-quay-orgs.html#orgaccounts">2.1.2 Creating organization accounts</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Red Hat Quay Workshop</a></li>
+    <li><a href="01-setup.html">1. Environment Setup</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/aolle/quay-workshop/edit/main/documentation/modules/ROOT/pages/01-setup.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Environment Setup</h1>
+<div class="sect1">
+<h2 id="tools"><a class="anchor" href="#tools"></a>Container Management Tools</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following tools are required for running the exercises in this tutorial.
+Please have them installed and configured before you get started with any of the tutorial chapters.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top"><strong>Tool</strong></th>
+<th class="tableblock halign-center valign-top"><strong>Fedora</strong></th>
+<th class="tableblock halign-center valign-top"><strong>Debian</strong></th>
+<th class="tableblock halign-center valign-top"><strong>macOS</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>podman</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>dnf install podman</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>apt install podman</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://podman.io/getting-started/installation">Podman for Mac</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>skopeo</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>dnf install skopeo</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>apt install skopeo</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>brew install skopeo</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="quay"><a class="anchor" href="#quay"></a>Red Hat Quay Prerequisites</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="odf"><a class="anchor" href="#odf"></a>ODF Operator</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can use the OpenShift Container Platform web console to install Quay prerequisites.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open a browser window and log in to the OpenShift Container Platform web console.</p>
+</li>
+<li>
+<p>From the Administrator perspective, click Operators → OperatorHub.</p>
+</li>
+<li>
+<p>In the Filter by keyword field, type <code>ODF</code>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/install/operatorhub-odf.png" alt="operatorhub odf">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Select the OpenShift Data Foundation tile and click Install.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/install/odf-install.png" alt="odf install">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>On the Install Operator page select <code>stable-4.10</code> from the list of available Update Channel options. Choose <code>A specific namespace on the cluster</code> and leave the default vaule of Installed Namespace as <code>openshift-storage</code>. Update approval <code>Automatic</code>. Console plugin <code>Enable</code>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/install/odfoperator-install-opts.png" alt="odfoperator install opts">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click <code>Install</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="storage"><a class="anchor" href="#storage"></a>Creating the StorageSystem instance</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To use the ODF Operator a StorageSystem instance is required. This is an example for an OCP standard and fresh installation (RHPDS) and may vary depending on your environment.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>From the Administrator perspective, click Operators → Installed Operators.</p>
+</li>
+<li>
+<p>Select <code>openshift-storage</code> project and OpenShift Data Foundation.</p>
+</li>
+<li>
+<p>Click on <code>Create StorageSystem</code> button.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/install/odf-storagesystem-b.png" alt="odf storagesystem b">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>On the Create StorageSystem select <code>Use an existing StorageClass</code> and the <code>gp2</code> storage class. Click Next.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/install/odf-storagesystem-gp2.png" alt="odf storagesystem gp2">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Select the capacity and the nodes. The selected nodes will be labeled with <code>cluster.ocs.openshift.io/openshift-storage=""</code>. Click Next.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/install/odf-storagesystem-capacity-request.png" alt="odf storagesystem capacity request">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Data encryption is not needed for this workshop. Click Next.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/install/odf-dataenc.png" alt="odf dataenc">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click on <code>Create StorageSystem</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="quayoperator"><a class="anchor" href="#quayoperator"></a>Installing Quay Operator</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can use the OpenShift Container Platform web console to suscribe and deploy the <code>Red Hat Quay Operator</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open a browser window and log in to the OpenShift Container Platform web console.</p>
+</li>
+<li>
+<p>From the Administrator perspective, click Operators → OperatorHub.</p>
+</li>
+<li>
+<p>In the Filter by keyword field, type Red Hat Quay.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/install/operatorhub-quay.png" alt="operatorhub quay">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Select the Red Hat Quay tile and click Install.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/install/quayoperator-install.png" alt="quayoperator install">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>On the Install Operator page select <code>stable-3.7</code> from the list of available Update Channel options. Choose <code>All namespaces on the cluster (default)</code> as installation mode. Choose <code>Automatic</code> update approval.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/install/quayoperator-opts.png" alt="quayoperator opts">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click <code>Install</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="quayinstance"><a class="anchor" href="#quayinstance"></a>Deploying Quay</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Create a <code>quay-workshop</code> project.</p>
+</li>
+<li>
+<p>From the Administrator perspective, click Operators → Installed Operators. Project: <code>quay-workshop</code>. Select Red Hat Quay operator.</p>
+</li>
+<li>
+<p>Click on Create instance (Quay Registry).</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/install/create-quay-instance.png" alt="create quay instance">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Change the Name if desired. Click on Create.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/install/quay-create.png" alt="quay create">
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+If the init container fails when deploying the Quay registry, check if a LimitRange exist in the OCP project. The RHPDS environment creates one automatically.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="index.html">Red Hat Quay Workshop</a></span>
+  <span class="next"><a href="02-quay-orgs.html">2.1 Users and Organizations</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="./_/js/vendor/clipboard.js"></script>
+<script src="./_/js/site.js"></script>
+<script async src="./_/js/vendor/highlight.js"></script>
+  </body>
+</html>
