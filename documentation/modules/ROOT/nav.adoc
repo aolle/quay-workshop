@@ -10,3 +10,9 @@
 ** xref:02-quay-orgs.adoc[2.1 Users and Organizations]
 *** xref:02-quay-orgs.adoc#useraccounts[2.1.1 Creating user accounts]
 *** xref:02-quay-orgs.adoc#orgaccounts[2.1.2 Creating organization accounts]
+
+** xref:03-quay-repos.adoc[2.2 Quay Repositories]
+*** xref:02-quay-repos.adoc#imagerepo[2.2.1 Creating an image repository]
+*** xref:02-quay-repos.adoc#push[2.2.2 Push (and Tag) an image into the repository]
+*** xref:02-quay-repos.adoc#imglayers[2.2.3 Inspecting image layers]
+*** xref:02-quay-repos.adoc#pull[2.2.4 Pull an image from the repository]
