@@ -13,8 +13,8 @@
 | `brew install skopeo`
 
 | `helm`
-| https://helm.sh/docs/intro/install/#from-the-binary-releases (or Snap Store)
-| https://helm.sh/docs/intro/install/#from-apt-debianubuntu
+| https://helm.sh/docs/intro/install/#from-the-binary-releases[Helm install] (or Snap Store)
+| https://helm.sh/docs/intro/install/#from-apt-debianubuntu[Helm install]
 | `brew install helm`
 
 |===

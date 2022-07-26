@@ -31,3 +31,8 @@
 *** xref:06-quay-oci.adoc#encrypted[2.5.4 Encrypted container images]
 **** xref:06-quay-oci.adoc#jwe[2.5.4.1 Encrypted container images with JSON Web Encryption (JWE) (RFC7516)]
 **** xref:06-quay-oci.adoc#pgp[2.5.4.2 Encrypted container images with PGP (RFC4880)]
+
+** xref:07-quay-clair.adoc[2.6 Clair Security Scanning]
+*** xref:07-quay-clair.adoc#cve[2.6.1 Explore the vulnerability data (CVE's)]
+**** xref:07-quay-clair.adoc#secscan[2.6.1.1 Security scan]
+**** xref:07-quay-clair.adoc#packages[2.6.1.2 Packages]
