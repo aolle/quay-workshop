@@ -1,12 +1,14 @@
-# Quay Repository Notifications
+= Quay Repository Notifications
+include::_attributes.adoc[]
 
 Quay supports adding notifications to a repository for various events that occur in the repository’s lifecycle.
 
-![Quay Notifications Events List](img/event-list.png)
+image::reponotifications/event-list.png[]
 
-## Create a Push to Repository Event Notification
+[#pushnotif]
+== Creating a push to repository event notification
 
-* From the Red Hat Quay Dashboard, click on `kafka` repository. Recall from [Quay Repository](../quay-repository/README.md), we created and pushed a strimzi/kafka image on it.
+* From the Red Hat Quay Dashboard, click on `kafka` repository. Recall from xref:03-quay-repos.adoc[2.2 Quay Repositories], we created and pushed a strimzi/kafka image on it.
 
 * Click `Settings`.
 
@@ -16,7 +18,7 @@ Quay supports adding notifications to a repository for various events that occur
 
 * Under the `Then issue a notification` drop down, select `Red Hat Quay Notification`.
 
-![Quay Notification Actions](img/notification-actions.png)
+image::reponotifications/notification-actions.png[]
 
 * In the `Recipient` drop down, select `owners`.
 
@@ -26,15 +28,18 @@ Quay supports adding notifications to a repository for various events that occur
 
 Push a new image into the repository or add a new tag the current one.
 
-```sh
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
 podman pull quay.io/strimzi/kafka:latest-kafka-3.0.0
 podman tag quay.io/strimzi/kafka:latest-kafka-3.0.0 <QUAY_HOSTNAME>/userorg/kafka:3.0.0
 podman login <QUAY_HOSTNAME>
 podman push <QUAY_HOSTNAME>/userorg/kafka:3.0.0
-```
+----
 
 After a while, we will see the notification in the top of our dashboard.
 
-![Quay Repository Notification](img/notification.png)
+image::reponotifications/notification.png[]
 
-![Quay Repository Notifications List](img/notifications.png)
+image::reponotifications/notifications.png[]

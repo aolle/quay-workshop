@@ -19,4 +19,7 @@
 
 ** xref:04-quay-mirror.adoc[2.3 Quay Repository Mirroring]
 *** xref:04-quay-mirror.adoc#imagerepo[2.3.1 Creating a repository to mirror from]
-**** xref:04-quay-mirror.adoc#usage[2.3.1.2 Repository Usage Logs, Tags and Tag History]
+**** xref:04-quay-mirror.adoc#usage[2.3.1.2 Repository usage logs, tags and tag history]
+
+** xref:05-quay-repo-notifications.adoc[2.4 Quay Repository Notifications]
+*** xref:05-quay-repo-notifications.adoc#pushnotif[2.4.1 Creating a push to repository event notification]

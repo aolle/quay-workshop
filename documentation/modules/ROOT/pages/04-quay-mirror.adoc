@@ -37,7 +37,7 @@ image::mirror/robot-acc.png[]
 * Click on `Enable Mirror`.
 
 [#usage]
-=== Repository Usage Logs, Tags and Tag History
+=== Repository usage logs, tags and tag history
 
 After enabling the mirror, check the Tag History, Tags and Usage Logs as shown below.
 
