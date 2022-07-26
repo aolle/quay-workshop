@@ -36,3 +36,7 @@
 *** xref:07-quay-clair.adoc#cve[2.6.1 Explore the vulnerability data (CVE's)]
 **** xref:07-quay-clair.adoc#secscan[2.6.1.1 Security scan]
 **** xref:07-quay-clair.adoc#packages[2.6.1.2 Packages]
+
+** xref:08-quay-cso.adoc[2.7 Quay Container Security Operator (CSO)]
+*** xref:08-quay-cso.adoc#install[2.7.1 Installing the Quay CSO Operator]
+*** xref:08-quay-cso.adoc#vulncheck[2.7.2 Checking the image vulnerabilities through the OpenShift web console]
