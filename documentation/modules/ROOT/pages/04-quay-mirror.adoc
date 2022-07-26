@@ -1,0 +1,48 @@
+= Quay Repository Mirroring
+include::_attributes.adoc[]
+
+Quay Repository mirroring lets us mirror images from external container registries (or local) into our Quay cluster.
+
+[#imagerepo]
+== Creating a repository to mirror from
+
+* Click `Create New Repository`.
+
+* Select the organization in the drop down list, name the repository `apache/httpd-mirror` and set `Public` visibility.
+
+image::mirror/mirror-cfg.png[]
+
+* Click `Create Public Repository`.
+
+* Click the `Settings` icon.
+
+* Change the `Repository State` to `Mirror`.
+
+image::mirror/repo-state.png[]
+
+* Click the `Mirroring` icon.
+
+* Fill out the fields with the following values:
+
+** Registry Location: `httpd`
+** Tags: `2.4.53, 2.4.48*`
+** Start Date: set the current date/time
+** Sync Interval: `1 minute`
+** Robot User: `Create robot account`
+
+image::mirror/robot-acc.png[]
+
+* Click on `Create robot account`.
+
+* Click on `Enable Mirror`.
+
+[#usage]
+=== Repository Usage Logs, Tags and Tag History
+
+After enabling the mirror, check the Tag History, Tags and Usage Logs as shown below.
+
+image::mirror/usagelogs.png[]
+
+image::mirror/tag-history.png[]
+
+image::mirror/tags.png[]

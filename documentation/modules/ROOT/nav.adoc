@@ -12,7 +12,11 @@
 *** xref:02-quay-orgs.adoc#orgaccounts[2.1.2 Creating organization accounts]
 
 ** xref:03-quay-repos.adoc[2.2 Quay Repositories]
-*** xref:02-quay-repos.adoc#imagerepo[2.2.1 Creating an image repository]
-*** xref:02-quay-repos.adoc#push[2.2.2 Push (and Tag) an image into the repository]
-*** xref:02-quay-repos.adoc#imglayers[2.2.3 Inspecting image layers]
-*** xref:02-quay-repos.adoc#pull[2.2.4 Pull an image from the repository]
+*** xref:03-quay-repos.adoc#imagerepo[2.2.1 Creating an image repository]
+*** xref:03-quay-repos.adoc#push[2.2.2 Push (and Tag) an image into the repository]
+*** xref:03-quay-repos.adoc#imglayers[2.2.3 Inspecting image layers]
+*** xref:03-quay-repos.adoc#pull[2.2.4 Pull an image from the repository]
+
+** xref:04-quay-mirror.adoc[2.3 Quay Repository Mirroring]
+*** xref:04-quay-mirror.adoc#imagerepo[2.3.1 Creating a repository to mirror from]
+**** xref:04-quay-mirror.adoc#usage[2.3.1.2 Repository Usage Logs, Tags and Tag History]
