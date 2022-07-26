@@ -40,3 +40,5 @@
 ** xref:08-quay-cso.adoc[2.7 Quay Container Security Operator (CSO)]
 *** xref:08-quay-cso.adoc#install[2.7.1 Installing the Quay CSO Operator]
 *** xref:08-quay-cso.adoc#vulncheck[2.7.2 Checking the image vulnerabilities through the OpenShift web console]
+
+** xref:09-quay-obs.adoc[2.8 Quay Observability]
