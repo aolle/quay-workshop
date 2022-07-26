@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Welcome to Red Hat Quay Workshop :: Red Hat Quay Workshop</title>
-    <link rel="canonical" href="https://olleb.com/quay-workshop/index.html">
-    <link rel="next" href="01-setup.html">
+    <title>Quay Repository Notifications :: Red Hat Quay Workshop</title>
+    <link rel="canonical" href="https://olleb.com/quay-workshop/05-quay-repo-notifications.html">
+    <link rel="prev" href="04-quay-mirror.html">
+    <link rel="next" href="06-quay-oci.html">
     <meta name="generator" content="Antora 3.0.3">
     <link rel="stylesheet" href="./_/css/site.css">
   </head>
@@ -126,12 +127,12 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="05-quay-repo-notifications.html">2.4 Quay Repository Notifications</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="05-quay-repo-notifications.html#pushnotif">2.4.1 Creating a push to repository event notification</a>
+    <a class="nav-link" href="#pushnotif">2.4.1 Creating a push to repository event notification</a>
   </li>
 </ul>
   </li>
@@ -211,24 +212,96 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Red Hat Quay Workshop</a></li>
-    <li><a href="index.html">Welcome to Red Hat Quay Workshop</a></li>
+    <li>2. Red Hat Quay</li>
+    <li><a href="05-quay-repo-notifications.html">2.4 Quay Repository Notifications</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/aolle/quay-workshop/edit/main/documentation/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/aolle/quay-workshop/edit/main/documentation/modules/ROOT/pages/05-quay-repo-notifications.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Welcome to Red Hat Quay Workshop</h1>
-<div class="sect1 text-center strong">
-<h2>Introduction</h2>
+<h1 class="page">Quay Repository Notifications</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Red Hat Quay is a distributed and highly available container image registry for your enterprise.</p>
+<p>Quay supports adding notifications to a repository for various events that occur in the repository’s lifecycle.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/reponotifications/event-list.png" alt="event list">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="pushnotif"><a class="anchor" href="#pushnotif"></a>Creating a push to repository event notification</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>From the Red Hat Quay Dashboard, click on <code>kafka</code> repository. Recall from <a href="03-quay-repos.html" class="xref page">2.2 Quay Repositories</a>, we created and pushed a strimzi/kafka image on it.</p>
+</li>
+<li>
+<p>Click <code>Settings</code>.</p>
+</li>
+<li>
+<p>Click <code>+ Create Notification</code> button.</p>
+</li>
+<li>
+<p>In the <code>When this event occurs</code> drop down, select <code>Push to Repository</code>.</p>
+</li>
+<li>
+<p>Under the <code>Then issue a notification</code> drop down, select <code>Red Hat Quay Notification</code>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/reponotifications/notification-actions.png" alt="notification actions">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In the <code>Recipient</code> drop down, select <code>owners</code>.</p>
+</li>
+<li>
+<p>In the <code>Notification title</code> text field, type <code>A new image has been pushed into the repository</code>.</p>
+</li>
+<li>
+<p>Click <code>Create Notification</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Push a new image into the repository or add a new tag the current one.</p>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman pull quay.io/strimzi/kafka:latest-kafka-3.0.0
+podman tag quay.io/strimzi/kafka:latest-kafka-3.0.0 &lt;QUAY_HOSTNAME&gt;/userorg/kafka:3.0.0
+podman login &lt;QUAY_HOSTNAME&gt;
+podman push &lt;QUAY_HOSTNAME&gt;/userorg/kafka:3.0.0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After a while, we will see the notification in the top of our dashboard.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/reponotifications/notification.png" alt="notification">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/reponotifications/notifications.png" alt="notifications">
+</div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="next"><a href="01-setup.html">1. Environment Setup</a></span>
+  <span class="prev"><a href="04-quay-mirror.html">2.3 Quay Repository Mirroring</a></span>
+  <span class="next"><a href="06-quay-oci.html">2.5 Quay OCI-based Artifacts Repository</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

@@ -94,6 +94,108 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-quay-repos.html">2.2 Quay Repositories</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-quay-repos.html#imagerepo">2.2.1 Creating an image repository</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-quay-repos.html#push">2.2.2 Push (and Tag) an image into the repository</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-quay-repos.html#imglayers">2.2.3 Inspecting image layers</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="03-quay-repos.html#pull">2.2.4 Pull an image from the repository</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-quay-mirror.html">2.3 Quay Repository Mirroring</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="04-quay-mirror.html#imagerepo">2.3.1 Creating a repository to mirror from</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="04-quay-mirror.html#usage">2.3.1.2 Repository usage logs, tags and tag history</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="05-quay-repo-notifications.html">2.4 Quay Repository Notifications</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="05-quay-repo-notifications.html#pushnotif">2.4.1 Creating a push to repository event notification</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="06-quay-oci.html">2.5 Quay OCI-based Artifacts Repository</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="06-quay-oci.html#allowed">2.5.1 Configuring allowed OCI artifact types</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="06-quay-oci.html#helm">2.5.2 Helm charts</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="06-quay-oci.html#signed">2.5.3 Signed container images</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="06-quay-oci.html#encrypted">2.5.4 Encrypted container images</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="06-quay-oci.html#jwe">2.5.4.1 Encrypted container images with JSON Web Encryption (JWE) (RFC7516)</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="06-quay-oci.html#pgp">2.5.4.2 Encrypted container images with PGP (RFC4880)</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="07-quay-clair.html">2.6 Clair Security Scanning</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="07-quay-clair.html#cve">2.6.1 Explore the vulnerability data (CVE&#8217;s)</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="07-quay-clair.html#secscan">2.6.1.1 Security scan</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="07-quay-clair.html#packages">2.6.1.2 Packages</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="08-quay-cso.html">2.7 Quay Container Security Operator (CSO)</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="08-quay-cso.html#install">2.7.1 Installing the Quay CSO Operator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="08-quay-cso.html#vulncheck">2.7.2 Checking the image vulnerabilities through the OpenShift web console</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="09-quay-obs.html">2.8 Quay Observability</a>
+  </li>
 </ul>
   </li>
 </ul>
@@ -152,6 +254,12 @@ Please have them installed and configured before you get started with any of the
 <td class="tableblock halign-center valign-top"><p class="tableblock"><code>dnf install skopeo</code></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><code>apt install skopeo</code></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><code>brew install skopeo</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>helm</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://helm.sh/docs/intro/install/#from-the-binary-releases">Helm install</a> (or Snap Store)</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://helm.sh/docs/intro/install/#from-apt-debianubuntu">Helm install</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>brew install helm</code></p></td>
 </tr>
 </tbody>
 </table>

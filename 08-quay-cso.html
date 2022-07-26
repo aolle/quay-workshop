@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Welcome to Red Hat Quay Workshop :: Red Hat Quay Workshop</title>
-    <link rel="canonical" href="https://olleb.com/quay-workshop/index.html">
-    <link rel="next" href="01-setup.html">
+    <title>Quay Container Security Operator (CSO) :: Red Hat Quay Workshop</title>
+    <link rel="canonical" href="https://olleb.com/quay-workshop/08-quay-cso.html">
+    <link rel="prev" href="07-quay-clair.html">
+    <link rel="next" href="09-quay-obs.html">
     <meta name="generator" content="Antora 3.0.3">
     <link rel="stylesheet" href="./_/css/site.css">
   </head>
@@ -180,15 +181,15 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="08-quay-cso.html">2.7 Quay Container Security Operator (CSO)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="08-quay-cso.html#install">2.7.1 Installing the Quay CSO Operator</a>
+    <a class="nav-link" href="#install">2.7.1 Installing the Quay CSO Operator</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="08-quay-cso.html#vulncheck">2.7.2 Checking the image vulnerabilities through the OpenShift web console</a>
+    <a class="nav-link" href="#vulncheck">2.7.2 Checking the image vulnerabilities through the OpenShift web console</a>
   </li>
 </ul>
   </li>
@@ -211,24 +212,184 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Red Hat Quay Workshop</a></li>
-    <li><a href="index.html">Welcome to Red Hat Quay Workshop</a></li>
+    <li>2. Red Hat Quay</li>
+    <li><a href="08-quay-cso.html">2.7 Quay Container Security Operator (CSO)</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/aolle/quay-workshop/edit/main/documentation/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/aolle/quay-workshop/edit/main/documentation/modules/ROOT/pages/08-quay-cso.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Welcome to Red Hat Quay Workshop</h1>
-<div class="sect1 text-center strong">
-<h2>Introduction</h2>
+<h1 class="page">Quay Container Security Operator (CSO)</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Red Hat Quay is a distributed and highly available container image registry for your enterprise.</p>
+<p>Scan pod images with the Quay Container Security Operator (CSO).</p>
+</div>
+<div class="paragraph">
+<p>The Container Security Operator brings Quay and Clair metadata to Kubernetes / OpenShift.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="install"><a class="anchor" href="#install"></a>Installing the Quay CSO Operator</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Open a browser window and log in to the OpenShift Container Platform web console.</p>
+</li>
+<li>
+<p>From the Administrator perspective, click Operators → OperatorHub.</p>
+</li>
+<li>
+<p>In the Filter by keyword field, type Quay.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/cso/operatorhub-quay.png" alt="operatorhub quay"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Select the Red Hat Quay Container Security Operator tile and click Install.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/cso/cso-install.png" alt="cso install"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Select <code>stable-3.7</code> from the list of available Update Channel options. Choose <code>All namespaces on the cluster (default)</code> as installation mode. Choose <code>Automatic</code> update approval.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/cso/cso-install-params.png" alt="cso install params"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Install.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="vulncheck"><a class="anchor" href="#vulncheck"></a>Checking the image vulnerabilities through the OpenShift web console</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Deploy a vulnerable image. For this example, we are going to deploy an old httpd vulnerable image.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Pull the image
+podman pull registry.redhat.io/rhel8/httpd-24:1-30
+
+# Tag the image
+podman tag registry.redhat.io/rhel8/httpd-24:1-30 &lt;QUAY_HOSTNAME&gt;/userorg/httpd-24:1-30
+
+# Push it to our Quay registry
+podman push &lt;QUAY_HOSTNAME&gt;/userorg/httpd-24:1-30</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Navigate to the Quay Registry Endpoint and select the <code>userorg/httpd-24</code> repository that has been created automatically when we pulled the image before.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/cso/httpd24-repo.png" alt="httpd24 repo"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Select <code>Settings</code> and <code>Make Public</code>.</p>
+</li>
+<li>
+<p>Open the OpenShift Container Platform web console and create a new project, click Projects → Create Project. Name the project as <code>vuln-httpd</code>. Click on <code>Create</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/cso/vulnhttpd-project.png" alt="vulnhttpd project"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Deploy the vulnerable image, click Workloads → Deployments. Click on <code>Create Deployment</code>.</p>
+</li>
+<li>
+<p>Replace the default image value by the image of our Quay registry. Set replicas as desired. Set <code>httpd</code> as custom name.</p>
+</li>
+<li>
+<p>Click on <code>Create</code>.</p>
+</li>
+<li>
+<p>OpenShift will start the deployment and will create the pod. Go to Workloads → Pods and select one of the <code>httpd</code> pods. Select the <code>Vulnerabilities</code> tab.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/cso/vuln-tab.png" alt="vuln tab"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click con the security scan results.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/cso/vulnimgmanifest.png" alt="vulnimgmanifest"></span></p>
+</div>
+<div class="paragraph">
+<p>Additionally, after installing the CSO operator, a new status related to Image Vulnerabilities is shown on the cluster overview.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/cso/overview.png" alt="overview"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click on <code>Image Vulnerabilities</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/cso/vuln.png" alt="vuln"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click on <code>View all</code> and click on the Manifest related to <code>userorg/httpd-24</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/cso/vulnlist.png" alt="vulnlist"></span></p>
+</div>
+<div class="paragraph">
+<p>We will be redirected to the Quay Security Scanner Dashboard.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/cso/quayredirect.png" alt="quayredirect"></span></p>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="next"><a href="01-setup.html">1. Environment Setup</a></span>
+  <span class="prev"><a href="07-quay-clair.html">2.6 Clair Security Scanning</a></span>
+  <span class="next"><a href="09-quay-obs.html">2.8 Quay Observability</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

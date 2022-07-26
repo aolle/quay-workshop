@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Welcome to Red Hat Quay Workshop :: Red Hat Quay Workshop</title>
-    <link rel="canonical" href="https://olleb.com/quay-workshop/index.html">
-    <link rel="next" href="01-setup.html">
+    <title>Quay Repository Mirroring :: Red Hat Quay Workshop</title>
+    <link rel="canonical" href="https://olleb.com/quay-workshop/04-quay-mirror.html">
+    <link rel="prev" href="03-quay-repos.html">
+    <link rel="next" href="05-quay-repo-notifications.html">
     <meta name="generator" content="Antora 3.0.3">
     <link rel="stylesheet" href="./_/css/site.css">
   </head>
@@ -111,16 +112,16 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="04-quay-mirror.html">2.3 Quay Repository Mirroring</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="04-quay-mirror.html#imagerepo">2.3.1 Creating a repository to mirror from</a>
+    <a class="nav-link" href="#imagerepo">2.3.1 Creating a repository to mirror from</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="04-quay-mirror.html#usage">2.3.1.2 Repository usage logs, tags and tag history</a>
+    <a class="nav-link" href="#usage">2.3.1.2 Repository usage logs, tags and tag history</a>
   </li>
 </ul>
   </li>
@@ -211,24 +212,128 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Red Hat Quay Workshop</a></li>
-    <li><a href="index.html">Welcome to Red Hat Quay Workshop</a></li>
+    <li>2. Red Hat Quay</li>
+    <li><a href="04-quay-mirror.html">2.3 Quay Repository Mirroring</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/aolle/quay-workshop/edit/main/documentation/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/aolle/quay-workshop/edit/main/documentation/modules/ROOT/pages/04-quay-mirror.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Welcome to Red Hat Quay Workshop</h1>
-<div class="sect1 text-center strong">
-<h2>Introduction</h2>
+<h1 class="page">Quay Repository Mirroring</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Red Hat Quay is a distributed and highly available container image registry for your enterprise.</p>
+<p>Quay Repository mirroring lets us mirror images from external container registries (or local) into our Quay cluster.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="imagerepo"><a class="anchor" href="#imagerepo"></a>Creating a repository to mirror from</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Click <code>Create New Repository</code>.</p>
+</li>
+<li>
+<p>Select the organization in the drop down list, name the repository <code>apache/httpd-mirror</code> and set <code>Public</code> visibility.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mirror/mirror-cfg.png" alt="mirror cfg">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click <code>Create Public Repository</code>.</p>
+</li>
+<li>
+<p>Click the <code>Settings</code> icon.</p>
+</li>
+<li>
+<p>Change the <code>Repository State</code> to <code>Mirror</code>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mirror/repo-state.png" alt="repo state">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click the <code>Mirroring</code> icon.</p>
+</li>
+<li>
+<p>Fill out the fields with the following values:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Registry Location: <code>httpd</code></p>
+</li>
+<li>
+<p>Tags: <code>2.4.53, 2.4.48*</code></p>
+</li>
+<li>
+<p>Start Date: set the current date/time</p>
+</li>
+<li>
+<p>Sync Interval: <code>1 minute</code></p>
+</li>
+<li>
+<p>Robot User: <code>Create robot account</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mirror/robot-acc.png" alt="robot acc">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click on <code>Create robot account</code>.</p>
+</li>
+<li>
+<p>Click on <code>Enable Mirror</code>.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="usage"><a class="anchor" href="#usage"></a>Repository usage logs, tags and tag history</h3>
+<div class="paragraph">
+<p>After enabling the mirror, check the Tag History, Tags and Usage Logs as shown below.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mirror/usagelogs.png" alt="usagelogs">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mirror/tag-history.png" alt="tag history">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mirror/tags.png" alt="tags">
+</div>
+</div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="next"><a href="01-setup.html">1. Environment Setup</a></span>
+  <span class="prev"><a href="03-quay-repos.html">2.2 Quay Repositories</a></span>
+  <span class="next"><a href="05-quay-repo-notifications.html">2.4 Quay Repository Notifications</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
