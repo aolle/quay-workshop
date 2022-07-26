@@ -12,4 +12,9 @@
 | `apt install skopeo`
 | `brew install skopeo`
 
+| `helm`
+| https://helm.sh/docs/intro/install/#from-the-binary-releases (or Snap Store)
+| https://helm.sh/docs/intro/install/#from-apt-debianubuntu
+| `brew install helm`
+
 |===

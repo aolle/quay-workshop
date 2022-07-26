@@ -23,3 +23,11 @@
 
 ** xref:05-quay-repo-notifications.adoc[2.4 Quay Repository Notifications]
 *** xref:05-quay-repo-notifications.adoc#pushnotif[2.4.1 Creating a push to repository event notification]
+
+** xref:06-quay-oci.adoc[2.5 Quay OCI-based Artifacts Repository]
+*** xref:06-quay-oci.adoc#allowed[2.5.1 Configuring allowed OCI artifact types]
+*** xref:06-quay-oci.adoc#helm[2.5.2 Helm charts]
+*** xref:06-quay-oci.adoc#signed[2.5.3 Signed container images]
+*** xref:06-quay-oci.adoc#encrypted[2.5.4 Encrypted container images]
+**** xref:06-quay-oci.adoc#jwe[2.5.4.1 Encrypted container images with JSON Web Encryption (JWE) (RFC7516)]
+**** xref:06-quay-oci.adoc#pgp[2.5.4.2 Encrypted container images with PGP (RFC4880)]
