@@ -9,7 +9,7 @@ Quay includes an integration with Clair to perform vulnerability scanning of con
 [#secscan]
 === Security scan
 
-* Navigate to our `kafka` demo Quay repository created [previously](../quay-repository/README.md).
+* Navigate to our `kafka` demo Quay repository created on xref:03-quay-repos.adoc[2.2 Quay Repositories].
 
 * Click on the `Security Scan` icon. We should see the Quay Security Scanner Dashboard.
 
