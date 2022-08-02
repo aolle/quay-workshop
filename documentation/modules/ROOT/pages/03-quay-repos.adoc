@@ -62,9 +62,9 @@ image::repositories/image-pushed.png[]
 
 * Navigate to the `userorg/kafka` repository.
 
-* Click the `Tags`icon.
+* Click the `Tags` icon.
 
-* We should have the 3.1.0 tag. Under `MANIFEST`, click on the `SHA256` value `20cffe996455`. We will see the layers dashboard.
+* Click on the `SHA256` value under `MANIFEST` of the `3.1.0` tag to see the layers dashboard.
 
 image::repositories/img-layers.png[]
 
@@ -82,3 +82,4 @@ image::repositories/img-layers.png[]
 image::repositories/fetchtag.png[]
 
 * Switch to a terminal, paste and execute the command on it. Docker or podman is required. If we're using podman, we have to replace the `docker` with `podman` before execute the command.
+As we created the repository as `Public`, login is not required to pull.
