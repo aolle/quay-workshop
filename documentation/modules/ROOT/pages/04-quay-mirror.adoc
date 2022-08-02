@@ -30,6 +30,8 @@ image::mirror/repo-state.png[]
 ** Sync Interval: `1 minute`
 ** Robot User: `Create robot account`
 
+image::mirror/create-robot-acc.png[]
+
 image::mirror/robot-acc.png[]
 
 * Click on `Create robot account`.
@@ -39,7 +41,7 @@ image::mirror/robot-acc.png[]
 [#usage]
 === Repository usage logs, tags and tag history
 
-After enabling the mirror, check the Tag History, Tags and Usage Logs as shown below.
+After enabling the mirror, check the `Tag History`, `Tags` and `Usage Logs` as shown below.
 
 image::mirror/usagelogs.png[]
 
