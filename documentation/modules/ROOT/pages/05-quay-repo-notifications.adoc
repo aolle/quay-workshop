@@ -1,7 +1,7 @@
 = Quay Repository Notifications
 include::_attributes.adoc[]
 
-Quay supports adding notifications to a repository for various events that occur in the repository’s lifecycle.
+Quay supports adding notifications to a repository for various events that occur in the repository lifecycle.
 
 image::reponotifications/event-list.png[]
 
