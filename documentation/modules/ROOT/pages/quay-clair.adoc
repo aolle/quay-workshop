@@ -9,9 +9,26 @@ Quay includes an integration with Clair to perform vulnerability scanning of con
 [#secscan]
 === Security scan
 
-* Navigate to our `kafka` demo Quay repository created on xref:03-quay-repos.adoc[2.2 Quay Repositories].
+Push a vulnerable image into the repository.
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+podman pull quay.io/wildfly/wildfly:23.0.2.Final
+podman tag quay.io/wildfly/wildfly:23.0.2.Final ${QUAY_HOSTNAME}/olleb/wildfly:23.0.2.Final
+# login if we are not already logged in
+podman login ${QUAY_HOSTNAME}
+podman push ${QUAY_HOSTNAME}/olleb/wildfly:23.0.2.Final
+----
+
+* Navigate to our `olleb/wildfly` Quay repository.
+
+image::clair/repo.png[]
 
 * Click on the `Security Scan` icon. We should see the Quay Security Scanner Dashboard.
+
+image::clair/secscan-icon.png[]
 
 image::clair/security-scanner-dashboard.png[]
 

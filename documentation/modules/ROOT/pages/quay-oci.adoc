@@ -6,15 +6,15 @@ Quay can be used to store OCI-based artifacts like Helm charts, encrypted contai
 [#allowed]
 == Configuring allowed OCI artifact types
 
-Some of the oci artifats that we are going to use on the next sections are not allowed by default. For example, the Helm charts and signed images are allowed by default, but the encrypted container images not (at least at the time of this writing). Follow this step if you want to upload encrypted images to Quay.
+Some of the OCI artifats that we are going to use on the next sections are not allowed by default. For example, the Helm charts and signed images are allowed by default, but the encrypted container images not (at least at the time of this writing). Follow this step if you want to upload encrypted images to Quay.
 
-As a previous step, we are going to configure the `ALLOWED_OCI_ARTIFACT_TYPES` environment variable for allowing some of the oci artifacts that we will use soon.
+As a previous step, we are going to configure the `ALLOWED_OCI_ARTIFACT_TYPES` environment variable for allowing some of the OCI artifacts that we will use soon.
 
 * Open a browser window and log in to the OpenShift Container Platform web console.
 
 * Click Operators → Installed Operators.
 
-* Select `quay-workshop` as the project and click on `Quay Registry`. Click to our `registry`.
+* Select `quay-workshop` as the project and click on `Quay Registry`. Click on our `registry`.
 
 image::oci/quay-registry.png[]
 
@@ -40,7 +40,7 @@ ALLOWED_OCI_ARTIFACT_TYPES:
 
 image::oci/valuesecret.png[]
 
-The `registry-quay-config-editor-*` and `registry-quay-app-*` pods will be restarted automatically with the new configuration.
+The `registry-quay-config-editor-\*` and `registry-quay-app-*` pods will be restarted automatically with the new configuration.
 
 [#helm]
 == Helm charts
@@ -51,7 +51,7 @@ The `registry-quay-config-editor-*` and `registry-quay-app-*` pods will be resta
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-helm registry login <QUAY_HOSTNAME>
+helm registry login ${QUAY_HOSTNAME}
 ----
 
 * Pull a chart.
@@ -69,10 +69,10 @@ helm pull https://redhat-developer.github.io/redhat-helm-charts/charts/quarkus-0
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-helm push quarkus-0.0.3.tgz oci://<QUAY_HOSTNAME>/userorg/helm
+helm push quarkus-0.0.3.tgz oci://${QUAY_HOSTNAME}/olleb/helm
 ----
 
-* Open the Quay Dashboard and open the `userorg/helm/quarkus` and go to `Tags`.
+* Open the Quay Dashboard and open the `olleb/helm/quarkus` and go to `Tags`.
 
 image::oci/helmrepo.png[]
 
@@ -84,23 +84,15 @@ The Helm chart is published to Quay as an OCI image.
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-helm install quarkus oci://<QUAY_HOSTNAME>/userorg/helm/quarkus --version=0.0.3
+helm install quarkus oci://${QUAY_HOSTNAME}/olleb/helm/quarkus --version=0.0.3
 ----
 
 [#signed]
 == Signed container images
-
 Image signing ensures the integrity of our image deployments. Quay will store the signature as an OCI artifact.
 
-* Download cosign and set execution permissions.
-
-[.lines_space]
-[.console-input]
-[source,bash, subs="+macros,+attributes"]
-----
-curl https://github.com/sigstore/cosign/releases/download/v1.9.0/cosign-linux-amd64 -L -o cosign
-chmod +x cosign
-----
+[#cosign]
+== Signed container images with cosign
 
 * Generate the key pair.
 
@@ -108,7 +100,7 @@ chmod +x cosign
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-./cosign generate-key-pair
+cosign generate-key-pair
 ----
 
 * Sign an image and pull it to Quay.
@@ -121,18 +113,18 @@ chmod +x cosign
 podman pull registry.redhat.io/rhel8/httpd-24:1-30
 
 # Tag and push the image
-podman tag registry.redhat.io/rhel8/httpd-24:1-30 <QUAY_HOSTNAME>/userorg/httpd-24:1-30
-podman push <QUAY_HOSTNAME>/userorg/httpd-24:1-30
+podman tag registry.redhat.io/rhel8/httpd-24:1-30 ${QUAY_HOSTNAME}/olleb/httpd-24:1-30
+podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30
 
 # Login
 # If we already signed in with podman or docker, the password parameter is not required, as it will use config.json file
-./cosign login <QUAY_HOSTNAME> -u <USER> -p <PASSWORD>
+./cosign login ${QUAY_HOSTNAME} -u <USER> -p <PASSWORD>
 
 # Sign and push the signature
-./cosign sign --key cosign.key <QUAY_HOSTNAME>/userorg/httpd-24:1-30
+./cosign sign --key cosign.key ${QUAY_HOSTNAME}/olleb/httpd-24:1-30
 ----
 
-* Navigate to the Quay Registry Dashboard, `userorg/httpd-24` repository.
+* Navigate to the Quay Registry Dashboard, `olleb/httpd-24` repository.
 
 * Click `Tags`.
 
@@ -159,10 +151,10 @@ Usually the image decrypting key is stored in a secret into our OCP cluster mast
 [source,bash, subs="+macros,+attributes"]
 ----
 # private key
-openssl genrsa --out /tmp/private-key.pem 2048
+openssl genrsa --out private-key.pem 2048
 
 # public key
-openssl rsa -in /tmp/private-key.pem -pubout -out /tmp/public-key.pem
+openssl rsa -in private-key.pem -pubout -out public-key.pem
 ----
 
 * Copy the image that we want to encrypt.
@@ -171,7 +163,7 @@ openssl rsa -in /tmp/private-key.pem -pubout -out /tmp/public-key.pem
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-skopeo copy docker://quay.io/centos7/httpd-24-centos7:latest oci:/tmp/local-httpd24:latest
+skopeo copy docker://quay.io/centos7/httpd-24-centos7:latest oci:local-httpd24:latest
 ----
 
 * Encrypt the image.
@@ -180,7 +172,7 @@ skopeo copy docker://quay.io/centos7/httpd-24-centos7:latest oci:/tmp/local-http
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-skopeo copy --encryption-key jwe:/tmp/public-key.pem oci:/tmp/local-httpd24:latest oci:/tmp/local-httpd24-encrypted:latest
+skopeo copy --encryption-key jwe:public-key.pem oci:local-httpd24:latest oci:local-httpd24-encrypted:latest
 ----
 
 * Push the image to Quay.
@@ -189,14 +181,14 @@ skopeo copy --encryption-key jwe:/tmp/public-key.pem oci:/tmp/local-httpd24:late
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-skopeo copy oci:/tmp/local-httpd24-encrypted:latest docker://<QUAY_HOSTNAME>/userorg/httpd-24-encrypted:latest
+skopeo copy oci:local-httpd24-encrypted:latest docker://${QUAY_HOSTNAME}/olleb/httpd-24-encrypted:latest
 ----
 
-* Navigate to the Quay Registry Dashboard, `userorg/httpd-24` repository.
+* Navigate to the Quay Registry Dashboard, `olleb/httpd-24-encrypted` repository.
 
 * Click `Tags`.
 
-We will see our encrypted image stored in it.
+We will see our encrypted image stored on it.
 
 [#pgp]
 === Encrypted container images with PGP (RFC4880)
@@ -223,7 +215,7 @@ You selected this USER-ID:
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-skopeo copy docker://quay.io/centos7/httpd-24-centos7:latest oci:/tmp/local-httpd24:latest
+skopeo copy docker://quay.io/centos7/nginx-116-centos7:latest oci:local-nginx-116:latest
 ----
 
 * Encrypt the image.
@@ -232,7 +224,7 @@ skopeo copy docker://quay.io/centos7/httpd-24-centos7:latest oci:/tmp/local-http
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-skopeo copy --encryption-key pgp:angel@olleb.com oci:/tmp/local-httpd24:latest oci:/tmp/local-httpd24-encrypted:latest
+skopeo copy --encryption-key pgp:angel@olleb.com oci:local-nginx-116:latest oci:local-nginx-116-encrypted:latest
 ----
 
 * Push the image to Quay.
@@ -241,11 +233,11 @@ skopeo copy --encryption-key pgp:angel@olleb.com oci:/tmp/local-httpd24:latest o
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-skopeo copy oci:/tmp/local-httpd24-encrypted:latest docker://<QUAY_HOSTNAME>/userorg/httpd-24-encrypted:latest
+skopeo copy oci:local-nginx-116-encrypted:latest docker://${QUAY_HOSTNAME}/olleb/nginx-116-encrypted:latest
 ----
 
-* Navigate to the Quay Registry Dashboard, `userorg/httpd-24` repository.
+* Navigate to the Quay Registry Dashboard, `olleb/nginx-116-encrypted` repository.
 
 * Click `Tags`.
 
-We will see our encrypted image stored in it.
+We will see our encrypted image stored on it.

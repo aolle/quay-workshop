@@ -19,11 +19,13 @@
 | `apt install openssl`
 
 | `cosign`
-| https://docs.sigstore.dev/cosign/installation[Cosign Installation]
-| https://docs.sigstore.dev/cosign/installation[Cosign Installation]
+| https://docs.sigstore.dev/cosign/installation[cosign Installation]
+| https://docs.sigstore.dev/cosign/installation[cosign Installation]
 
 | `pgp`
 | `dnf install gnupg`
 | `apt install gnupg`
 
 |===
+
+Note: some of these tools are available through the Web Terminal provided by the Web Terminal Operator.

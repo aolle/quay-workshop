@@ -1,6 +1,15 @@
 = Environment Setup
 include::_attributes.adoc[]
 
+[IMPORTANT,subs="attributes+,+macros"]
+====
+This tutorial was developed and tested with:
+
+* OpenShift `{openshift-version}`
+* ODF `{odf-version}`
+* Quay `{quay-version}`
+====
+
 [#tools]
 == Container Management Tools
 
@@ -100,5 +109,16 @@ image::install/create-quay-instance.png[]
 
 image::install/quay-create.png[]
 
-IMPORTANT: If the init container fails when deploying the Quay registry, check if a LimitRange exist in the OCP project. The RHPDS environment creates one automatically.
+IMPORTANT: If the init container fails when deploying the Quay registry, check if a LimitRange exists in the OCP project. The RHPDS environment creates one automatically.
 
+[#exportenvvar]
+== Export environment variables
+
+The command-line or shell will be used during the workshop. The `QUAY_HOSTNAME` environment variable has to be set in the working terminal before executing the commands. Alternatively, we can provide the hostname directly.
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+QUAY_HOSTNAME=$(oc get route registry-quay -n quay-workshop -o jsonpath={.spec.host})
+----

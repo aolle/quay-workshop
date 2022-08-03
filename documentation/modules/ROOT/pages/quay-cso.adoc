@@ -14,15 +14,15 @@ The Container Security Operator brings Quay and Clair metadata to Kubernetes / O
 
 * In the Filter by keyword field, type Quay. 
 
-image:cso/operatorhub-quay.png[]
+image::cso/operatorhub-quay.png[]
 
 * Select the Red Hat Quay Container Security Operator tile and click Install.
 
-image:cso/cso-install.png[]
+image::cso/cso-install.png[]
 
 * Select `stable-3.7` from the list of available Update Channel options. Choose `All namespaces on the cluster (default)` as installation mode. Choose `Automatic` update approval.
 
-image:cso/cso-install-params.png[]
+image::cso/cso-install-params.png[]
 
 * Install.
 
@@ -39,48 +39,50 @@ image:cso/cso-install-params.png[]
 podman pull registry.redhat.io/rhel8/httpd-24:1-30
 
 # Tag the image
-podman tag registry.redhat.io/rhel8/httpd-24:1-30 <QUAY_HOSTNAME>/userorg/httpd-24:1-30
+podman tag registry.redhat.io/rhel8/httpd-24:1-30 ${QUAY_HOSTNAME}/olleb/httpd-24:1-30
 
 # Push it to our Quay registry
-podman push <QUAY_HOSTNAME>/userorg/httpd-24:1-30
+podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30
 ----
 
-* Navigate to the Quay Registry Endpoint and select the `userorg/httpd-24` repository that has been created automatically when we pulled the image before.
-
-image:cso/httpd24-repo.png[]
+* Navigate to the Quay Registry Endpoint and select the `olleb/httpd-24` repository that has been created automatically when we pulled the image before.
 
 * Select `Settings` and `Make Public`.
 
 * Open the OpenShift Container Platform web console and create a new project, click Projects → Create Project. Name the project as `vuln-httpd`. Click on `Create`.
 
-image:cso/vulnhttpd-project.png[]
+image::cso/vulnhttpd-project.png[]
 
-* Deploy the vulnerable image, click Workloads → Deployments. Click on `Create Deployment`.
+* On `vuln-httpd` project; deploy the vulnerable image, click Workloads → Deployments. Click on `Create Deployment`.
 
 * Replace the default image value by the image of our Quay registry. Set replicas as desired. Set `httpd` as custom name.
+
+image::cso/yaml.png[]
 
 * Click on `Create`.
 
 * OpenShift will start the deployment and will create the pod. Go to Workloads → Pods and select one of the `httpd` pods. Select the `Vulnerabilities` tab.
 
-image:cso/vuln-tab.png[]
+image::cso/pods.png[]
+
+image::cso/vuln-tab.png[]
 
 * Click con the security scan results.
 
-image:cso/vulnimgmanifest.png[]
+image::cso/vulnimgmanifest.png[]
 
 Additionally, after installing the CSO operator, a new status related to Image Vulnerabilities is shown on the cluster overview.
 
-image:cso/overview.png[]
+image::cso/overview.png[]
 
 * Click on `Image Vulnerabilities`.
 
-image:cso/vuln.png[]
+image::cso/vuln.png[]
 
-* Click on `View all` and click on the Manifest related to `userorg/httpd-24`.
+* Click on `View all` and click on the Manifest related to `olleb/httpd-24`.
 
-image:cso/vulnlist.png[]
+image::cso/vulnlist.png[]
 
 We will be redirected to the Quay Security Scanner Dashboard.
 
-image:cso/quayredirect.png[]
+image::cso/quayredirect.png[]

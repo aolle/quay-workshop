@@ -8,7 +8,9 @@ Quay Repository mirroring lets us mirror images from external container registri
 
 * Click `Create New Repository`.
 
-* Select the organization in the drop down list, name the repository `apache/httpd-mirror` and set `Public` visibility.
+image::repositories/create-repo.png[]
+
+* Select the organization in the drop down list, name the repository as `apache/httpd-mirror` and set `Public` visibility.
 
 image::mirror/mirror-cfg.png[]
 
@@ -35,6 +37,8 @@ image::mirror/create-robot-acc.png[]
 image::mirror/robot-acc.png[]
 
 * Click on `Create robot account`.
+
+image::mirror/mirror-all.png[]
 
 * Click on `Enable Mirror`.
 

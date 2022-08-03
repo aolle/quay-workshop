@@ -15,7 +15,7 @@ image::repositories/repo-config.png[]
 * Click `Create Public Repository`.
 
 [#push]
-== Push (and Tag) an image into the repository
+== Push (and tag) an image into the repository
 
 * Pull an image from the public registry.
 
@@ -32,16 +32,16 @@ podman pull quay.io/strimzi/kafka:latest-kafka-3.1.0
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-podman tag quay.io/strimzi/kafka:latest-kafka-3.1.0 <QUAY_HOSTNAME>/userorg/kafka:3.1.0
+podman tag quay.io/strimzi/kafka:latest-kafka-3.1.0 ${QUAY_HOSTNAME}/olleb/kafka:3.1.0
 ----
 
-* Sign into our Quay.
+* Sign into our Quay repository (if we are not already signed in).
 
 [.lines_space]
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-podman login <QUAY_HOSTNAME>
+podman login ${QUAY_HOSTNAME}
 ----
 
 * Push the image to Quay repository.
@@ -50,7 +50,7 @@ podman login <QUAY_HOSTNAME>
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-podman push <QUAY_HOSTNAME>/userorg/kafka:3.1.0
+podman push ${QUAY_HOSTNAME}/olleb/kafka:3.1.0
 ----
 
 * Check that the image has been pushed into our Quay repository.
@@ -60,7 +60,7 @@ image::repositories/image-pushed.png[]
 [#imglayers]
 == Inspecting image layers
 
-* Navigate to the `userorg/kafka` repository.
+* Navigate to the `olleb/kafka` repository.
 
 * Click the `Tags` icon.
 
@@ -71,7 +71,7 @@ image::repositories/img-layers.png[]
 [#pull]
 == Pull an image from the repository
 
-* From Quay dashboard, click on `userorg/kafka` repository.
+* From Quay dashboard, click on `olleb/kafka` repository.
 
 * Click `Tags`.
 

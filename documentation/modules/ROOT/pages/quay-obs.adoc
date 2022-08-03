@@ -9,6 +9,6 @@ OpenShift provides an onboard observability. The Quay Operator adds an embedded/
 
 * In the `Dashboard` drop down, select `Quay - quay-workshop - registry`.
 
-image:obs/obs1.png[]
+image::obs/obs1.png[]
 
-image:obs/obs2.png[]
+image::obs/obs2.png[]
