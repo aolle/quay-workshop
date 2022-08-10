@@ -8,7 +8,7 @@
 *** xref:setup.adoc#exportenvvar[1.2.5. Export environment variables]
 
 * 2. Red Hat Quay
-** xref:quay-orgs.adoc[2.1 Users, Organizations and Teams]
+** xref:quay-orgs.adoc[2.1 Users and Organizations]
 *** xref:quay-orgs.adoc#useraccounts[2.1.1 Creating user accounts]
 *** xref:quay-orgs.adoc#orgaccounts[2.1.2 Creating organization accounts]
 
@@ -30,6 +30,7 @@
 *** xref:quay-oci.adoc#helm[2.5.2 Helm charts]
 *** xref:quay-oci.adoc#signed[2.5.3 Signed container images]
 **** xref:quay-oci.adoc#cosign[2.5.3.1 Signed container images with cosign]
+**** xref:quay-oci.adoc#signpgp[2.5.3.2 Signed container images with PGP (RFC4880)]
 *** xref:quay-oci.adoc#encrypted[2.5.4 Encrypted container images]
 **** xref:quay-oci.adoc#jwe[2.5.4.1 Encrypted container images with JSON Web Encryption (JWE) (RFC7516)]
 **** xref:quay-oci.adoc#pgp[2.5.4.2 Encrypted container images with PGP (RFC4880)]

@@ -91,8 +91,13 @@ helm install quarkus oci://${QUAY_HOSTNAME}/olleb/helm/quarkus --version=0.0.3
 == Signed container images
 Image signing ensures the integrity of our image deployments. Quay will store the signature as an OCI artifact.
 
+IMPORTANT:
+This section shows how we can sign and store the result artifacts in our Quay registry, and how we can use Quay for storing OCI arifacts like signatures.
+This is NOT a security guide neither a registry hardening guide.
+We should decide wheter the source resgistry is trustable or not; if signing an image after uploading it into the registry is enough for us (or we prefer sign it before pushing); etc.
+
 [#cosign]
-== Signed container images with cosign
+=== Signed container images with cosign
 
 * Generate the key pair.
 
@@ -110,18 +115,18 @@ cosign generate-key-pair
 [source,bash, subs="+macros,+attributes"]
 ----
 # Pull the image
-podman pull registry.redhat.io/rhel8/httpd-24:1-30
+podman pull quay.io/centos7/httpd-24-centos7:latest
 
 # Tag and push the image
-podman tag registry.redhat.io/rhel8/httpd-24:1-30 ${QUAY_HOSTNAME}/olleb/httpd-24:1-30
-podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30
+podman tag quay.io/centos7/httpd-24-centos7:latest ${QUAY_HOSTNAME}/olleb/httpd-24:latest
+podman push ${QUAY_HOSTNAME}/olleb/httpd-24:latest
 
 # Login
 # If we already signed in with podman or docker, the password parameter is not required, as it will use config.json file
 ./cosign login ${QUAY_HOSTNAME} -u <USER> -p <PASSWORD>
 
 # Sign and push the signature
-./cosign sign --key cosign.key ${QUAY_HOSTNAME}/olleb/httpd-24:1-30
+./cosign sign --key cosign.key ${QUAY_HOSTNAME}/olleb/httpd-24:latest
 ----
 
 * Navigate to the Quay Registry Dashboard, `olleb/httpd-24` repository.
@@ -131,6 +136,45 @@ podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30
 We will see our signature stored in it.
 
 image::oci/signature.png[]
+
+[#signpgp]
+=== Signed container images with PGP (RFC4880)
+
+* Generate the PGP keys.
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+gpg --full-generate-key
+<..>
+Real name: Angel
+Email address: angel@olleb.com
+Comment:
+You selected this USER-ID:
+    "Angel <angel@olleb.com>"
+<..>
+----
+
+* Copy, sign the image and push it to Quay.
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+skopeo copy --sign-by angel@olleb.com docker://quay.io/centos7/nginx-116-centos7:latest docker://${QUAY_HOSTNAME}/olleb/nginx-116:latest
+----
+
+The signature will be stored in our sigstore `~/.local/share/containers/sigstore/olleb/nginx-116-centos7@sha256=<SHA>/signature-1`
+
+Signature can be verified with:
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+gpg --verify ~/.local/share/containers/sigstore/olleb/nginx-116-centos7@sha256=<SHA>/signature-1
+----
 
 [#encrypted]
 == Encrypted container images
