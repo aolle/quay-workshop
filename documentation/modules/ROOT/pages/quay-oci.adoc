@@ -91,10 +91,12 @@ helm install quarkus oci://${QUAY_HOSTNAME}/olleb/helm/quarkus --version=0.0.3
 == Signed container images
 Image signing ensures the integrity of our image deployments. Quay will store the signature as an OCI artifact.
 
-IMPORTANT:
+[IMPORTANT,subs="attributes+,+macros"]
+====
 This section shows how we can sign and store the result artifacts in our Quay registry, and how we can use Quay for storing OCI arifacts like signatures.
 This is NOT a security guide neither a registry hardening guide.
 We should decide wheter the source resgistry is trustable or not; if signing an image after uploading it into the registry is enough for us (or we prefer sign it before pushing); etc.
+====
 
 [#cosign]
 === Signed container images with cosign
