@@ -1,4 +1,4 @@
-= Welcome to Red Hat Quay Workshop
+= Red Hat Quay Workshop
 :page-layout: home
 :!sectids:
 
