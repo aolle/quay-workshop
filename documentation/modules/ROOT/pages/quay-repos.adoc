@@ -83,3 +83,69 @@ image::repositories/fetchtag.png[]
 
 * Switch to a terminal, paste and execute the command on it. Docker or podman is required. If we're using podman, we have to replace the `docker` with `podman` before execute the command.
 As we created the repository as `Public`, login is not required to pull.
+
+[#tm]
+== Time machine
+
+Quay provide us a way for reviewing the history of tags and revert those to a previous image.
+
+In this section, we create a new repository to avoid mistakes.
+
+* Create a new image repository as already explained. I created the `olleb/timemachine` repository.
+
+* Build an image, tag it and push it.
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+echo "FROM scratch" > Dockerfile.tm
+podman build . -t timemachine -f Dockerfile.tm
+
+podman tag localhost/timemachine ${QUAY_HOSTNAME}/olleb/timemachine:latest
+podman push ${QUAY_HOSTNAME}/olleb/timemachine:latest
+----
+
+* Verify that the image has been pushed into Quay repository. Check also the manifest digest and the layers.
+
+image::repositories/tm-latest1.png[]
+
+image::repositories/tm-layers1.png[]
+
+* Add a new layer, build, tag it with the same tag as before and push the new image.
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+echo "LABEL org.opencontainers.image.authors="angel@olleb.com"" >> Dockerfile.tm
+podman build . -t timemachine -f Dockerfile.tm
+
+podman tag localhost/timemachine ${QUAY_HOSTNAME}/olleb/timemachine:latest
+podman push ${QUAY_HOSTNAME}/olleb/timemachine:latest
+----
+
+* Verify that the image has been pushed into Quay repository. Check also the manifest digest and the layers. Observe that the manifest digest and the layers are different than the previous image.
+
+image::repositories/tm-latest2.png[]
+
+image::repositories/tm-layers2.png[]
+
+* Rollback the image to the previous one. Click on `Tag History`.
+
+image::repositories/taghistory.png[]
+
+* Click on `Revert to ...`.
+
+image::repositories/revert.png[]
+
+* Click on `Restore Tag`.
+
+image::repositories/restoretag.png[]
+
+* Verify that the image has been retored to the previous one.
+
+image::repositories/restored.png[]
+
+[#expiration]
+== Image expiration
