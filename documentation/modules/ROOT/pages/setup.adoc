@@ -1,7 +1,7 @@
 = Environment Setup
 include::_attributes.adoc[]
 
-[IMPORTANT,subs="attributes+,+macros"]
+[NOTE,subs="attributes+,+macros"]
 ====
 This tutorial was developed and tested with:
 
@@ -109,12 +109,12 @@ image::install/create-quay-instance.png[]
 
 image::install/quay-create.png[]
 
-IMPORTANT: If the init container fails when deploying the Quay registry, check if a LimitRange exists in the OCP project. The RHPDS environment creates one automatically.
+WARNING: Check if the init container fails during the Quay registry deployment. In this case, watch out if a `LimitRange` exists in the current `OCP` project. Sometimes, the `RHPDS` environment creates a `LimitRange` automatically when a new project is created.
 
 [#exportenvvar]
 == Export environment variables
 
-The command-line or shell will be used during the workshop. The `QUAY_HOSTNAME` environment variable has to be set in the working terminal before executing the commands. Alternatively, we can provide the hostname directly.
+IMPORTANT: The command-line or shell will be used during the workshop. The `QUAY_HOSTNAME` environment variable has to be set in the working terminal before executing the commands. Alternatively, we can provide the hostname directly.
 
 [.lines_space]
 [.console-input]
