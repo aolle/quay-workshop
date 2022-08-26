@@ -8,7 +8,7 @@ Quay can be used to store OCI-based artifacts like Helm charts, encrypted contai
 
 Some of the OCI artifats that we are going to use on the next sections are not allowed by default. For example, the Helm charts and signed images are allowed by default, but the encrypted container images not (at least at the time of this writing). Follow this step if you want to upload encrypted images to Quay.
 
-As a previous step, we are going to configure the `ALLOWED_OCI_ARTIFACT_TYPES` environment variable for allowing some of the OCI artifacts that we will use soon.
+As a previous step, we are going to configure the `ALLOWED_OCI_ARTIFACT_TYPES` property for allowing some of the OCI artifacts that we will use soon.
 
 * Open a browser window and log in to the OpenShift Container Platform web console.
 

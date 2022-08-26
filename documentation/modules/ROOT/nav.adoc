@@ -17,7 +17,7 @@
 *** xref:quay-repos.adoc#push[2.2.2 Push (and tag) an image into the repository]
 *** xref:quay-repos.adoc#imglayers[2.2.3 Inspecting image layers]
 *** xref:quay-repos.adoc#pull[2.2.4 Pull an image from the repository]
-*** xref:quay-repos.adoc#tm[2.2.5 Time machine]
+*** xref:quay-repos.adoc#rollback[2.2.5 Image rollback]
 *** xref:quay-repos.adoc#expiration[2.2.6 Image expiration]
 
 ** xref:quay-mirror.adoc[2.3 Quay Repository Mirroring]

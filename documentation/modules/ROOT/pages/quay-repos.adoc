@@ -84,14 +84,12 @@ image::repositories/fetchtag.png[]
 * Switch to a terminal, paste and execute the command on it. Docker or podman is required. If we're using podman, we have to replace the `docker` with `podman` before execute the command.
 As we created the repository as `Public`, login is not required to pull.
 
-[#tm]
-== Time machine
+[#rollback]
+== Image rollback
 
 Quay provide us a way for reviewing the history of tags and revert those to a previous image.
 
-In this section, we create a new repository to avoid mistakes.
-
-* Create a new image repository as already explained. I created the `olleb/timemachine` repository.
+* Create a new image repository as already explained. I created the `olleb/rollback` repository.
 
 * Build an image, tag it and push it.
 
@@ -99,37 +97,37 @@ In this section, we create a new repository to avoid mistakes.
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-echo "FROM scratch" > Dockerfile.tm
-podman build . -t timemachine -f Dockerfile.tm
+echo "FROM scratch" > Containerfile.rbk
+podman build . -t rollback:1.0 -f Containerfile.rbk
 
-podman tag localhost/timemachine ${QUAY_HOSTNAME}/olleb/timemachine:latest
-podman push ${QUAY_HOSTNAME}/olleb/timemachine:latest
+podman tag localhost/rollback:1.0 ${QUAY_HOSTNAME}/olleb/rollback:latest
+podman push ${QUAY_HOSTNAME}/olleb/rollback:latest
 ----
 
 * Verify that the image has been pushed into Quay repository. Check also the manifest digest and the layers.
 
-image::repositories/tm-latest1.png[]
+image::repositories/rblatest1.png[]
 
-image::repositories/tm-layers1.png[]
+image::repositories/rblayers1.png[]
 
-* Add a new layer, build, tag it with the same tag as before and push the new image.
+* Add a new layer, build, tag it with the same remote tag and push the new image to *overwrite* the old one.
 
 [.lines_space]
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-echo "LABEL org.opencontainers.image.authors="angel@olleb.com"" >> Dockerfile.tm
-podman build . -t timemachine -f Dockerfile.tm
+echo "LABEL org.opencontainers.image.authors=angel@olleb.com" >> Containerfile.rbk
+podman build . -t rollback:2.0 -f Containerfile.rbk
 
-podman tag localhost/timemachine ${QUAY_HOSTNAME}/olleb/timemachine:latest
-podman push ${QUAY_HOSTNAME}/olleb/timemachine:latest
+podman tag localhost/rollback:2.0 ${QUAY_HOSTNAME}/olleb/rollback:latest
+podman push ${QUAY_HOSTNAME}/olleb/rollback:latest
 ----
 
 * Verify that the image has been pushed into Quay repository. Check also the manifest digest and the layers. Observe that the manifest digest and the layers are different than the previous image.
 
-image::repositories/tm-latest2.png[]
+image::repositories/rblatest2.png[]
 
-image::repositories/tm-layers2.png[]
+image::repositories/rblayers2.png[]
 
 * Rollback the image to the previous one. Click on `Tag History`.
 
@@ -149,3 +147,79 @@ image::repositories/restored.png[]
 
 [#expiration]
 == Image expiration
+
+Image tags can be configured to expire from Quay on a time and date.
+
+* Create a new image repository as already explained. I created the `olleb/expiration` repository.
+
+* Build a `1.0` image, tag it and push it.
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+echo "FROM scratch" > Containerfile.exp
+podman build . -t exp:1.0 -f Containerfile.exp
+
+podman tag localhost/exp:1.0 ${QUAY_HOSTNAME}/olleb/expiration:1.0
+podman push ${QUAY_HOSTNAME}/olleb/expiration:1.0
+----
+
+* Build a new `2.0` image, tag it also as `latest` and push both tags. On that image version, we are going to include the label `quay.expires-after` with a value of `5m` in our `Containerfile`; Quay will automatically expire those tags after the indicated time.
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+echo "LABEL org.opencontainers.image.authors=angel@olleb.com" >> Containerfile.exp
+echo "LABEL quay.expires-after=5m" >> Containerfile.exp
+podman build . -t exp:2.0 -f Containerfile.exp
+
+podman tag localhost/exp:2.0 ${QUAY_HOSTNAME}/olleb/expiration:2.0
+podman push ${QUAY_HOSTNAME}/olleb/expiration:2.0
+
+podman tag localhost/exp:2.0 ${QUAY_HOSTNAME}/olleb/expiration:latest
+podman push ${QUAY_HOSTNAME}/olleb/expiration:latest
+----
+
+* We should have two images and three tags in our repository. Two of them marked as expiring soon.
+
+image::repositories/exp1.png[]
+
+After a while, both tags will be removed automatically.
+
+image::repositories/taghistoryautodeleted.png[]
+
+* Select the `1.0` tag, in the `Actions` drop down list select `Change Tags Expiration`. Set the desired `Expiration Date`.
+
+image::repositories/expirationdatetag.png[]
+
+TIP: Alternatively, the expiration also can be set through the `Options` icon → `Change Expiration`.
+
+When the tag is about to expire a message is shown:
+
+image::repositories/abouttoexpire.png[]
+
+NOTE: by default, the minimum expiration time is one hour and the maximum is 104 weeks (2 years aprox.); at the time of this writting. If we want to allow earlier/later minimum expirations, the `LABELED_EXPIRATION_MINIMUM` property can be set to a different time value like `60s` (seconds), `5m` (minutes), `24h` (hours), `7d` (days), `2w` (weeks). The configuration has to be put in the `Config Bundle Secret` of our registry instance. An example of how to do it is explained in the following section xref:quay-oci.adoc#allowed[2.5.1 Configuring allowed OCI artifact types].
+
+When the tag expires, is deleted automatically.
+
+image::repositories/tagexpireddeleted.png[]
+
+NOTE: Note that even though the tag is deleted, we can still restore the image. The reason is, when a tag is deleted, and there are no other tags pointing on the same image, the image is garbage collected not before the default value, which is 14 days (`2w`). Quay has a gc worker enabled by default which runs periodically and removes the expired stuff when the configured *Time Machine* amount of time passed.
+
+As we stored the image inside `olleb` organization, we can check that value browsing to `/organization/olleb?tab=settings`.
+
+image::repositories/orgexptime.png[]
+
+If the image stored is under the user account instead on an organization, the value is under user settings.
+
+The Time Machine amount time can be modified changing the value of `TAG_EXPIRATION_OPTIONS` array property; a default expiration value also exists which is `DEFAULT_TAG_EXPIRATION`, `TAG_EXPIRATION_OPTIONS` *must* include that value in the list. As before, an example of how to do it is explained in the following section xref:quay-oci.adoc#allowed[2.5.1 Configuring allowed OCI artifact types].
+
+For example, with the following custom configuration:
+
+image::repositories/expcfg.png[]
+
+we will see:
+
+image::repositories/customtm.png[]
