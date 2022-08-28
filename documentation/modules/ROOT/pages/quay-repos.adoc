@@ -66,6 +66,8 @@ image::repositories/image-pushed.png[]
 
 * Click on the `SHA256` value under `MANIFEST` of the `3.1.0` tag to see the layers dashboard.
 
+image::repositories/image-pushed.png[]
+
 image::repositories/img-layers.png[]
 
 [#pull]

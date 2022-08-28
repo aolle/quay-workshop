@@ -28,13 +28,13 @@ You can use the OpenShift Container Platform web console to install Quay prerequ
 
 * Open a browser window and log in to the OpenShift Container Platform web console.
 
-* From the Administrator perspective, click Operators → OperatorHub.
+* From the Administrator perspective, click `Operators` → `OperatorHub`.
 
-* In the Filter by keyword field, type `ODF`.
+* In the `Filter by keyword` field, type `ODF`.
 
 image::install/operatorhub-odf.png[]
 
-* Select the OpenShift Data Foundation tile and click Install.
+* Select the OpenShift Data Foundation tile and click `Install`.
 
 image::install/odf-install.png[]
 
@@ -49,7 +49,7 @@ image::install/odfoperator-install-opts.png[]
 
 To use the ODF Operator a StorageSystem instance is required. This is an example for an OCP standard and fresh installation (RHPDS) and may vary depending on your environment.
 
-* From the Administrator perspective, click Operators → Installed Operators.
+* From the Administrator perspective, click `Operators` → `Installed Operators`.
 
 * Select `openshift-storage` project and OpenShift Data Foundation.
 
@@ -61,11 +61,11 @@ image::install/odf-storagesystem-b.png[]
 
 image::install/odf-storagesystem-gp2.png[]
 
-* Select the capacity and the nodes. The selected nodes will be labeled with `cluster.ocs.openshift.io/openshift-storage=""`. Click Next.
+* Select the capacity and the nodes. The selected nodes will be labeled with `cluster.ocs.openshift.io/openshift-storage=""`. Click `Next`.
 
 image::install//odf-storagesystem-capacity-request.png[]
 
-* Data encryption is not needed for this workshop. Click Next.
+* Data encryption is not needed for this workshop. Click `Next`.
 
 image::install/odf-dataenc.png[]
 
@@ -78,13 +78,13 @@ You can use the OpenShift Container Platform web console to suscribe and deploy 
 
 * Open a browser window and log in to the OpenShift Container Platform web console.
 
-* From the Administrator perspective, click Operators → OperatorHub.
+* From the Administrator perspective, click `Operators` → `OperatorHub`.
 
-* In the Filter by keyword field, type Red Hat Quay.
+* In the Filter by keyword field, type `Red Hat Quay`.
 
 image::install/operatorhub-quay.png[]
 
-* Select the Red Hat Quay tile and click Install.
+* Select the Red Hat Quay tile and click `Install`.
 
 image::install/quayoperator-install.png[]
 
@@ -99,13 +99,13 @@ image::install/quayoperator-opts.png[]
 
 * Create a `quay-workshop` project.
 
-* From the Administrator perspective, click Operators → Installed Operators. Project: `quay-workshop`. Select Red Hat Quay operator.
+* From the Administrator perspective, click `Operators` → `Installed Operators`. Project: `quay-workshop`. Select Red Hat Quay operator.
 
 * Click on Create instance (Quay Registry).
 
 image::install/create-quay-instance.png[]
 
-* Change the Name if desired. Click on Create.
+* Change the Name if desired. Click on `Create`.
 
 image::install/quay-create.png[]
 
