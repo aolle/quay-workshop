@@ -6,7 +6,6 @@ include::_attributes.adoc[]
 This tutorial was developed and tested with:
 
 * OpenShift `{openshift-version}`
-* ODF `{odf-version}`
 * Quay `{quay-version}`
 ====
 
@@ -45,31 +44,77 @@ image::install/odfoperator-install-opts.png[]
 * Click `Install`.
 
 [#storage]
-== Creating the StorageSystem instance
+== Creating the standalone object gateway
 
-To use the ODF Operator a StorageSystem instance is required. This is an example for an OCP standard and fresh installation (RHPDS) and may vary depending on your environment.
+For workshop testing purposes, and as Red Hat Quay does not support local filesystem storage, we are going to deploy the Multi-Cloud Object Gateway (MCG) component provided by the Red Hat OpenShift Data Foundation Operator which has been already installed before.
 
-* From the Administrator perspective, click `Operators` → `Installed Operators`.
+The MCG provide us a S3 compatible object storage interface for our Quay deployment managed by the Operator. The gateway use is combinated with the use of the Kubernetes `PersistenVolume` storage; which is mounted on the gateway as a backing store for object storage and any block based `StorageClass` is supported.
 
-* Select `openshift-storage` project and OpenShift Data Foundation.
+NOTE: This is not an HA solution.
 
-* Click on `Create StorageSystem` button.
+* Create the NooBaa object storage:
 
-image::install/odf-storagesystem-b.png[]
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+cat <<EOF | oc apply -f -
+apiVersion: noobaa.io/v1alpha1
+kind: NooBaa
+metadata:
+  name: noobaa
+  namespace: openshift-storage
+spec:
+ dbResources:
+   requests:
+     cpu: '0.1'
+     memory: 1Gi
+ dbType: postgres
+ coreResources:
+   requests:
+     cpu: '0.1'
+     memory: 1Gi
+EOF
+----
 
-* On the Create StorageSystem select `Use an existing StorageClass` and the `gp2` storage class. Click Next.
+* After a while, check if the MCG has been provisioned:
 
-image::install/odf-storagesystem-gp2.png[]
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+oc get -n openshift-storage noobaas noobaa
+----
 
-* Select the capacity and the nodes. The selected nodes will be labeled with `cluster.ocs.openshift.io/openshift-storage=""`. Click `Next`.
+* Configure the backing store for the gateway and make it the default for all the `ObjectBucketClaim` issued by the Operator.
 
-image::install//odf-storagesystem-capacity-request.png[]
-
-* Data encryption is not needed for this workshop. Click `Next`.
-
-image::install/odf-dataenc.png[]
-
-* Click on `Create StorageSystem`.
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+cat <<EOF | oc apply -f -
+apiVersion: noobaa.io/v1alpha1
+kind: BackingStore
+metadata:
+  finalizers:
+  - noobaa.io/finalizer
+  labels:
+    app: noobaa
+  name: noobaa-pv-backing-store
+  namespace: openshift-storage
+spec:
+  pvPool:
+    numVolumes: 1
+    resources:
+      requests:
+        storage: 50Gi
+  type: pv-pool
+  placementPolicy:
+    tiers:
+    - backingStores:
+      - noobaa-pv-backing-store
+EOF
+----
 
 [#quayoperator]
 == Installing Quay Operator

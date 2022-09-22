@@ -16,7 +16,6 @@ asciidoc:
     release-version: main
     page-pagination: true
     openshift-version: v4.10
-    odf-version: v4.10
     quay-version: v3.7
   extensions:
     - ./lib/tab-block.js

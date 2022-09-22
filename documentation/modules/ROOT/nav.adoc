@@ -2,7 +2,7 @@
 ** xref:setup.adoc#tools[1.1. Container Management Tools]
 ** xref:setup.adoc#quay[1.2. Red Hat Quay Prerequisites]
 *** xref:setup.adoc#odf[1.2.1. ODF operator]
-*** xref:setup.adoc#storage[1.2.2. Creating the StorageSystem instance]
+*** xref:setup.adoc#storage[1.2.2. Creating the standalone object gateway]
 *** xref:setup.adoc#quayoperator[1.2.3. Installing Quay operator]
 *** xref:setup.adoc#quayinstance[1.2.4. Deploying Quay]
 *** xref:setup.adoc#exportenvvar[1.2.5. Export environment variables]
