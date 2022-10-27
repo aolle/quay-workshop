@@ -10,6 +10,10 @@
 | `dnf install skopeo`
 | `apt install skopeo`
 
+| `OpenShift CLI (oc)`
+| https://access.redhat.com/downloads/content/290[OpenShift Container Platform downloads page]
+| https://access.redhat.com/downloads/content/290[OpenShift Container Platform downloads page]
+
 | `helm`
 | https://helm.sh/docs/intro/install/#from-the-binary-releases[Helm install] (or Snap Store)
 | https://helm.sh/docs/intro/install/#from-apt-debianubuntu[Helm install]
