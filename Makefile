@@ -11,6 +11,6 @@ run:
 	-p 8080:8080 \
 	$(IMAGE_NAME)
 
-cleanup:
+clean:
 	podman rmi "$$(podman images -f "dangling=true" -q)" -f 2>/dev/null
 	podman rmi $(IMAGE_NAME) 2>/dev/null
