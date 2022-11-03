@@ -5,7 +5,7 @@ OpenShift provides an onboard observability. The Quay Operator adds an embedded/
 
 * Open a browser window and log in to the OpenShift Container Platform web console.
 
-* From the Administrator perspective, click Observe → Dashboards.
+* From the Administrator perspective, click `Observe` → `Dashboards`.
 
 * In the `Dashboard` drop down, select `Quay - quay-workshop - registry`.
 

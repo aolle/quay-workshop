@@ -12,13 +12,13 @@ As a previous step, we are going to configure the `ALLOWED_OCI_ARTIFACT_TYPES` p
 
 * Open a browser window and log in to the OpenShift Container Platform web console.
 
-* Click Operators → Installed Operators.
+* Click `Operators` → `Installed Operators`.
 
-* Select `quay-workshop` as the project and click on `Quay Registry`. Click on our `registry`.
+* Select `quay-workshop` as the project and click `Quay Registry`. Click our `registry`.
 
 image::oci/quay-registry.png[]
 
-* Click on the `Config Bundle Secret` secret (`registry-config-bundle-*`).
+* Click the `Config Bundle Secret` secret (`registry-config-bundle-*`).
 
 image::oci/config-bundle-secret.png[]
 

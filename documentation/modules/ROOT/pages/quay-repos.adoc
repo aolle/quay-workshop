@@ -64,7 +64,7 @@ image::repositories/image-pushed.png[]
 
 * Click the `Tags` icon.
 
-* Click on the `SHA256` value under `MANIFEST` of the `3.1.0` tag to see the layers dashboard.
+* Click the `SHA256` value under `MANIFEST` of the `3.1.0` tag to see the layers dashboard.
 
 image::repositories/image-pushed.png[]
 
@@ -73,7 +73,7 @@ image::repositories/img-layers.png[]
 [#pull]
 == Pull an image from the repository
 
-* From Quay dashboard, click on `olleb/kafka` repository.
+* From Quay dashboard, click the `olleb/kafka` repository.
 
 * Click `Tags`.
 
@@ -131,15 +131,15 @@ image::repositories/rblatest2.png[]
 
 image::repositories/rblayers2.png[]
 
-* Rollback the image to the previous one. Click on `Tag History`.
+* Rollback the image to the previous one. Click `Tag History`.
 
 image::repositories/taghistory.png[]
 
-* Click on `Revert to ...`.
+* Click `Revert to ...`.
 
 image::repositories/revert.png[]
 
-* Click on `Restore Tag`.
+* Click `Restore Tag`.
 
 image::repositories/restoretag.png[]
 

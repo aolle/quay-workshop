@@ -10,13 +10,13 @@ The Container Security Operator brings Quay and Clair metadata to Kubernetes / O
 
 * Open a browser window and log in to the OpenShift Container Platform web console.
 
-* From the Administrator perspective, click Operators → OperatorHub.
+* From the Administrator perspective, click `Operators` → `OperatorHub`.
 
 * In the Filter by keyword field, type Quay. 
 
 image::cso/operatorhub-quay.png[]
 
-* Select the Red Hat Quay Container Security Operator tile and click Install.
+* Select the Red Hat Quay Container Security Operator tile and click `Install`.
 
 image::cso/cso-install.png[]
 
@@ -49,11 +49,11 @@ podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30
 
 * Select `Settings` and `Make Public`.
 
-* Open the OpenShift Container Platform web console and create a new project, click Projects → Create Project. Name the project as `vuln-httpd`. Click on `Create`.
+* Open the OpenShift Container Platform web console and create a new project, click Projects → Create Project. Name the project as `vuln-httpd`. Click `Create`.
 
 image::cso/vulnhttpd-project.png[]
 
-* On `vuln-httpd` project; deploy the vulnerable image, click Workloads → Deployments. Click on `Create Deployment`.
+* On `vuln-httpd` project; deploy the vulnerable image, click Workloads → Deployments. Click `Create Deployment`.
 
 * Replace the default image value by the image of our Quay registry. Set replicas as desired. Set `httpd` as custom name.
 
@@ -75,11 +75,11 @@ Additionally, after installing the CSO operator, a new status related to Image V
 
 image::cso/overview.png[]
 
-* Click on `Image Vulnerabilities`.
+* Click `Image Vulnerabilities`.
 
 image::cso/vuln.png[]
 
-* Click on `View all` and click on the Manifest related to `olleb/httpd-24`.
+* Click `View all` and click on the Manifest related to `olleb/httpd-24`.
 
 image::cso/vulnlist.png[]
 

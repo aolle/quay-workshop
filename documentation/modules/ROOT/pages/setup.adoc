@@ -5,8 +5,8 @@ include::_attributes.adoc[]
 ====
 This tutorial was developed and tested with:
 
-* OpenShift `{openshift-version}`
-* Quay `{quay-version}`
+* Red Hat OpenShift `{openshift-version}`
+* Red Hat Quay `{quay-version}`
 ====
 
 [#tools]
@@ -146,11 +146,11 @@ image::install/quayoperator-opts.png[]
 
 * From the Administrator perspective, click `Operators` → `Installed Operators`. Project: `quay-workshop`. Select Red Hat Quay operator.
 
-* Click on Create instance (Quay Registry).
+* Click `Create instance` (Quay Registry).
 
 image::install/create-quay-instance.png[]
 
-* Change the Name if desired. Click on `Create`.
+* Change the Name if desired. Click `Create`.
 
 image::install/quay-create.png[]
 

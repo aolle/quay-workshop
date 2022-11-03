@@ -36,11 +36,11 @@ image::mirror/create-robot-acc.png[]
 
 image::mirror/robot-acc.png[]
 
-* Click on `Create robot account`.
+* Click `Create robot account`.
 
 image::mirror/mirror-all.png[]
 
-* Click on `Enable Mirror`.
+* Click `Enable Mirror`.
 
 [#usage]
 === Repository usage logs, tags and tag history
