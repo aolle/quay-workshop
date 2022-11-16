@@ -143,7 +143,7 @@ image::repositories/revert.png[]
 
 image::repositories/restoretag.png[]
 
-* Verify that the image has been retored to the previous one.
+* Verify that the image has been restored with the previous one.
 
 image::repositories/restored.png[]
 
@@ -202,7 +202,7 @@ When the tag is about to expire a message is shown:
 
 image::repositories/abouttoexpire.png[]
 
-NOTE: by default, the minimum expiration time is one hour and the maximum is 104 weeks (2 years aprox.); at the time of this writting. If we want to allow earlier/later minimum expirations, the `LABELED_EXPIRATION_MINIMUM` property can be set to a different time value like `60s` (seconds), `5m` (minutes), `24h` (hours), `7d` (days), `2w` (weeks). The configuration has to be put in the `Config Bundle Secret` of our registry instance. An example of how to do it is explained in the following section xref:quay-oci.adoc#allowed[2.5.1 Configuring allowed OCI artifact types].
+NOTE: by default, the minimum expiration time is one hour and the maximum is 104 weeks (2 years aprox.); at the time of this writing. If we want to allow earlier/later minimum expiration, the `LABELED_EXPIRATION_MINIMUM` property can be set to a different time value like `60s` (seconds), `5m` (minutes), `24h` (hours), `7d` (days), `2w` (weeks). The configuration has to be put in the `Config Bundle Secret` of our registry instance. An example of how to do it is explained in the following section xref:quay-oci.adoc#allowed[2.5.1 Configuring allowed OCI artifact types].
 
 When the tag expires, is deleted automatically.
 

@@ -37,7 +37,7 @@ image::install/operatorhub-odf.png[]
 
 image::install/odf-install.png[]
 
-* On the Install Operator page select `stable-4.10` from the list of available Update Channel options. Choose `A specific namespace on the cluster` and leave the default vaule of Installed Namespace as `openshift-storage`. Update approval `Automatic`. Console plugin `Enable`.
+* On the Install Operator page select `stable-4.10` from the list of available Update Channel options. Choose `A specific namespace on the cluster` and leave the default value of Installed Namespace as `openshift-storage`. Update approval `Automatic`. Console plugin `Enable`.
 
 image::install/odfoperator-install-opts.png[]
 
@@ -46,9 +46,9 @@ image::install/odfoperator-install-opts.png[]
 [#storage]
 == Creating the standalone object gateway
 
-For workshop testing purposes, and as Red Hat Quay does not support local filesystem storage, we are going to deploy the Multi-Cloud Object Gateway (MCG) component provided by the Red Hat OpenShift Data Foundation Operator which has been already installed before.
+For workshop testing purposes, and as Red Hat Quay does not support local file system storage, we are going to deploy the Multi-Cloud Object Gateway (MCG) component provided by the Red Hat OpenShift Data Foundation Operator which has been already installed before.
 
-The MCG provide us a S3 compatible object storage interface for our Quay deployment managed by the Operator. The gateway use is combinated with the use of the Kubernetes `PersistenVolume` storage; which is mounted on the gateway as a backing store for object storage and any block based `StorageClass` is supported.
+The MCG provide us a S3 compatible object storage interface for our Quay deployment managed by the Operator. The gateway use is combined with the use of the Kubernetes `PersistentVolume` storage; which is mounted on the gateway as a backing store for object storage and any block based `StorageClass` is supported.
 
 NOTE: This is not an HA solution.
 

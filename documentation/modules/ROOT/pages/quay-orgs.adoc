@@ -10,7 +10,7 @@ To create a new user for our Red Hat Quay instance:
 
 * From the Administrator perspective, click `Operators` → `Installed Operators`. Project: `quay-workshop`. Select `Red Hat Quay` operator.
 
-* Select `Quay Registry` tab and click the recenlty created registry.
+* Select `Quay Registry` tab and click the recently created registry.
 
 * Open the `Registry Endpoint`.
 
