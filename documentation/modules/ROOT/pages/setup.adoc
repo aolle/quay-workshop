@@ -86,35 +86,7 @@ EOF
 oc get -n openshift-storage noobaas noobaa
 ----
 
-* Configure the backing store for the gateway and make it the default for all the `ObjectBucketClaim` issued by the Operator.
-
-[.lines_space]
-[.console-input]
-[source,bash, subs="+macros,+attributes"]
-----
-cat <<EOF | oc apply -f -
-apiVersion: noobaa.io/v1alpha1
-kind: BackingStore
-metadata:
-  finalizers:
-  - noobaa.io/finalizer
-  labels:
-    app: noobaa
-  name: noobaa-pv-backing-store
-  namespace: openshift-storage
-spec:
-  pvPool:
-    numVolumes: 1
-    resources:
-      requests:
-        storage: 50Gi
-  type: pv-pool
-  placementPolicy:
-    tiers:
-    - backingStores:
-      - noobaa-pv-backing-store
-EOF
-----
+NOTE: After creating the Multi-Cloud Object Gateway, a new default backing store for all the `ObjectBucketClaim` issued by the Operator, should be created automatically.
 
 [#quayoperator]
 == Installing Quay Operator
