@@ -12,7 +12,7 @@ The Container Security Operator brings Quay and Clair metadata to Kubernetes / O
 
 * From the Administrator perspective, click `Operators` → `OperatorHub`.
 
-* In the Filter by keyword field, type Quay. 
+* In the Filter by keyword field, type `Quay`.
 
 image::cso/operatorhub-quay.png[]
 
@@ -20,7 +20,7 @@ image::cso/operatorhub-quay.png[]
 
 image::cso/cso-install.png[]
 
-* Select `stable-3.7` from the list of available Update Channel options. Choose `All namespaces on the cluster (default)` as installation mode. Choose `Automatic` update approval.
+* Select `stable-{quay-version}` from the list of available Update Channel options. Choose `All namespaces on the cluster (default)` as installation mode. Choose `Automatic` update approval.
 
 image::cso/cso-install-params.png[]
 

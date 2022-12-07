@@ -12,6 +12,8 @@ Quay supports adding notifications to a repository for various events that occur
 
 * Click `+ Create Notification` button.
 
+image::reponotifications/notifbutton.png[]
+
 * In the `When this event occurs` drop down, select `Push to Repository`.
 
 image::reponotifications/event-list.png[]

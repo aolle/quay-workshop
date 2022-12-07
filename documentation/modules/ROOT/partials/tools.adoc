@@ -1,34 +1,26 @@
-[cols="3*^,3*.",options="header,+attributes"]
 |===
-|**Tool**|**Fedora**|**Debian**
+|**Tool**|**Reference**
 
 | `podman`
-| `dnf install podman`
-| `apt install podman`
+| https://podman.io/getting-started/installation[Podman Installation Instructions]
 
 | `skopeo`
-| `dnf install skopeo`
-| `apt install skopeo`
+| https://github.com/containers/skopeo/blob/main/install.md[Installing Skopeo]
 
-| `OpenShift CLI (oc)`
-| https://access.redhat.com/downloads/content/290[OpenShift Container Platform downloads page]
+| `OpenShift CLI`
 | https://access.redhat.com/downloads/content/290[OpenShift Container Platform downloads page]
 
 | `helm`
-| https://helm.sh/docs/intro/install/#from-the-binary-releases[Helm install] (or Snap Store)
-| https://helm.sh/docs/intro/install/#from-apt-debianubuntu[Helm install]
+| https://helm.sh/docs/intro/install[Installing Helm]
 
 | `openssl`
-| `dnf install openssl`
-| `apt install openssl`
+|
 
 | `cosign`
 | https://docs.sigstore.dev/cosign/installation[cosign Installation]
-| https://docs.sigstore.dev/cosign/installation[cosign Installation]
 
 | `pgp`
-| `dnf install gnupg`
-| `apt install gnupg`
+|
 
 |===
 

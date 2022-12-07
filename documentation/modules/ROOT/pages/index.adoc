@@ -1,4 +1,4 @@
-= Red Hat Quay Workshop
+= Red Hat Quay {quay-version} Workshop
 :page-layout: home
 :!sectids:
 

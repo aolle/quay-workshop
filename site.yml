@@ -2,7 +2,7 @@ runtime:
   cache_dir: ./.cache/antora
 
 site:
-  title: Red Hat Quay Workshop
+  title: Red Hat Quay 3.8 Workshop
   url: https://olleb.com/quay-workshop
   start_page: quay-workshop::index.adoc
 
@@ -15,8 +15,8 @@ asciidoc:
   attributes:
     release-version: main
     page-pagination: true
-    openshift-version: v4.10
-    quay-version: v3.7
+    openshift-version: 4.10
+    quay-version: 3.8
   extensions:
     - ./lib/tab-block.js
     - ./lib/remote-include-processor.js

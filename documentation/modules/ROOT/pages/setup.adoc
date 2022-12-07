@@ -105,7 +105,7 @@ image::install/operatorhub-quay.png[]
 
 image::install/quayoperator-install.png[]
 
-* On the Install Operator page select `stable-3.7` from the list of available Update Channel options. Choose `All namespaces on the cluster (default)` as installation mode. Choose `Automatic` update approval.
+* On the Install Operator page select `stable-{quay-version}` from the list of available Update Channel options. Choose `All namespaces on the cluster (default)` as installation mode. Choose `Automatic` update approval.
 
 image::install/quayoperator-opts.png[]
 
@@ -114,11 +114,11 @@ image::install/quayoperator-opts.png[]
 [#quayinstance]
 == Deploying Quay
 
-* Create a `quay-workshop` project.
+* Create a new `quay-workshop` project.
 
 * From the Administrator perspective, click `Operators` → `Installed Operators`. Project: `quay-workshop`. Select Red Hat Quay operator.
 
-* Click `Create instance` (Quay Registry).
+* Click `Create instance` (Quay Registry tile).
 
 image::install/create-quay-instance.png[]
 

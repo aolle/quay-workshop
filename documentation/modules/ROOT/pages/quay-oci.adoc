@@ -72,7 +72,7 @@ helm pull https://redhat-developer.github.io/redhat-helm-charts/charts/quarkus-0
 helm push quarkus-0.0.3.tgz oci://${QUAY_HOSTNAME}/olleb/helm
 ----
 
-* Open the Quay Dashboard and open the `olleb/helm/quarkus` and go to `Tags`.
+* Open the Quay Dashboard and open the `olleb/helm/quarkus` repository and go to `Tags`.
 
 image::oci/helmrepo.png[]
 
@@ -124,12 +124,17 @@ podman tag quay.io/centos7/httpd-24-centos7:latest ${QUAY_HOSTNAME}/olleb/httpd-
 podman push ${QUAY_HOSTNAME}/olleb/httpd-24:latest
 
 # Login
-# If we already signed in with podman or docker, the password parameter is not required, as it will use config.json file
-./cosign login ${QUAY_HOSTNAME} -u <USER> -p <PASSWORD>
+## update the config.json auth file
+podman login --authfile ~/.docker/config.json ${QUAY_HOSTNAME}
+
+## login with cosign, will rely on the updated config.json
+cosign login ${QUAY_HOSTNAME} -u <USER>
 
 # Sign and push the signature
-./cosign sign --key cosign.key ${QUAY_HOSTNAME}/olleb/httpd-24:latest
+cosign sign --key cosign.key ${QUAY_HOSTNAME}/olleb/httpd-24:latest
 ----
+
+NOTE: strictly speaking, signing the image referencing it using a tag is not safe; it can lead us to sign a different image than the intended one. The correct way to do it would be using the image digest `@sha256:...`. Those steps will be updated in the future before `cosign` drops that functionality.
 
 * Navigate to the Quay Registry Dashboard, `olleb/httpd-24` repository.
 

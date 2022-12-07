@@ -23,7 +23,7 @@ image::repositories/repo-config.png[]
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-podman pull quay.io/strimzi/kafka:latest-kafka-3.1.0
+podman pull quay.io/strimzi/kafka:latest-kafka-3.2.1
 ----
 
 * Tag the image.
@@ -32,7 +32,7 @@ podman pull quay.io/strimzi/kafka:latest-kafka-3.1.0
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-podman tag quay.io/strimzi/kafka:latest-kafka-3.1.0 ${QUAY_HOSTNAME}/olleb/kafka:3.1.0
+podman tag quay.io/strimzi/kafka:latest-kafka-3.2.1 ${QUAY_HOSTNAME}/olleb/kafka:3.2.1
 ----
 
 * Sign into our Quay repository (if we are not already signed in).
@@ -50,7 +50,7 @@ podman login ${QUAY_HOSTNAME}
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-podman push ${QUAY_HOSTNAME}/olleb/kafka:3.1.0
+podman push ${QUAY_HOSTNAME}/olleb/kafka:3.2.1
 ----
 
 * Check that the image has been pushed into our Quay repository.
@@ -64,9 +64,9 @@ image::repositories/image-pushed.png[]
 
 * Click the `Tags` icon.
 
-* Click the `SHA256` value under `MANIFEST` of the `3.1.0` tag to see the layers dashboard.
+* Click the `SHA256` value under `MANIFEST` of the `3.2.1` tag to see the layers dashboard.
 
-image::repositories/image-pushed.png[]
+image::repositories/image-pushed2.png[]
 
 image::repositories/img-layers.png[]
 
@@ -79,19 +79,20 @@ image::repositories/img-layers.png[]
 
 * On any of the tags, click the `Fetch Tag` icon.
 
-* Select `Docker Pull (by tag)` from the `Image Format` drop down and click the `Copy Command` button.
+image::repositories/fetchtagpre.png[]
+
+* Select `Podman Pull (by tag)` from the `Image Format` drop down and click the `Copy Command` button.
 
 image::repositories/fetchtag.png[]
 
-* Switch to a terminal, paste and execute the command on it. Docker or podman is required. If we're using podman, we have to replace the `docker` with `podman` before execute the command.
-As we created the repository as `Public`, login is not required to pull.
+* Switch to a terminal, paste and execute the command on it. Podman is required. As we created the repository as `Public`, login is not required to pull.
 
 [#rollback]
 == Image rollback
 
 Quay provide us a way for reviewing the history of tags and revert those to a previous image.
 
-* Create a new image repository as already explained. I created the `olleb/rollback` repository.
+* Create a new image repository as already explained. I created the `olleb/rollback` public repository.
 
 * Build an image, tag it and push it.
 
