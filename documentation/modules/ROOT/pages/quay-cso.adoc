@@ -1,14 +1,14 @@
 = Quay Container Security Operator (CSO) 
 include::_attributes.adoc[]
 
-Scan pod images with the Quay Container Security Operator (CSO).
+Scan pod images with the Red Hat Quay Container Security Operator (CSO).
 
-The Container Security Operator brings Quay and Clair metadata to Kubernetes / OpenShift.
+The Container Security Operator brings Quay and Clair metadata to Kubernetes / Red Hat OpenShift.
 
 [#install]
 == Installing the Quay CSO Operator
 
-* Open a browser window and log in to the OpenShift Container Platform web console.
+* Open a browser window and log in to the Red Hat OpenShift Container Platform web console.
 
 * From the Administrator perspective, click `Operators` → `OperatorHub`.
 
@@ -27,7 +27,7 @@ image::cso/cso-install-params.png[]
 * Install.
 
 [#vulncheck]
-== Checking the image vulnerabilities through the OpenShift web console
+== Checking the image vulnerabilities through the Red Hat OpenShift web console
 
 * Deploy a vulnerable image. For this example, we are going to deploy an old httpd vulnerable image.
 
@@ -49,7 +49,7 @@ podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30
 
 * Select `Settings` and `Make Public`.
 
-* Open the OpenShift Container Platform web console and create a new project, click Projects → Create Project. Name the project as `vuln-httpd`. Click `Create`.
+* Open the Red Hat OpenShift Container Platform web console and create a new project, click Projects → Create Project. Name the project as `vuln-httpd`. Click `Create`.
 
 image::cso/vulnhttpd-project.png[]
 
@@ -61,7 +61,7 @@ image::cso/yaml.png[]
 
 * Click on `Create`.
 
-* OpenShift will start the deployment and will create the pod. Go to Workloads → Pods and select one of the `httpd` pods. Select the `Vulnerabilities` tab.
+* Red Hat OpenShift will start the deployment and will create the pod. Go to Workloads → Pods and select one of the `httpd` pods. Select the `Vulnerabilities` tab.
 
 image::cso/pods.png[]
 

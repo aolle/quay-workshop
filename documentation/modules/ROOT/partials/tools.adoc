@@ -7,7 +7,7 @@
 | `skopeo`
 | https://github.com/containers/skopeo/blob/main/install.md[Installing Skopeo]
 
-| `OpenShift CLI`
+| `Red Hat OpenShift CLI`
 | https://access.redhat.com/downloads/content/290[OpenShift Container Platform downloads page]
 
 | `helm`

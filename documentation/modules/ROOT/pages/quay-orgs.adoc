@@ -6,7 +6,7 @@ include::_attributes.adoc[]
 
 To create a new user for our Red Hat Quay instance:
 
-* Open a browser window and log in to the OpenShift Container Platform web console.
+* Open a browser window and log in to the Red Hat OpenShift Container Platform web console.
 
 * From the Administrator perspective, click `Operators` → `Installed Operators`. Project: `quay-workshop`. Select `Red Hat Quay` operator.
 
@@ -18,7 +18,7 @@ image::organizations/quay-registries.png[]
 
 image::organizations/quay-endpoint.png[]
 
-NOTE: Alternatively, you will also see the registry endpoint URL under the `Networking` → `Routes` section in the OpenShift Container Platform web console.
+NOTE: Alternatively, you will also see the registry endpoint URL under the `Networking` → `Routes` section in the Red Hat OpenShift Container Platform web console.
 
 * `Create Account`.
 

@@ -10,7 +10,7 @@ Some of the OCI artifacts that we are going to use on the next sections are not 
 
 As a previous step, we are going to configure the `ALLOWED_OCI_ARTIFACT_TYPES` property for allowing some of the OCI artifacts that we will use soon.
 
-* Open a browser window and log in to the OpenShift Container Platform web console.
+* Open a browser window and log in to the Red Hat OpenShift Container Platform web console.
 
 * Click `Operators` → `Installed Operators`.
 

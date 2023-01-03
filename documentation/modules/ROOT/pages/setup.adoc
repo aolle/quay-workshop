@@ -23,9 +23,9 @@ include::partial$tools.adoc[]
 [#odf]
 == ODF Operator
 
-You can use the OpenShift Container Platform web console to install Quay prerequisites.
+You can use the Red Hat OpenShift Container Platform web console to install Quay prerequisites.
 
-* Open a browser window and log in to the OpenShift Container Platform web console.
+* Open a browser window and log in to the Red Hat OpenShift Container Platform web console.
 
 * From the Administrator perspective, click `Operators` → `OperatorHub`.
 
@@ -33,7 +33,7 @@ You can use the OpenShift Container Platform web console to install Quay prerequ
 
 image::install/operatorhub-odf.png[]
 
-* Select the OpenShift Data Foundation tile and click `Install`.
+* Select the Red Hat OpenShift Data Foundation tile and click `Install`.
 
 image::install/odf-install.png[]
 
@@ -91,9 +91,9 @@ NOTE: After creating the Multi-Cloud Object Gateway, a new default backing store
 [#quayoperator]
 == Installing Quay Operator
 
-You can use the OpenShift Container Platform web console to suscribe and deploy the `Red Hat Quay Operator`.
+You can use the Red Hat OpenShift Container Platform web console to suscribe and deploy the `Red Hat Quay Operator`.
 
-* Open a browser window and log in to the OpenShift Container Platform web console.
+* Open a browser window and log in to the Red Hat OpenShift Container Platform web console.
 
 * From the Administrator perspective, click `Operators` → `OperatorHub`.
 
