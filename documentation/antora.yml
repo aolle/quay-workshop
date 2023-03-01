@@ -1,6 +1,6 @@
 name: ROOT
 title: Red Hat Quay Workshop
-version: master
+version: v3.7
 nav:
   - modules/ROOT/nav.adoc
 
