@@ -282,8 +282,7 @@
 <h2 id="tools"><a class="anchor" href="#tools"></a>Container Management Tools</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following tools are required for running the exercises in this tutorial.
-Please have them installed and configured before you get started with any of the tutorial chapters.</p>
+<p>The following tools are required to run the exercises in this tutorial. Please ensure that they are installed and properly configured before proceeding with any of the tutorial chapters.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -351,15 +350,15 @@ Please have them installed and configured before you get started with any of the
 <h2 id="odf"><a class="anchor" href="#odf"></a>ODF Operator</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You can use the OpenShift Container Platform web console to install Quay prerequisites.</p>
+<p>You can use the Red Hat OpenShift Container Platform web console to install Quay prerequisites by following these steps:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Open a browser window and log in to the OpenShift Container Platform web console.</p>
+<p>Open a browser window and log in to the Red Hat OpenShift Container Platform web console.</p>
 </li>
 <li>
-<p>From the Administrator perspective, click <code>Operators</code> → <code>OperatorHub</code>.</p>
+<p>From the Administrator perspective, click on <code>Operators</code> and then select <code>OperatorHub</code>.</p>
 </li>
 <li>
 <p>In the <code>Filter by keyword</code> field, type <code>ODF</code>.</p>
@@ -374,7 +373,7 @@ Please have them installed and configured before you get started with any of the
 <div class="ulist">
 <ul>
 <li>
-<p>Select the OpenShift Data Foundation tile and click <code>Install</code>.</p>
+<p>Select the Red Hat OpenShift Data Foundation tile and click <code>Install</code> button.</p>
 </li>
 </ul>
 </div>
@@ -386,7 +385,7 @@ Please have them installed and configured before you get started with any of the
 <div class="ulist">
 <ul>
 <li>
-<p>On the Install Operator page select <code>stable-4.10</code> from the list of available Update Channel options. Choose <code>A specific namespace on the cluster</code> and leave the default value of Installed Namespace as <code>openshift-storage</code>. Update approval <code>Automatic</code>. Console plugin <code>Enable</code>.</p>
+<p>On the Install Operator page, select <code>stable-4.10</code> from the list of available Update Channel options, and then choose A specific namespace on the cluster. Leave the default value of Installed Namespace as openshift-storage, and set the Update Approval to Automatic. Also, make sure to set <code>Enable</code> the Console Plugin.</p>
 </li>
 </ul>
 </div>
@@ -408,10 +407,10 @@ Please have them installed and configured before you get started with any of the
 <h2 id="storage"><a class="anchor" href="#storage"></a>Creating the standalone object gateway</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>For workshop testing purposes, and as Red Hat Quay does not support local file system storage, we are going to deploy the Multi-Cloud Object Gateway (MCG) component provided by the Red Hat OpenShift Data Foundation Operator which has been already installed before.</p>
+<p>For workshop testing purposes, we will deploy the Multi-Cloud Object Gateway (MCG) component provided by the Red Hat OpenShift Data Foundation Operator.</p>
 </div>
 <div class="paragraph">
-<p>The MCG provide us a S3 compatible object storage interface for our Quay deployment managed by the Operator. The gateway use is combined with the use of the Kubernetes <code>PersistentVolume</code> storage; which is mounted on the gateway as a backing store for object storage and any block based <code>StorageClass</code> is supported.</p>
+<p>The MCG provides a S3-compatible object storage interface for our Quay deployment managed by the Operator. The gateway is used in combination with the Kubernetes <code>PersistentVolume</code> storage, which is mounted on the gateway as a backing store for object storage, and any block-based <code>StorageClass</code> is supported.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -420,7 +419,7 @@ Please have them installed and configured before you get started with any of the
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-This is not an HA solution.
+This is not a high-availability (HA) solution.
 </td>
 </tr>
 </table>
@@ -456,7 +455,7 @@ EOF</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>After a while, check if the MCG has been provisioned:</p>
+<p>After some time, verify if the MCG has been provisioned:</p>
 </li>
 </ul>
 </div>
@@ -472,7 +471,7 @@ EOF</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-After creating the Multi-Cloud Object Gateway, a new default backing store for all the <code>ObjectBucketClaim</code> issued by the Operator, should be created automatically.
+After creating the Multi-Cloud Object Gateway, a new default backing store for all the <code>ObjectBucketClaim</code> issued by the Operator is automatically created.
 </td>
 </tr>
 </table>
@@ -483,15 +482,15 @@ After creating the Multi-Cloud Object Gateway, a new default backing store for a
 <h2 id="quayoperator"><a class="anchor" href="#quayoperator"></a>Installing Quay Operator</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You can use the OpenShift Container Platform web console to suscribe and deploy the <code>Red Hat Quay Operator</code>.</p>
+<p>You can use the Red Hat OpenShift Container Platform web console to suscribe and deploy the <code>Red Hat Quay Operator</code>.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Open a browser window and log in to the OpenShift Container Platform web console.</p>
+<p>Open a browser window and log in to the Red Hat OpenShift Container Platform web console.</p>
 </li>
 <li>
-<p>From the Administrator perspective, click <code>Operators</code> → <code>OperatorHub</code>.</p>
+<p>From the Administrator perspective, click on <code>Operators</code> and then select <code>OperatorHub</code>.</p>
 </li>
 <li>
 <p>In the Filter by keyword field, type <code>Red Hat Quay</code>.</p>
@@ -506,7 +505,7 @@ After creating the Multi-Cloud Object Gateway, a new default backing store for a
 <div class="ulist">
 <ul>
 <li>
-<p>Select the Red Hat Quay tile and click <code>Install</code>.</p>
+<p>Select the Red Hat Quay tile and click on the <code>Install</code> button.</p>
 </li>
 </ul>
 </div>
@@ -518,7 +517,7 @@ After creating the Multi-Cloud Object Gateway, a new default backing store for a
 <div class="ulist">
 <ul>
 <li>
-<p>On the Install Operator page select <code>stable-3.7</code> from the list of available Update Channel options. Choose <code>All namespaces on the cluster (default)</code> as installation mode. Choose <code>Automatic</code> update approval.</p>
+<p>On the Install Operator page, select <code>stable-3.7</code> from the list of available Update Channel options. Then, choose <code>All namespaces on the cluster (default)</code> as the installation mode and select <code>Automatic</code> for update approval.</p>
 </li>
 </ul>
 </div>
@@ -542,13 +541,13 @@ After creating the Multi-Cloud Object Gateway, a new default backing store for a
 <div class="ulist">
 <ul>
 <li>
-<p>Create a <code>quay-workshop</code> project.</p>
+<p>Create a new <code>quay-workshop</code> project.</p>
 </li>
 <li>
-<p>From the Administrator perspective, click <code>Operators</code> → <code>Installed Operators</code>. Project: <code>quay-workshop</code>. Select Red Hat Quay operator.</p>
+<p>From the Administrator perspective, navigate to <code>Operators</code> and then select <code>Installed Operators</code>. Choose the <code>quay-workshop</code> project and select the Red Hat Quay operator.</p>
 </li>
 <li>
-<p>Click <code>Create instance</code> (Quay Registry).</p>
+<p>Click <code>Create instance</code> to create a new Quay Registry instance.</p>
 </li>
 </ul>
 </div>
@@ -560,7 +559,7 @@ After creating the Multi-Cloud Object Gateway, a new default backing store for a
 <div class="ulist">
 <ul>
 <li>
-<p>Change the Name if desired. Click <code>Create</code>.</p>
+<p>If desired, change the name, and then click Create.</p>
 </li>
 </ul>
 </div>
@@ -576,7 +575,7 @@ After creating the Multi-Cloud Object Gateway, a new default backing store for a
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-Check if the init container fails during the Quay registry deployment. In this case, watch out if a <code>LimitRange</code> exists in the current <code>OCP</code> project. Sometimes, the <code>RHPDS</code> environment creates a <code>LimitRange</code> automatically when a new project is created.
+Please check if the init container fails during the Quay registry deployment. If it fails, please verify if a <code>LimitRange</code> exists in the current <code>OCP</code> project. Sometimes, the <code>RHPDS</code> environment creates a <code>LimitRange</code> automatically when a new project is created.
 </td>
 </tr>
 </table>
@@ -593,7 +592,7 @@ Check if the init container fails during the Quay registry deployment. In this c
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-The command-line or shell will be used during the workshop. The <code>QUAY_HOSTNAME</code> environment variable has to be set in the working terminal before executing the commands. Alternatively, we can provide the hostname directly.
+It is recommended to set the <code>QUAY_HOSTNAME</code> environment variable in the working terminal before executing the commands. Alternatively, the hostname can be provided directly in the commands as needed.
 </td>
 </tr>
 </table>

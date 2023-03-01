@@ -254,10 +254,10 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Scan pod images with the Quay Container Security Operator (CSO).</p>
+<p>Scan pod images with the Red Hat Quay Container Security Operator (CSO).</p>
 </div>
 <div class="paragraph">
-<p>The Container Security Operator brings Quay and Clair metadata to Kubernetes / OpenShift.</p>
+<p>The Container Security Operator brings Quay and Clair metadata to Kubernetes / Red Hat OpenShift, allowing us to scan images for vulnerabilities and compliance issues. This helps ensure that the images used in our pods are secure and compliant with relevant standards.</p>
 </div>
 </div>
 </div>
@@ -267,13 +267,13 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Open a browser window and log in to the OpenShift Container Platform web console.</p>
+<p>Open a browser window and log in to the Red Hat OpenShift Container Platform web console.</p>
 </li>
 <li>
-<p>From the Administrator perspective, click <code>Operators</code> → <code>OperatorHub</code>.</p>
+<p>From the Administrator perspective, click <code>Operators</code>, then <code>OperatorHub</code>.</p>
 </li>
 <li>
-<p>In the Filter by keyword field, type Quay.</p>
+<p>In the <code>Filter by keyword</code> field, type <code>Quay</code>.</p>
 </li>
 </ul>
 </div>
@@ -285,7 +285,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Select the Red Hat Quay Container Security Operator tile and click <code>Install</code>.</p>
+<p>Select the <code>Red Hat Quay Container Security Operator</code> tile and click <code>Install</code>.</p>
 </li>
 </ul>
 </div>
@@ -297,7 +297,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Select <code>stable-3.7</code> from the list of available Update Channel options. Choose <code>All namespaces on the cluster (default)</code> as installation mode. Choose <code>Automatic</code> update approval.</p>
+<p>Select <code>stable-3.7</code> from the list of available <code>Update Channel</code> options. Choose <code>All namespaces on the cluster (default)</code> as the installation mode. Choose <code>Automatic</code> update approval.</p>
 </li>
 </ul>
 </div>
@@ -309,7 +309,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Install.</p>
+<p>Click <code>Install</code> to start the installation process.</p>
 </li>
 </ul>
 </div>
@@ -340,13 +340,13 @@ podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Navigate to the Quay Registry Endpoint and select the <code>olleb/httpd-24</code> repository that has been created automatically when we pulled the image before.</p>
+<p>Navigate to the Quay Registry Endpoint and select the <code>olleb/httpd-24</code> repository that has been automatically created when we pulled the image before.</p>
 </li>
 <li>
-<p>Select <code>Settings</code> and <code>Make Public</code>.</p>
+<p>Select <code>Settings</code> and then click <code>Make Public</code>.</p>
 </li>
 <li>
-<p>Open the OpenShift Container Platform web console and create a new project, click Projects → Create Project. Name the project as <code>vuln-httpd</code>. Click <code>Create</code>.</p>
+<p>Open the Red Hat OpenShift Container Platform web console and create a new project by clicking <code>Projects</code> then <code>Create Project</code>. Name the project as <code>vuln-httpd</code> and then click <code>Create</code>.</p>
 </li>
 </ul>
 </div>
@@ -358,10 +358,10 @@ podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>On <code>vuln-httpd</code> project; deploy the vulnerable image, click Workloads → Deployments. Click <code>Create Deployment</code>.</p>
+<p>In the <code>vuln-httpd</code> project, deploy the vulnerable image by clicking <code>Workloads</code> then <code>Deployments</code>. Click <code>Create Deployment</code>.</p>
 </li>
 <li>
-<p>Replace the default image value by the image of our Quay registry. Set replicas as desired. Set <code>httpd</code> as custom name.</p>
+<p>Replace the default image value with the image from our Quay registry. Set replicas as desired and set <code>httpd</code> as the custom name.</p>
 </li>
 </ul>
 </div>
@@ -373,10 +373,10 @@ podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Click on <code>Create</code>.</p>
+<p>Click <code>Create</code>.</p>
 </li>
 <li>
-<p>OpenShift will start the deployment and will create the pod. Go to Workloads → Pods and select one of the <code>httpd</code> pods. Select the <code>Vulnerabilities</code> tab.</p>
+<p>Red Hat OpenShift will start the deployment and create the pod. Go to <code>Workloads</code> then <code>Pods</code> and select one of the <code>httpd</code> pods. Select the <code>Vulnerabilities</code> tab.</p>
 </li>
 </ul>
 </div>
@@ -393,7 +393,7 @@ podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Click con the security scan results.</p>
+<p>Click on the security scan results.</p>
 </li>
 </ul>
 </div>
@@ -425,7 +425,7 @@ podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Click <code>View all</code> and click on the Manifest related to <code>olleb/httpd-24</code>.</p>
+<p>Click <code>View all</code> and then click on the Manifest related to <code>olleb/httpd-24</code>.</p>
 </li>
 </ul>
 </div>
@@ -435,7 +435,7 @@ podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We will be redirected to the Quay Security Scanner Dashboard.</p>
+<p>You will be redirected to the Quay Security Scanner Dashboard.</p>
 </div>
 <div class="imageblock">
 <div class="content">

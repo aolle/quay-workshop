@@ -254,7 +254,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Quay supports adding notifications to a repository for various events that occur in the repository lifecycle.</p>
+<p>Quay supports adding notifications to a repository for various events that occur in the repository lifecycle, such as a new image push or tag deletion.</p>
 </div>
 </div>
 </div>
@@ -264,13 +264,13 @@
 <div class="ulist">
 <ul>
 <li>
-<p>From the Red Hat Quay Dashboard, click the <code>olleb/kafka</code> repository. Recall from <a href="quay-repos.html" class="xref page">2.2 Quay Repositories</a>, we created and pushed a <code>strimzi/kafka</code> image on it.</p>
+<p>From the Red Hat Quay Dashboard, go to the <code>olleb/kafka</code> repository. Remind from <a href="quay-repos.html" class="xref page">2.2 Quay Repositories</a>, we created and pushed a <code>strimzi/kafka</code> image.</p>
 </li>
 <li>
 <p>Click <code>Settings</code>.</p>
 </li>
 <li>
-<p>Click <code>+ Create Notification</code> button.</p>
+<p>Click on the <code>+ Create Notification</code> button.</p>
 </li>
 </ul>
 </div>
@@ -282,7 +282,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>In the <code>When this event occurs</code> drop down, select <code>Push to Repository</code>.</p>
+<p>In the <code>When this event occurs</code> drop-down menu, select <code>Push to Repository</code>.</p>
 </li>
 </ul>
 </div>
@@ -294,7 +294,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Under the <code>Then issue a notification</code> drop down, select <code>Red Hat Quay Notification</code>.</p>
+<p>Under the <code>Then issue a notification</code> drop-down menu, select <code>Red Hat Quay Notification</code>.</p>
 </li>
 </ul>
 </div>
@@ -306,7 +306,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>In the <code>Recipient</code> drop down, select <code>owners</code>.</p>
+<p>In the <code>Recipient</code> drop-down menu, select <code>owners</code>.</p>
 </li>
 <li>
 <p>In the <code>Notification title</code> text field, type <code>A new image has been pushed into the repository</code>.</p>
@@ -326,7 +326,7 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>Push a new image into the repository or add a new tag the current one.</p>
+<p>Push a new image or add a new tag to the existing one in the repository.</p>
 </div>
 <div class="listingblock lines_space console-input">
 <div class="content">
@@ -338,7 +338,7 @@ podman push ${QUAY_HOSTNAME}/olleb/kafka:3.0.0</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>After a while, we will see the notification in the top of our dashboard.</p>
+<p>After a while, a notification will appear at the top of our dashboard indicating that a new image has been pushed into the repository.</p>
 </div>
 <div class="imageblock">
 <div class="content">

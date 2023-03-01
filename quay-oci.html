@@ -262,10 +262,7 @@
 <h2 id="allowed"><a class="anchor" href="#allowed"></a>Configuring allowed OCI artifact types</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Some of the OCI artifacts that we are going to use on the next sections are not allowed by default. For example, the Helm charts and signed images are allowed by default, but the encrypted container images not (at least at the time of this writing). Follow this step if you want to upload encrypted images to Quay.</p>
-</div>
-<div class="paragraph">
-<p>As a previous step, we are going to configure the <code>ALLOWED_OCI_ARTIFACT_TYPES</code> property for allowing some of the OCI artifacts that we will use soon.</p>
+<p>Some of the OCI artifacts that we will be using in the following sections are not allowed by default in Quay. For example, encrypted container images are not allowed by default (at least at the time of writing). To upload encrypted images to Quay, follow these steps to configure the <code>ALLOWED_OCI_ARTIFACT_TYPES</code> property:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -273,10 +270,10 @@
 <p>Open a browser window and log in to the Red Hat OpenShift Container Platform web console.</p>
 </li>
 <li>
-<p>Click <code>Operators</code> → <code>Installed Operators</code>.</p>
+<p>Click on <code>Operators</code>, then <code>Installed Operators</code>.</p>
 </li>
 <li>
-<p>Select <code>quay-workshop</code> as the project and click <code>Quay Registry</code>. Click our <code>registry</code>.</p>
+<p>Select <code>quay-workshop</code> project and click on <code>Quay Registry</code>. Then click on our <code>registry</code>.</p>
 </li>
 </ul>
 </div>
@@ -300,10 +297,10 @@
 <div class="ulist">
 <ul>
 <li>
-<p>In the <code>Actions</code> drop down, select <code>Edit Secret</code>.</p>
+<p>In the <code>Actions</code> drop-down menu, select <code>Edit Secret</code>.</p>
 </li>
 <li>
-<p>Add the following into the <code>Value</code> text field. And click <code>Save</code>.</p>
+<p>Add the following into the <code>Value</code> text field, and click <code>Save</code>.</p>
 </li>
 </ul>
 </div>
@@ -333,7 +330,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Login to Quay registry with helm.</p>
+<p>Login to the Quay registry with helm.</p>
 </li>
 </ul>
 </div>
@@ -357,7 +354,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Push the chart into Quay repository.</p>
+<p>Push the chart into the Quay repository.</p>
 </li>
 </ul>
 </div>
@@ -369,7 +366,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Open the Quay Dashboard and open the <code>olleb/helm/quarkus</code> repository and go to <code>Tags</code>.</p>
+<p>Open the Quay Dashboard and navigate to the <code>olleb/helm/quarkus</code> repository. Then, go to <code>Tags</code>.</p>
 </li>
 </ul>
 </div>
@@ -384,7 +381,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>The Helm chart can be installed directly from the repository.</p>
+<p>The Helm chart can now be installed directly from the repository.</p>
 </li>
 </ul>
 </div>
@@ -409,9 +406,7 @@
 </td>
 <td class="content">
 <div class="paragraph">
-<p>This section shows how we can sign and store the result artifacts in our Quay registry, and how we can use Quay for storing OCI artifacts like signatures.
-This is NOT a security guide neither a registry hardening guide.
-We should decide when the source registry is trusted or not; if signing an image after uploading it into the registry is enough for us (or we prefer sign it before pushing); etc.</p>
+<p>This section shows how to sign and store image artifacts in a Quay registry, and how to use Quay to store OCI artifacts like signatures. However, it is important to note that this is not a comprehensive security guide or a registry hardening guide. Before signing images, we need to decide whether the source registry is trusted or not. Additionally, we need to determine whether signing an image after uploading it into the registry is sufficient or if we prefer to sign it before pushing it.</p>
 </div>
 </td>
 </tr>
@@ -465,7 +460,7 @@ cosign sign --key cosign.key ${QUAY_HOSTNAME}/olleb/httpd-24:latest</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-strictly speaking, signing the image referencing it using a tag is not safe; it can lead us to sign a different image than the intended one. The correct way to do it would be using the image digest <code>@sha256:&#8230;&#8203;</code>. Those steps will be updated in the future before <code>cosign</code> drops that functionality.
+Strictly speaking, signing an image by referencing it using a tag is not secure, as it can lead to signing a different image than the intended one. The correct way to sign an image is by using the image digest <code>@sha256:&#8230;&#8203;</code> The steps will be updated in the future before <code>cosign</code> drops that functionality.
 </td>
 </tr>
 </table>
@@ -481,7 +476,7 @@ strictly speaking, signing the image referencing it using a tag is not safe; it 
 </ul>
 </div>
 <div class="paragraph">
-<p>We will see our signature stored in it.</p>
+<p>You should see the signature stored in the repository.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -526,7 +521,7 @@ You selected this USER-ID:
 <p>The signature will be stored in our sigstore <code>~/.local/share/containers/sigstore/olleb/nginx-116-centos7@sha256=&lt;SHA&gt;/signature-1</code></p>
 </div>
 <div class="paragraph">
-<p>Signature can be verified with:</p>
+<p>The signature can be verified with:</p>
 </div>
 <div class="listingblock lines_space console-input">
 <div class="content">
@@ -608,12 +603,12 @@ openssl rsa -in private-key.pem -pubout -out public-key.pem</code></pre>
 <p>Navigate to the Quay Registry Dashboard, <code>olleb/httpd-24-encrypted</code> repository.</p>
 </li>
 <li>
-<p>Click <code>Tags</code>.</p>
+<p>Click on <code>Tags</code>.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>We will see our encrypted image stored on it.</p>
+<p>We will see our encrypted image stored in it.</p>
 </div>
 </div>
 <div class="sect2">
@@ -684,7 +679,7 @@ You selected this USER-ID:
 </ul>
 </div>
 <div class="paragraph">
-<p>We will see our encrypted image stored on it.</p>
+<p>We will see our encrypted image stored in it.</p>
 </div>
 </div>
 </div>
