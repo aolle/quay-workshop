@@ -12,8 +12,7 @@ This tutorial was developed and tested with:
 [#tools]
 == Container Management Tools
 
-The following tools are required for running the exercises in this tutorial. 
-Please have them installed and configured before you get started with any of the tutorial chapters.
+The following tools are required to run the exercises in this tutorial. Please ensure that they are installed and properly configured before proceeding with any of the tutorial chapters.
 
 include::partial$tools.adoc[]
 
@@ -23,21 +22,21 @@ include::partial$tools.adoc[]
 [#odf]
 == ODF Operator
 
-You can use the Red Hat OpenShift Container Platform web console to install Quay prerequisites.
+You can use the Red Hat OpenShift Container Platform web console to install Quay prerequisites by following these steps:
 
 * Open a browser window and log in to the Red Hat OpenShift Container Platform web console.
 
-* From the Administrator perspective, click `Operators` → `OperatorHub`.
+* From the Administrator perspective, click on `Operators` and then select `OperatorHub`.
 
 * In the `Filter by keyword` field, type `ODF`.
 
 image::install/operatorhub-odf.png[]
 
-* Select the Red Hat OpenShift Data Foundation tile and click `Install`.
+* Select the Red Hat OpenShift Data Foundation tile and click `Install` button.
 
 image::install/odf-install.png[]
 
-* On the Install Operator page select `stable-4.10` from the list of available Update Channel options. Choose `A specific namespace on the cluster` and leave the default value of Installed Namespace as `openshift-storage`. Update approval `Automatic`. Console plugin `Enable`.
+* On the Install Operator page, select stable-4.10 from the list of available Update Channel options, and then choose A specific namespace on the cluster. Leave the default value of Installed Namespace as openshift-storage, and set the Update Approval to Automatic. Also, make sure to set `Enable` the Console Plugin.
 
 image::install/odfoperator-install-opts.png[]
 
@@ -46,11 +45,11 @@ image::install/odfoperator-install-opts.png[]
 [#storage]
 == Creating the standalone object gateway
 
-For workshop testing purposes, and as Red Hat Quay does not support local file system storage, we are going to deploy the Multi-Cloud Object Gateway (MCG) component provided by the Red Hat OpenShift Data Foundation Operator which has been already installed before.
+For workshop testing purposes, we will deploy the Multi-Cloud Object Gateway (MCG) component provided by the Red Hat OpenShift Data Foundation Operator.
 
-The MCG provide us a S3 compatible object storage interface for our Quay deployment managed by the Operator. The gateway use is combined with the use of the Kubernetes `PersistentVolume` storage; which is mounted on the gateway as a backing store for object storage and any block based `StorageClass` is supported.
+The MCG provides a S3-compatible object storage interface for our Quay deployment managed by the Operator. The gateway is used in combination with the Kubernetes `PersistentVolume` storage, which is mounted on the gateway as a backing store for object storage, and any block-based `StorageClass` is supported.
 
-NOTE: This is not an HA solution.
+NOTE: This is not a high-availability (HA) solution.
 
 * Create the NooBaa object storage:
 
@@ -77,7 +76,7 @@ spec:
 EOF
 ----
 
-* After a while, check if the MCG has been provisioned:
+* After some time, verify if the MCG has been provisioned:
 
 [.lines_space]
 [.console-input]
@@ -86,7 +85,7 @@ EOF
 oc get -n openshift-storage noobaas noobaa
 ----
 
-NOTE: After creating the Multi-Cloud Object Gateway, a new default backing store for all the `ObjectBucketClaim` issued by the Operator, should be created automatically.
+NOTE: After creating the Multi-Cloud Object Gateway, a new default backing store for all the `ObjectBucketClaim` issued by the Operator is automatically created.
 
 [#quayoperator]
 == Installing Quay Operator
@@ -95,17 +94,17 @@ You can use the Red Hat OpenShift Container Platform web console to suscribe and
 
 * Open a browser window and log in to the Red Hat OpenShift Container Platform web console.
 
-* From the Administrator perspective, click `Operators` → `OperatorHub`.
+* From the Administrator perspective, click on `Operators` and then select `OperatorHub`.
 
 * In the Filter by keyword field, type `Red Hat Quay`.
-
+    
 image::install/operatorhub-quay.png[]
 
-* Select the Red Hat Quay tile and click `Install`.
+* Select the Red Hat Quay tile and click on the `Install` button.
 
 image::install/quayoperator-install.png[]
 
-* On the Install Operator page select `stable-{quay-version}` from the list of available Update Channel options. Choose `All namespaces on the cluster (default)` as installation mode. Choose `Automatic` update approval.
+* On the Install Operator page, select `stable-3.8` from the list of available Update Channel options. Then, choose `All namespaces on the cluster (default)` as the installation mode and select `Automatic` for update approval.
 
 image::install/quayoperator-opts.png[]
 
@@ -116,22 +115,22 @@ image::install/quayoperator-opts.png[]
 
 * Create a new `quay-workshop` project.
 
-* From the Administrator perspective, click `Operators` → `Installed Operators`. Project: `quay-workshop`. Select Red Hat Quay operator.
+* From the Administrator perspective, navigate to `Operators` and then select `Installed Operators`. Choose the `quay-workshop` project and select the Red Hat Quay operator.
 
-* Click `Create instance` (Quay Registry tile).
+* Click `Create instance` to create a new Quay Registry instance.
 
 image::install/create-quay-instance.png[]
 
-* Change the Name if desired. Click `Create`.
+* If desired, change the name, and then click Create.
 
 image::install/quay-create.png[]
 
-WARNING: Check if the init container fails during the Quay registry deployment. In this case, watch out if a `LimitRange` exists in the current `OCP` project. Sometimes, the `RHPDS` environment creates a `LimitRange` automatically when a new project is created.
+WARNING: Please check if the init container fails during the Quay registry deployment. If it fails, please verify if a `LimitRange` exists in the current `OCP` project. Sometimes, the `RHPDS` environment creates a `LimitRange` automatically when a new project is created.
 
 [#exportenvvar]
 == Export environment variables
 
-IMPORTANT: The command-line or shell will be used during the workshop. The `QUAY_HOSTNAME` environment variable has to be set in the working terminal before executing the commands. Alternatively, we can provide the hostname directly.
+IMPORTANT: It is recommended to set the `QUAY_HOSTNAME` environment variable in the working terminal before executing the commands. Alternatively, the hostname can be provided directly in the commands as needed.
 
 [.lines_space]
 [.console-input]

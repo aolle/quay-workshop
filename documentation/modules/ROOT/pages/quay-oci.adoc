@@ -6,15 +6,13 @@ Quay can be used to store OCI-based artifacts like Helm charts, encrypted contai
 [#allowed]
 == Configuring allowed OCI artifact types
 
-Some of the OCI artifacts that we are going to use on the next sections are not allowed by default. For example, the Helm charts and signed images are allowed by default, but the encrypted container images not (at least at the time of this writing). Follow this step if you want to upload encrypted images to Quay.
-
-As a previous step, we are going to configure the `ALLOWED_OCI_ARTIFACT_TYPES` property for allowing some of the OCI artifacts that we will use soon.
+Some of the OCI artifacts that we will be using in the following sections are not allowed by default in Quay. For example, encrypted container images are not allowed by default (at least at the time of writing). To upload encrypted images to Quay, follow these steps to configure the `ALLOWED_OCI_ARTIFACT_TYPES` property:
 
 * Open a browser window and log in to the Red Hat OpenShift Container Platform web console.
 
-* Click `Operators` → `Installed Operators`.
+* Click on `Operators`, then `Installed Operators`.
 
-* Select `quay-workshop` as the project and click `Quay Registry`. Click our `registry`.
+* Select `quay-workshop` project and click on `Quay Registry`. Then click on our `registry`.
 
 image::oci/quay-registry.png[]
 
@@ -22,9 +20,9 @@ image::oci/quay-registry.png[]
 
 image::oci/config-bundle-secret.png[]
 
-* In the `Actions` drop down, select `Edit Secret`.
+* In the `Actions` drop-down menu, select `Edit Secret`.
 
-* Add the following into the `Value` text field. And click `Save`.
+* Add the following into the `Value` text field, and click `Save`.
 
 [.lines_space]
 [.console-input]
@@ -45,7 +43,7 @@ The `registry-quay-config-editor-\*` and `registry-quay-app-*` pods will be rest
 [#helm]
 == Helm charts
 
-* Login to Quay registry with helm.
+* Login to the Quay registry with helm.
 
 [.lines_space]
 [.console-input]
@@ -63,7 +61,7 @@ helm registry login ${QUAY_HOSTNAME}
 helm pull https://redhat-developer.github.io/redhat-helm-charts/charts/quarkus-0.0.3.tgz
 ----
 
-* Push the chart into Quay repository.
+* Push the chart into the Quay repository.
 
 [.lines_space]
 [.console-input]
@@ -72,13 +70,13 @@ helm pull https://redhat-developer.github.io/redhat-helm-charts/charts/quarkus-0
 helm push quarkus-0.0.3.tgz oci://${QUAY_HOSTNAME}/olleb/helm
 ----
 
-* Open the Quay Dashboard and open the `olleb/helm/quarkus` repository and go to `Tags`.
+* Open the Quay Dashboard and navigate to the `olleb/helm/quarkus` repository. Then, go to `Tags`.
 
 image::oci/helmrepo.png[]
 
 The Helm chart is published to Quay as an OCI image.
 
-* The Helm chart can be installed directly from the repository.
+* The Helm chart can now be installed directly from the repository.
 
 [.lines_space]
 [.console-input]
@@ -89,13 +87,12 @@ helm install quarkus oci://${QUAY_HOSTNAME}/olleb/helm/quarkus --version=0.0.3
 
 [#signed]
 == Signed container images
+
 Image signing ensures the integrity of our image deployments. Quay will store the signature as an OCI artifact.
 
 [IMPORTANT,subs="attributes+,+macros"]
 ====
-This section shows how we can sign and store the result artifacts in our Quay registry, and how we can use Quay for storing OCI artifacts like signatures.
-This is NOT a security guide neither a registry hardening guide.
-We should decide when the source registry is trusted or not; if signing an image after uploading it into the registry is enough for us (or we prefer sign it before pushing); etc.
+This section shows how to sign and store image artifacts in a Quay registry, and how to use Quay to store OCI artifacts like signatures. However, it is important to note that this is not a comprehensive security guide or a registry hardening guide. Before signing images, we need to decide whether the source registry is trusted or not. Additionally, we need to determine whether signing an image after uploading it into the registry is sufficient or if we prefer to sign it before pushing it.
 ====
 
 [#cosign]
@@ -134,13 +131,13 @@ cosign login ${QUAY_HOSTNAME} -u <USER>
 cosign sign --key cosign.key ${QUAY_HOSTNAME}/olleb/httpd-24:latest
 ----
 
-NOTE: strictly speaking, signing the image referencing it using a tag is not safe; it can lead us to sign a different image than the intended one. The correct way to do it would be using the image digest `@sha256:...`. Those steps will be updated in the future before `cosign` drops that functionality.
+NOTE: Strictly speaking, signing an image by referencing it using a tag is not secure, as it can lead to signing a different image than the intended one. The correct way to sign an image is by using the image digest `@sha256:...` The steps will be updated in the future before `cosign` drops that functionality.
 
 * Navigate to the Quay Registry Dashboard, `olleb/httpd-24` repository.
 
 * Click `Tags`.
 
-We will see our signature stored in it.
+You should see the signature stored in the repository.
 
 image::oci/signature.png[]
 
@@ -174,7 +171,7 @@ skopeo copy --sign-by angel@olleb.com docker://quay.io/centos7/nginx-116-centos7
 
 The signature will be stored in our sigstore `~/.local/share/containers/sigstore/olleb/nginx-116-centos7@sha256=<SHA>/signature-1`
 
-Signature can be verified with:
+The signature can be verified with:
 
 [.lines_space]
 [.console-input]
@@ -237,9 +234,9 @@ skopeo copy oci:local-httpd24-encrypted:latest docker://${QUAY_HOSTNAME}/olleb/h
 
 * Navigate to the Quay Registry Dashboard, `olleb/httpd-24-encrypted` repository.
 
-* Click `Tags`.
+* Click on `Tags`.
 
-We will see our encrypted image stored on it.
+We will see our encrypted image stored in it.
 
 [#pgp]
 === Encrypted container images with PGP (RFC4880)
@@ -291,4 +288,4 @@ skopeo copy oci:local-nginx-116-encrypted:latest docker://${QUAY_HOSTNAME}/olleb
 
 * Click `Tags`.
 
-We will see our encrypted image stored on it.
+We will see our encrypted image stored in it.

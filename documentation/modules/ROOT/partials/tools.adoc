@@ -24,4 +24,4 @@
 
 |===
 
-Note: some of these tools are available through the Web Terminal provided by the Web Terminal Operator.
+Note: Some of these tools are available through the Web Terminal provided by the operator.

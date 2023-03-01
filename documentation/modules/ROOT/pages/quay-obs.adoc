@@ -1,13 +1,13 @@
 = Quay Observability
 include::_attributes.adoc[]
 
-Red Hat OpenShift provides an onboard observability. The Quay Operator adds an embedded/integrated Quay Dashboard into the graphical Red Hat OpenShift console; there is where we can observe the healthiness, rates, latency and more of our Quay registry.
+Red Hat OpenShift provides built-in observability tools for monitoring the health and performance of the system. The Quay Operator adds an embedded Quay Dashboard to the OpenShift console, where we can monitor the health, rates, latency, and more of our Quay registry.
 
-* Open a browser window and log in to the Red Hat OpenShift Container Platform web console.
+* Open a web browser and log in to the Red Hat OpenShift Container Platform web console.
 
-* From the Administrator perspective, click `Observe` → `Dashboards`.
+* From the Administrator perspective, click on `Observe`, then `Dashboards`.
 
-* In the `Dashboard` drop down, select `Quay - quay-workshop - registry`.
+* In the `Dashboard` drop-down menu, select `Quay - quay-workshop - registry`.
 
 image::obs/obs1.png[]
 

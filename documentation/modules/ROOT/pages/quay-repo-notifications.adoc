@@ -1,28 +1,28 @@
 = Quay Repository Notifications
 include::_attributes.adoc[]
 
-Quay supports adding notifications to a repository for various events that occur in the repository lifecycle.
+Quay supports adding notifications to a repository for various events that occur in the repository lifecycle, such as a new image push or tag deletion.
 
 [#pushnotif]
 == Creating a push to repository event notification
 
-* From the Red Hat Quay Dashboard, click the `olleb/kafka` repository. Recall from xref:quay-repos.adoc[2.2 Quay Repositories], we created and pushed a `strimzi/kafka` image on it.
+* From the Red Hat Quay Dashboard, go to the `olleb/kafka` repository. Remind from xref:quay-repos.adoc[2.2 Quay Repositories], we created and pushed a `strimzi/kafka` image.
 
 * Click `Settings`.
 
-* Click `+ Create Notification` button.
+* Click on the `+ Create Notification` button.
 
 image::reponotifications/notifbutton.png[]
 
-* In the `When this event occurs` drop down, select `Push to Repository`.
+* In the `When this event occurs` drop-down menu, select `Push to Repository`.
 
 image::reponotifications/event-list.png[]
 
-* Under the `Then issue a notification` drop down, select `Red Hat Quay Notification`.
+* Under the `Then issue a notification` drop-down menu, select `Red Hat Quay Notification`.
 
 image::reponotifications/notification-actions.png[]
 
-* In the `Recipient` drop down, select `owners`.
+* In the `Recipient` drop-down menu, select `owners`.
 
 * In the `Notification title` text field, type `A new image has been pushed into the repository`.
 
@@ -30,7 +30,7 @@ image::reponotifications/notifications-all.png[]
 
 * Click `Create Notification`.
 
-Push a new image into the repository or add a new tag the current one.
+Push a new image or add a new tag to the existing one in the repository.
 
 [.lines_space]
 [.console-input]
@@ -43,7 +43,7 @@ podman login ${QUAY_HOSTNAME}
 podman push ${QUAY_HOSTNAME}/olleb/kafka:3.0.0
 ----
 
-After a while, we will see the notification in the top of our dashboard.
+After a while, a notification will appear at the top of our dashboard indicating that a new image has been pushed into the repository.
 
 image::reponotifications/notification.png[]
 
