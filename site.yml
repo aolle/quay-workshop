@@ -7,8 +7,9 @@ site:
   start_page: quay-workshop::index.adoc
 
 content:
+  branches: [v*, main]
   sources:
-    - url: ./
+    - url: .
       start_path: documentation
 
 asciidoc:
