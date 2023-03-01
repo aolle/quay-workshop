@@ -24,7 +24,7 @@ image::cso/cso-install.png[]
 
 image::cso/cso-install-params.png[]
 
-* Click `Install` to start the installation process..
+* Click `Install` to start the installation process.
 
 [#vulncheck]
 == Checking the image vulnerabilities through the Red Hat OpenShift web console
@@ -67,7 +67,7 @@ image::cso/pods.png[]
 
 image::cso/vuln-tab.png[]
 
-* Click con the security scan results.
+* Click on the security scan results.
 
 image::cso/vulnimgmanifest.png[]
 

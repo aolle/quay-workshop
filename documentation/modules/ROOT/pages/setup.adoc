@@ -5,8 +5,8 @@ include::_attributes.adoc[]
 ====
 This tutorial was developed and tested with:
 
-* Red Hat OpenShift `{openshift-version}`
-* Red Hat Quay `{quay-version}`
+* Red Hat OpenShift `4.11`
+* Red Hat Quay `3.8`
 ====
 
 [#tools]
