@@ -5,7 +5,7 @@ include::_attributes.adoc[]
 ====
 This tutorial was developed and tested with:
 
-* Red Hat OpenShift `4.11`
+* Red Hat OpenShift `4.12`
 * Red Hat Quay `3.8`
 ====
 
@@ -36,7 +36,7 @@ image::install/operatorhub-odf.png[]
 
 image::install/odf-install.png[]
 
-* On the Install Operator page, select `stable-4.10` from the list of available Update Channel options, and then choose A specific namespace on the cluster. Leave the default value of Installed Namespace as openshift-storage, and set the Update Approval to Automatic. Also, make sure to set `Enable` the Console Plugin.
+* On the Install Operator page, select `stable-4.12` from the list of available Update Channel options, and then choose A specific namespace on the cluster. Leave the default value of Installed Namespace as openshift-storage, and set the Update Approval to Automatic. Also, make sure to set `Enable` the Console Plugin.
 
 image::install/odfoperator-install-opts.png[]
 
