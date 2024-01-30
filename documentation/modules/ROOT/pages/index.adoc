@@ -6,3 +6,5 @@
 == Introduction
 
 Red Hat Quay is a distributed and highly available container image registry for your enterprise.
+
+IMPORTANT: This is not an official guide or workshop provided by Red Hat. For more information on training or guidelines related to this topic or product, please reach out to your designated Red Hat representative.
