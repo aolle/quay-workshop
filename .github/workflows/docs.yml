@@ -12,7 +12,7 @@ jobs:
     runs-on: [ubuntu-latest]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: "Generate site using antora site action"
@@ -20,7 +20,7 @@ jobs:
         with:
           antora_playbook: site.yml
       - name: "Upload generated site"
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: site
           path: "${{ github.workspace }}/${{ env.SITE_DIR }}"
@@ -30,9 +30,9 @@ jobs:
     name: "Deploy GitHub Pages"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Download generated site
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: site
           path: "${{ github.workspace }}/${{ env.SITE_DIR }}"
