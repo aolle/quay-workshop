@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Quay OCI-based Artifacts Repository :: Red Hat Quay Workshop</title>
+    <link rel="canonical" href="https://olleb.com/quay-workshop/quay-oci.html">
+    <link rel="prev" href="quay-repo-notifications.html">
+    <link rel="next" href="quay-clair.html">
+    <meta name="generator" content="Antora 3.0.3">
+    <link rel="stylesheet" href="../_/css/site.css">
+<link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../_/img/RHDLogo.svg" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="https://olleb.com/quay-workshop">Red Hat Quay Workshop</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
+        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
+        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/kafka-tutorial/" target="_blank">Kafka</a>
+            <a class="navbar-item" href="https://devsecops-workshop.github.io/" target="_blank">DevSecOps</a>
+            <a class="navbar-item" href="https://acidonper.github.io/redhat-workshop-cicd-gitops/redhat-workshop-cicd-gitops/" target="_blank">CI/CD & GitOps</a>
+            <a class="navbar-item" href="https://atarazana.github.io/gramola-gitops-guide/gramola-gitops-guide/" target="_blank">Gramola GitOps Guide</a>
+            <a class="navbar-item" href="https://luisarizmendi.github.io/tutorial-secure-onboarding/" target="_blank">Secure Edge device onboarding with RHEL and FDO</a>
+            <a class="navbar-item" href="https://xbryan1.github.io/rhte-2023-acm-docs/" target="_blank">Multicluster Application Deployment with Advanced Cluster Management and GitOps</a>
+            <a class="navbar-item" href="https://redhat-scholars.github.io/java-inner-loop-dev-guide/java-inner-loop-dev-guide/index.html" target="_blank">Java Inner Loop Dev Guide</a>
+            <a class="navbar-item" href="https://atarazana.github.io/kitchensink-guide/" target="_blank">Deploying JBoss EAP applications on OpenShift</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html"></a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="setup.html">1. Environment Setup</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="setup.html#tools">1.1. Container Management Tools</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="setup.html#quay">1.2. Red Hat Quay Prerequisites</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="setup.html#odf">1.2.1. ODF operator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="setup.html#storage">1.2.2. Creating the standalone object gateway</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="setup.html#quayoperator">1.2.3. Installing Quay operator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="setup.html#quayinstance">1.2.4. Deploying Quay</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="setup.html#exportenvvar">1.2.5. Export environment variables</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">2. Red Hat Quay</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="quay-orgs.html">2.1 Users and Organizations</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="quay-orgs.html#useraccounts">2.1.1 Creating user accounts</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="quay-orgs.html#orgaccounts">2.1.2 Creating organization accounts</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="quay-repos.html">2.2 Quay Repositories</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="quay-repos.html#imagerepo">2.2.1 Creating an image repository</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="quay-repos.html#push">2.2.2 Push (and tag) an image into the repository</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="quay-repos.html#imglayers">2.2.3 Inspecting image layers</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="quay-repos.html#pull">2.2.4 Pull an image from the repository</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="quay-repos.html#rollback">2.2.5 Image rollback</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="quay-repos.html#expiration">2.2.6 Image expiration</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="quay-mirror.html">2.3 Quay Repository Mirroring</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="quay-mirror.html#imagerepo">2.3.1 Creating a repository to mirror from</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="quay-mirror.html#usage">2.3.1.2 Repository usage logs, tags and tag history</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="quay-repo-notifications.html">2.4 Quay Repository Notifications</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="quay-repo-notifications.html#pushnotif">2.4.1 Creating a push to repository event notification</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="quay-oci.html">2.5 Quay OCI-based Artifacts Repository</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#allowed">2.5.1 Configuring allowed OCI artifact types</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#helm">2.5.2 Helm charts</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#signed">2.5.3 Signed container images</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="#cosign">2.5.3.1 Signed container images with cosign</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="#signpgp">2.5.3.2 Signed container images with PGP (RFC4880)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#encrypted">2.5.4 Encrypted container images</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="#jwe">2.5.4.1 Encrypted container images with JSON Web Encryption (JWE) (RFC7516)</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="#pgp">2.5.4.2 Encrypted container images with PGP (RFC4880)</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="quay-clair.html">2.6 Clair Security Scanning</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="quay-clair.html#cve">2.6.1 Explore the vulnerability data (CVE&#8217;s)</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="quay-clair.html#secscan">2.6.1.1 Security scan</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="quay-clair.html#packages">2.6.1.2 Packages</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="quay-cso.html">2.7 Quay Container Security Operator (CSO)</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="quay-cso.html#install">2.7.1 Installing the Quay CSO Operator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="quay-cso.html#vulncheck">2.7.2 Checking the image vulnerabilities through the Red Hat OpenShift web console</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-obs.html">2.8 Quay Observability</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Red Hat Quay Workshop</a></li>
+    <li>2. Red Hat Quay</li>
+    <li><a href="quay-oci.html">2.5 Quay OCI-based Artifacts Repository</a></li>
+  </ul>
+</nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">main</button>
+  <div class="version-menu">
+    <a class="version" href="../quay-oci.html">main</a>
+    <a class="version is-current" href="quay-oci.html">main</a>
+    <a class="version" href="../v3.7/quay-oci.html">v3.7</a>
+  </div>
+</div>
+  <div style="padding: 0 0.5rem 0 0.75rem;"><a href="https://olleb.com" target="_blank" rel="noopener noreferrer"> © 2023 - Àngel Ollé Blázquez</a></div>
+</div>
+ 
+  <div class="content">
+<article class="doc">
+<h1 class="page">Quay OCI-based Artifacts Repository</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Quay can be used to store OCI-based artifacts like Helm charts, encrypted container images, signed images, zstd compressed images, etc.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="allowed"><a class="anchor" href="#allowed"></a>Configuring allowed OCI artifact types</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Some of the OCI artifacts that we will be using in the following sections are not allowed by default in Quay. For example, encrypted container images are not allowed by default (at least at the time of writing). To upload encrypted images to Quay, follow these steps to configure the <code>ALLOWED_OCI_ARTIFACT_TYPES</code> property:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open a browser window and log in to the Red Hat OpenShift Container Platform web console.</p>
+</li>
+<li>
+<p>Click on <code>Operators</code>, then <code>Installed Operators</code>.</p>
+</li>
+<li>
+<p>Select <code>quay-workshop</code> project and click on <code>Quay Registry</code>. Then click on our <code>registry</code>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/oci/quay-registry.png" alt="quay registry">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click the <code>Config Bundle Secret</code> secret (<code>registry-config-bundle-*</code>).</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/oci/config-bundle-secret.png" alt="config bundle secret">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In the <code>Actions</code> drop-down menu, select <code>Edit Secret</code>.</p>
+</li>
+<li>
+<p>Add the following into the <code>Value</code> text field, and click <code>Save</code>.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">ALLOWED_OCI_ARTIFACT_TYPES:
+  application/vnd.oci.image.config.v1+json:
+  - application/vnd.dev.cosign.simplesigning.v1+json
+  - application/vnd.oci.image.layer.v1.tar+gzip+encrypted
+  application/vnd.cncf.helm.config.v1+json:
+  - application/tar+gzip</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/oci/valuesecret.png" alt="valuesecret">
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>registry-quay-config-editor-*</code> and <code>registry-quay-app-*</code> pods will be restarted automatically with the new configuration.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="helm"><a class="anchor" href="#helm"></a>Helm charts</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Login to the Quay registry with helm.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">helm registry login ${QUAY_HOSTNAME}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Pull a chart.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">helm pull <a href="https://redhat-developer.github.io/redhat-helm-charts/charts/quarkus-0.0.3.tgz" class="bare">https://redhat-developer.github.io/redhat-helm-charts/charts/quarkus-0.0.3.tgz</a></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Push the chart into the Quay repository.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">helm push quarkus-0.0.3.tgz oci://${QUAY_HOSTNAME}/olleb/helm</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the Quay Dashboard and navigate to the <code>olleb/helm/quarkus</code> repository. Then, go to <code>Tags</code>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/oci/helmrepo.png" alt="helmrepo">
+</div>
+</div>
+<div class="paragraph">
+<p>The Helm chart is published to Quay as an OCI image.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The Helm chart can now be installed directly from the repository.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">helm install quarkus oci://${QUAY_HOSTNAME}/olleb/helm/quarkus --version=0.0.3</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="signed"><a class="anchor" href="#signed"></a>Signed container images</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Image signing ensures the integrity of our image deployments. Quay will store the signature as an OCI artifact.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This section shows how to sign and store image artifacts in a Quay registry, and how to use Quay to store OCI artifacts like signatures. However, it is important to note that this is not a comprehensive security guide or a registry hardening guide. Before signing images, we need to decide whether the source registry is trusted or not. Additionally, we need to determine whether signing an image after uploading it into the registry is sufficient or if we prefer to sign it before pushing it.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="cosign"><a class="anchor" href="#cosign"></a>Signed container images with cosign</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Generate the key pair.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cosign generate-key-pair</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Sign an image and pull it to Quay.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Pull the image
+podman pull quay.io/centos7/httpd-24-centos7:latest
+
+# Tag and push the image
+podman tag quay.io/centos7/httpd-24-centos7:latest ${QUAY_HOSTNAME}/olleb/httpd-24:latest
+podman push ${QUAY_HOSTNAME}/olleb/httpd-24:latest
+
+# Login
+## update the config.json auth file
+podman login --authfile ~/.docker/config.json ${QUAY_HOSTNAME}
+
+## login with cosign, will rely on the updated config.json
+cosign login ${QUAY_HOSTNAME} -u &lt;USER&gt;
+
+# Sign and push the signature
+cosign sign --key cosign.key ${QUAY_HOSTNAME}/olleb/httpd-24:latest</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Strictly speaking, signing an image by referencing it using a tag is not secure, as it can lead to signing a different image than the intended one. The correct way to sign an image is by using the image digest <code>@sha256:&#8230;&#8203;</code> The steps will be updated in the future before <code>cosign</code> drops that functionality.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Navigate to the Quay Registry Dashboard, <code>olleb/httpd-24</code> repository.</p>
+</li>
+<li>
+<p>Click <code>Tags</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You should see the signature stored in the repository.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/oci/signature.png" alt="signature">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="signpgp"><a class="anchor" href="#signpgp"></a>Signed container images with PGP (RFC4880)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Generate the PGP keys.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">gpg --full-generate-key
+&lt;..&gt;
+Real name: Angel
+Email address: <a href="mailto:angel@olleb.com">angel@olleb.com</a>
+Comment:
+You selected this USER-ID:
+    "Angel &lt;<a href="mailto:angel@olleb.com">angel@olleb.com</a>&gt;"
+&lt;..&gt;</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Copy, sign the image and push it to Quay.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">skopeo copy --sign-by <a href="mailto:angel@olleb.com">angel@olleb.com</a> docker://quay.io/centos7/nginx-116-centos7:latest docker://${QUAY_HOSTNAME}/olleb/nginx-116:latest</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The signature will be stored in our sigstore <code>~/.local/share/containers/sigstore/olleb/nginx-116-centos7@sha256=&lt;SHA&gt;/signature-1</code></p>
+</div>
+<div class="paragraph">
+<p>The signature can be verified with:</p>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">gpg --verify ~/.local/share/containers/sigstore/olleb/nginx-116-centos7@sha256=&lt;SHA&gt;/signature-1</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="encrypted"><a class="anchor" href="#encrypted"></a>Encrypted container images</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An image can be encrypted with a key or multiple keys. Also, we can encrypt the full image layers or some specific layer instead; also, we can encrypt all image layers or only some layer. In any case, we can store the container image into Quay.</p>
+</div>
+<div class="paragraph">
+<p>The encrypted images are used when we want to protect private and sensitive content from our images, for example, in case of our registry is compromised.</p>
+</div>
+<div class="paragraph">
+<p>Usually the image decrypting key is stored in a secret into our OCP cluster master node.</p>
+</div>
+<div class="sect2">
+<h3 id="jwe"><a class="anchor" href="#jwe"></a>Encrypted container images with JSON Web Encryption (JWE) (RFC7516)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Generate the encryption RSA keys with openssl.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># private key
+openssl genrsa --out private-key.pem 2048
+
+# public key
+openssl rsa -in private-key.pem -pubout -out public-key.pem</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Copy the image that we want to encrypt.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">skopeo copy docker://quay.io/centos7/httpd-24-centos7:latest oci:local-httpd24:latest</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Encrypt the image.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">skopeo copy --encryption-key jwe:public-key.pem oci:local-httpd24:latest oci:local-httpd24-encrypted:latest</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Push the image to Quay.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">skopeo copy oci:local-httpd24-encrypted:latest docker://${QUAY_HOSTNAME}/olleb/httpd-24-encrypted:latest</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Navigate to the Quay Registry Dashboard, <code>olleb/httpd-24-encrypted</code> repository.</p>
+</li>
+<li>
+<p>Click on <code>Tags</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We will see our encrypted image stored in it.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pgp"><a class="anchor" href="#pgp"></a>Encrypted container images with PGP (RFC4880)</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Generate the PGP keys.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">gpg --full-generate-key
+&lt;..&gt;
+Real name: Angel
+Email address: <a href="mailto:angel@olleb.com">angel@olleb.com</a>
+Comment:
+You selected this USER-ID:
+    "Angel &lt;<a href="mailto:angel@olleb.com">angel@olleb.com</a>&gt;"
+&lt;..&gt;</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Copy the image that we want to encrypt.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">skopeo copy docker://quay.io/centos7/nginx-116-centos7:latest oci:local-nginx-116:latest</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Encrypt the image.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">skopeo copy --encryption-key pgp:angel@olleb.com oci:local-nginx-116:latest oci:local-nginx-116-encrypted:latest</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Push the image to Quay.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">skopeo copy oci:local-nginx-116-encrypted:latest docker://${QUAY_HOSTNAME}/olleb/nginx-116-encrypted:latest</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Navigate to the Quay Registry Dashboard, <code>olleb/nginx-116-encrypted</code> repository.</p>
+</li>
+<li>
+<p>Click <code>Tags</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We will see our encrypted image stored in it.</p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="quay-repo-notifications.html">2.4 Quay Repository Notifications</a></span>
+  <span class="next"><a href="quay-clair.html">2.6 Clair Security Scanning</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
