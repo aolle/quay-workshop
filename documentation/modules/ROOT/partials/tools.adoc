@@ -17,11 +17,11 @@
 |
 
 | `cosign`
-| https://docs.sigstore.dev/cosign/installation[cosign Installation]
+| https://docs.sigstore.dev/cosign/system_config/installation/[cosign Installation]
 
 | `pgp`
 |
 
 |===
 
-Note: Some of these tools are available through the Web Terminal provided by the operator.
+Note: Some of these tools are also available through the web terminal provided by the operator.
