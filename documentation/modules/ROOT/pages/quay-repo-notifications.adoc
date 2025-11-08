@@ -1,16 +1,16 @@
 = Quay Repository Notifications
 include::_attributes.adoc[]
 
-Quay supports adding notifications to a repository for various events that occur in the repository lifecycle, such as a new image push or tag deletion.
+Quay supports adding notifications to a repository for various events that occur during the repository lifecycle, such as when a new image is pushed or a tag is deleted.
 
 [#pushnotif]
-== Creating a push to repository event notification
+== Creating a Push-to-Repository Event Notification
 
-* From the Red Hat Quay Dashboard, go to the `olleb/kafka` repository. Remind from xref:quay-repos.adoc[2.2 Quay Repositories], we created and pushed a `strimzi/kafka` image.
+* From the Red Hat Quay Dashboard, navigate to the `olleb/kafka` repository. Recall from xref:quay-repos.adoc[2.2 Quay Repositories] that we previously created and pushed a `strimzi/kafka` image.
 
 * Click `Settings`.
 
-* Click on the `+ Create Notification` button.
+* Click the `+ Create Notification` button.
 
 image::reponotifications/notifbutton.png[]
 
@@ -24,7 +24,7 @@ image::reponotifications/notification-actions.png[]
 
 * In the `Recipient` drop-down menu, select `owners`.
 
-* In the `Notification title` text field, type `A new image has been pushed into the repository`.
+* In the `Notification title` text field, enter `A new image has been pushed into the repository`.
 
 image::reponotifications/notifications-all.png[]
 
@@ -38,12 +38,12 @@ Push a new image or add a new tag to the existing one in the repository.
 ----
 podman pull quay.io/strimzi/kafka:latest-kafka-3.0.0
 podman tag quay.io/strimzi/kafka:latest-kafka-3.0.0 ${QUAY_HOSTNAME}/olleb/kafka:3.0.0
-# login if we are not already logged in
+# Log in if you are not already authenticated
 podman login ${QUAY_HOSTNAME}
 podman push ${QUAY_HOSTNAME}/olleb/kafka:3.0.0
 ----
 
-After a while, a notification will appear at the top of our dashboard indicating that a new image has been pushed into the repository.
+After a few moments, a notification will appear at the top of the dashboard indicating that a new image has been pushed to the repository.
 
 image::reponotifications/notification.png[]
 

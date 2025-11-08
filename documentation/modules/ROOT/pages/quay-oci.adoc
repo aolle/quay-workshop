@@ -1,47 +1,10 @@
-= Quay OCI-based Artifacts Repository
+= Quay OCI-Based Artifacts Repository
 include::_attributes.adoc[]
 
 Quay can be used to store OCI-based artifacts like Helm charts, encrypted container images, signed images, zstd compressed images, etc. 
 
-[#allowed]
-== Configuring allowed OCI artifact types
-
-Some of the OCI artifacts that we will be using in the following sections are not allowed by default in Quay. For example, encrypted container images are not allowed by default (at least at the time of writing). To upload encrypted images to Quay, follow these steps to configure the `ALLOWED_OCI_ARTIFACT_TYPES` property:
-
-* Open a browser window and log in to the Red Hat OpenShift Container Platform web console.
-
-* Click on `Operators`, then `Installed Operators`.
-
-* Select `quay-workshop` project and click on `Quay Registry`. Then click on our `registry`.
-
-image::oci/quay-registry.png[]
-
-* Click the `Config Bundle Secret` secret (`registry-config-bundle-*`).
-
-image::oci/config-bundle-secret.png[]
-
-* In the `Actions` drop-down menu, select `Edit Secret`.
-
-* Add the following into the `Value` text field, and click `Save`.
-
-[.lines_space]
-[.console-input]
-[source,yaml, subs="+macros,+attributes"]
-----
-ALLOWED_OCI_ARTIFACT_TYPES:
-  application/vnd.oci.image.config.v1+json:
-  - application/vnd.dev.cosign.simplesigning.v1+json
-  - application/vnd.oci.image.layer.v1.tar+gzip+encrypted
-  application/vnd.cncf.helm.config.v1+json:
-  - application/tar+gzip
-----
-
-image::oci/valuesecret.png[]
-
-The `registry-quay-config-editor-\*` and `registry-quay-app-*` pods will be restarted automatically with the new configuration.
-
 [#helm]
-== Helm charts
+== Working with Helm Charts
 
 * Login to the Quay registry with helm.
 
@@ -86,19 +49,14 @@ helm install quarkus oci://${QUAY_HOSTNAME}/olleb/helm/quarkus --version=0.0.3
 ----
 
 [#signed]
-== Signed container images
+== Signed Container Images
 
-Image signing ensures the integrity of our image deployments. Quay will store the signature as an OCI artifact.
-
-[IMPORTANT,subs="attributes+,+macros"]
-====
-This section shows how to sign and store image artifacts in a Quay registry, and how to use Quay to store OCI artifacts like signatures. However, it is important to note that this is not a comprehensive security guide or a registry hardening guide. Before signing images, we need to decide whether the source registry is trusted or not. Additionally, we need to determine whether signing an image after uploading it into the registry is sufficient or if we prefer to sign it before pushing it.
-====
+Image signing ensures the integrity and authenticity of image deployments. Quay stores the signature as an OCI artifact.
 
 [#cosign]
-=== Signed container images with cosign
+=== Signing Container Images with Cosign
 
-* Generate the key pair.
+* Generate a key pair.
 
 [.lines_space]
 [.console-input]
@@ -107,69 +65,68 @@ This section shows how to sign and store image artifacts in a Quay registry, and
 cosign generate-key-pair
 ----
 
-* Sign an image and pull it to Quay.
+* Sign an image and push it to Quay.
 
 [.lines_space]
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
 # Pull the image
-podman pull quay.io/centos7/httpd-24-centos7:latest
+podman pull quay.io/fedora/httpd-24-micro:2.4
 
 # Tag and push the image
-podman tag quay.io/centos7/httpd-24-centos7:latest ${QUAY_HOSTNAME}/olleb/httpd-24:latest
-podman push ${QUAY_HOSTNAME}/olleb/httpd-24:latest
+podman tag quay.io/fedora/httpd-24-micro:2.4 ${QUAY_HOSTNAME}/olleb/httpd-24-micro:2.4
 
-# Login
-## update the config.json auth file
-podman login --authfile ~/.docker/config.json ${QUAY_HOSTNAME}
+# Log in
+podman login ${QUAY_HOSTNAME}
 
-## login with cosign, will rely on the updated config.json
-cosign login ${QUAY_HOSTNAME} -u <USER>
+# Push the image
+podman push ${QUAY_HOSTNAME}/olleb/httpd-24-micro:2.4
+
+# Log in with cosign
+DOCKER_CONFIG="${XDG_RUNTIME_DIR}/containers/" cosign login ${QUAY_HOSTNAME} -u <USER>
 
 # Sign and push the signature
-cosign sign --key cosign.key ${QUAY_HOSTNAME}/olleb/httpd-24:latest
+DIGEST=$(podman inspect --format '{{.Digest}}' "${QUAY_HOSTNAME}/olleb/httpd-24-micro:2.4")
+
+cosign sign --key cosign.key "${QUAY_HOSTNAME}/olleb/httpd-24-micro@$DIGEST" --tlog-upload=false
 ----
 
-NOTE: Strictly speaking, signing an image by referencing it using a tag is not secure, as it can lead to signing a different image than the intended one. The correct way to sign an image is by using the image digest `@sha256:...` The steps will be updated in the future before `cosign` drops that functionality.
-
-* Navigate to the Quay Registry Dashboard, `olleb/httpd-24` repository.
+* Navigate to the Quay Dashboard and open the `olleb/httpd-24-micro` repository.
 
 * Click `Tags`.
 
-You should see the signature stored in the repository.
+You should now see the signature stored in the repository.
 
 image::oci/signature.png[]
 
 [#signpgp]
-=== Signed container images with PGP (RFC4880)
+=== Signing Container Images with PGP (RFC4880)
 
-* Generate the PGP keys.
-
-[.lines_space]
-[.console-input]
-[source,bash, subs="+macros,+attributes"]
-----
-gpg --full-generate-key
-<..>
-Real name: Angel
-Email address: angel@olleb.com
-Comment:
-You selected this USER-ID:
-    "Angel <angel@olleb.com>"
-<..>
-----
-
-* Copy, sign the image and push it to Quay.
+* Generate PGP keys.
 
 [.lines_space]
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-skopeo copy --sign-by angel@olleb.com docker://quay.io/centos7/nginx-116-centos7:latest docker://${QUAY_HOSTNAME}/olleb/nginx-116:latest
+gpg --batch --gen-key <<EOF
+Key-Type: RSA
+Key-Length: 4096
+Name-Real: Angel
+Name-Email: angel@olleb.com
+Expire-Date: 0
+%commit
+EOF
 ----
 
-The signature will be stored in our sigstore `~/.local/share/containers/sigstore/olleb/nginx-116-centos7@sha256=<SHA>/signature-1`
+* Sign the image and push it to Quay.
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+podman push --sign-by angel@olleb.com ${QUAY_HOSTNAME}/olleb/httpd-24-micro:2.4 --tls-verify=false
+----
 
 The signature can be verified with:
 
@@ -177,115 +134,149 @@ The signature can be verified with:
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-gpg --verify ~/.local/share/containers/sigstore/olleb/nginx-116-centos7@sha256=<SHA>/signature-1
+gpg --verify ~/.local/share/containers/sigstore/olleb/httpd-24-micro@sha256=<SHA>/signature-1
 ----
 
+NOTE: `skopeo` can also be used for signing and moving images between registries.
+
 [#encrypted]
-== Encrypted container images
+== Encrypted Container Images
 
-An image can be encrypted with a key or multiple keys. Also, we can encrypt the full image layers or some specific layer instead; also, we can encrypt all image layers or only some layer. In any case, we can store the container image into Quay.
+An image can be encrypted using one or more keys. You can encrypt the entire image layers or specific layers. In any case, the container image can be stored in Quay.
 
-The encrypted images are used when we want to protect private and sensitive content from our images, for example, in case of our registry is compromised.
+Encrypted images are used to protect private and sensitive content in your images, for example, in case the registry is compromised.
 
-Usually the image decrypting key is stored in a secret into our OCP cluster master node.
+Typically, the image decryption key is stored in a secret on the OCP cluster master node.
 
 [#jwe]
-=== Encrypted container images with JSON Web Encryption (JWE) (RFC7516)
+=== Encrypting Container Images with JSON Web Encryption (JWE) (RFC7516)
 
-* Generate the encryption RSA keys with openssl.
+* Generate RSA encryption keys using OpenSSL.
 
 [.lines_space]
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-# private key
+# Private key
 openssl genrsa --out private-key.pem 2048
 
-# public key
+# Public key
 openssl rsa -in private-key.pem -pubout -out public-key.pem
 ----
 
-* Copy the image that we want to encrypt.
+* Pull the image you want to encrypt.
 
 [.lines_space]
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-skopeo copy docker://quay.io/centos7/httpd-24-centos7:latest oci:local-httpd24:latest
+# Pull the image
+podman pull quay.io/fedora/mysql-80:80
+
+# Tag and push the image
+podman tag quay.io/fedora/mysql-80:80 ${QUAY_HOSTNAME}/olleb/mysql-80:jwe
 ----
 
-* Encrypt the image.
+* Encrypt and push the image.
 
 [.lines_space]
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-skopeo copy --encryption-key jwe:public-key.pem oci:local-httpd24:latest oci:local-httpd24-encrypted:latest
+podman push --encryption-key jwe:public-key.pem ${QUAY_HOSTNAME}/olleb/mysql-80:jwe
 ----
 
-* Push the image to Quay.
-
-[.lines_space]
-[.console-input]
-[source,bash, subs="+macros,+attributes"]
-----
-skopeo copy oci:local-httpd24-encrypted:latest docker://${QUAY_HOSTNAME}/olleb/httpd-24-encrypted:latest
-----
-
-* Navigate to the Quay Registry Dashboard, `olleb/httpd-24-encrypted` repository.
-
-* Click on `Tags`.
-
-We will see our encrypted image stored in it.
-
-[#pgp]
-=== Encrypted container images with PGP (RFC4880)
-
-* Generate the PGP keys.
-
-[.lines_space]
-[.console-input]
-[source,bash, subs="+macros,+attributes"]
-----
-gpg --full-generate-key
-<..>
-Real name: Angel
-Email address: angel@olleb.com
-Comment:
-You selected this USER-ID:
-    "Angel <angel@olleb.com>"
-<..>
-----
-
-* Copy the image that we want to encrypt.
-
-[.lines_space]
-[.console-input]
-[source,bash, subs="+macros,+attributes"]
-----
-skopeo copy docker://quay.io/centos7/nginx-116-centos7:latest oci:local-nginx-116:latest
-----
-
-* Encrypt the image.
-
-[.lines_space]
-[.console-input]
-[source,bash, subs="+macros,+attributes"]
-----
-skopeo copy --encryption-key pgp:angel@olleb.com oci:local-nginx-116:latest oci:local-nginx-116-encrypted:latest
-----
-
-* Push the image to Quay.
-
-[.lines_space]
-[.console-input]
-[source,bash, subs="+macros,+attributes"]
-----
-skopeo copy oci:local-nginx-116-encrypted:latest docker://${QUAY_HOSTNAME}/olleb/nginx-116-encrypted:latest
-----
-
-* Navigate to the Quay Registry Dashboard, `olleb/nginx-116-encrypted` repository.
+* Navigate to the Quay Dashboard and open the `olleb/mysql-80` repository.
 
 * Click `Tags`.
 
-We will see our encrypted image stored in it.
+You will see the encrypted image stored in the repository.
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+podman inspect ${QUAY_HOSTNAME}/olleb/mysql-80:jwe
+----
+
+Try pulling it with:
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+# Remove the local image if it exists
+podman rmi ${QUAY_HOSTNAME}/olleb/mysql-80:jwe
+
+# Pull
+podman pull ${QUAY_HOSTNAME}/olleb/mysql-80:jwe
+----
+
+You will get an error like `Error: writing blob: layer 0 (blob "sha256:...`.
+
+Now, pull the image providing the private key for decryption:
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+podman pull --decryption-key private-key.pem ${QUAY_HOSTNAME}/olleb/mysql-80:jwe
+----
+
+The image will be pulled without issues.
+
+NOTE: `skopeo` can also be used to perform the same steps.
+
+// TODO: skopeo inspect --raw docker://${QUAY_HOSTNAME}/olleb/mysql-80:jwe --tls-verify=false | jq
+
+[#pgp]
+=== Encrypting Container Images with PGP (RFC4880)
+
+* Generate PGP keys.
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+gpg --batch --gen-key <<EOF
+Key-Type: RSA
+Key-Length: 4096
+Name-Real: Angel
+Name-Email: angel@olleb.com
+Expire-Date: 0
+%commit
+EOF
+----
+
+* Pull the image you want to encrypt.
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+# pull the image
+podman pull quay.io/fedora/postgresql-16:16
+
+# tag and push the image
+podman tag quay.io/fedora/postgresql-16:16 ${QUAY_HOSTNAME}/olleb/postgresql-16:pgp
+----
+
+* Encrypt and push the image.
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+podman push --encryption-key pgp:angel@olleb.com ${QUAY_HOSTNAME}/olleb/postgresql-16:pgp
+----
+
+* Navigate to the Quay Dashboard and open the `olleb/postgresql-16` repository.
+
+* Click `Tags`.
+
+You will see the encrypted image stored in the repository.
+
+// TODO: decrypt
+
+NOTE: `skopeo` can also be used to perform the same steps.
+
