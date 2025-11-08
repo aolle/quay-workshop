@@ -4,38 +4,40 @@ include::_attributes.adoc[]
 [#imagerepo]
 == Creating an image repository
 
-* Click on the `Create New Repository` button.
+On the main Quay landing page:
+
+* Click the `Create New Repository` button.
 
 image::repositories/create-repo.png[]
 
-* Select the organization from the drop-down list, name the repository `kafka`, and set the visibility to `public`.
+* Select the organization from the drop-down list, name the repository `kafka`, and set the visibility to `Public`.
 
 image::repositories/repo-config.png[]
 
 * Click `Create Public Repository`.
 
 [#push]
-== Push (and tag) an image into the repository
+== Pushing (and tagging) an image into the repository
 
-* Pull an image from the public registry by running the `podman pull` command followed by the name of the image.
-
-[.lines_space]
-[.console-input]
-[source,bash, subs="+macros,+attributes"]
-----
-podman pull quay.io/strimzi/kafka:latest-kafka-3.2.1
-----
-
-* Tag the image with a name and a version number using the `podman tag` command.
+* Pull an image from the public registry by running the `podman pull` command followed by the image name.
 
 [.lines_space]
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-podman tag quay.io/strimzi/kafka:latest-kafka-3.2.1 ${QUAY_HOSTNAME}/olleb/kafka:3.2.1
+podman pull quay.io/strimzi/kafka:latest-kafka-4.0.0
 ----
 
-* Sign into our Quay repository using your account credentials, if you are not already signed in.
+* Tag the image with a name and version number using the `podman tag` command.
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+podman tag quay.io/strimzi/kafka:latest-kafka-4.0.0 ${QUAY_HOSTNAME}/olleb/kafka:4.0.0
+----
+
+* Sign in to your Quay repository using your account credentials, if you are not already signed in.
 
 [.lines_space]
 [.console-input]
@@ -50,10 +52,10 @@ podman login ${QUAY_HOSTNAME}
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-podman push ${QUAY_HOSTNAME}/olleb/kafka:3.2.1
+podman push ${QUAY_HOSTNAME}/olleb/kafka:4.0.0
 ----
 
-* Verify that the image has been successfully pushed into our Quay repository by checking that the image is listed.
+* Verify that the image has been successfully pushed to your Quay repository by confirming that the image is listed.
 
 image::repositories/image-pushed.png[]
 
@@ -62,39 +64,40 @@ image::repositories/image-pushed.png[]
 
 * Navigate to the `olleb/kafka` repository.
 
-* Click on the `Tags` icon.
+* Click the `Tags` icon.
 
-* Click on the `SHA256` value located under `MANIFEST` section of the `3.2.1` tag to view the layers dashboard.
+* Under the `MANIFEST` section of the `4.0.0` tag, click the `SHA256` value to open the image layers dashboard.
 
 image::repositories/image-pushed2.png[]
 
 image::repositories/img-layers.png[]
 
 [#pull]
-== Pull an image from the repository
+== Pulling an image from the repository
 
 * From the Quay dashboard, locate and select the `olleb/kafka` repository.
 
-* Click on the `Tags` tab.
+* Click the `Tags` tab.
 
-* Select any of the repository\'s tags by clicking on it, click on the `Fetch Tag` icon.
+* Select any of the repository’s tags and click the `Fetch Tag` icon.
 
 image::repositories/fetchtagpre.png[]
 
-* Select `Podman Pull (by tag)` from the `Image Format` drop-down menu and click on the `Copy Command` button.
+* From the *Image Format* drop-down menu, select `Podman Pull (by tag)` and click the `Copy Command` button.
 
 image::repositories/fetchtag.png[]
 
-* Switch to a terminal, paste the command you copied from the Quay UI, and then execute it. Make sure you have `Podman` installed on your system. Since we created the repository as `Public`, no login is required to pull the image.
+* Switch to a terminal, paste the command you copied from the Quay UI, and execute it.  
+  Ensure that `Podman` is installed on your system. Since the repository was created as `Public`, no login is required to pull the image.
 
 [#rollback]
-== Image rollback
+== Rolling back an image
 
-Quay provides us with a convenient way to review the history of tags associated with an image repository.
+Quay provides a convenient way to review the history of tags associated with an image repository and to roll back to a previous version when needed.
 
-* Create a new image repository as already explained. In this case, create a public repository named `olleb/rollback` on Quay.
+* Create a new image repository as previously explained. In this case, create a public repository named `olleb/rollback` on Quay.
 
-* Build an image, tag it and push it.
+* Build an image, tag it, and push it.
 
 [.lines_space]
 [.console-input]
@@ -107,13 +110,13 @@ podman tag localhost/rollback:1.0 ${QUAY_HOSTNAME}/olleb/rollback:latest
 podman push ${QUAY_HOSTNAME}/olleb/rollback:latest
 ----
 
-* Verify that the image has been pushed into Quay repository. Check also the manifest digest and the layers.
+* Verify that the image has been pushed to the Quay repository. Also, check the manifest digest and the layers.
 
 image::repositories/rblatest1.png[]
 
 image::repositories/rblayers1.png[]
 
-* Add a new layer to the Containerfile, rebuild the image, and *overwrite* the old one by tagging and pushing it with the same remote tag.
+* Add a new layer to the `Containerfile`, rebuild the image, and *overwrite* the previous one by tagging and pushing it with the same remote tag.
 
 [.lines_space]
 [.console-input]
@@ -126,36 +129,37 @@ podman tag localhost/rollback:2.0 ${QUAY_HOSTNAME}/olleb/rollback:latest
 podman push ${QUAY_HOSTNAME}/olleb/rollback:latest
 ----
 
-* Verify that the new image has been pushed to the Quay repository and check its manifest digest and layers in the Quay UI. You should observe that the manifest digest and layers are different from the previous image.
+* Verify that the new image has been pushed to the Quay repository, and check its manifest digest and layers in the Quay UI.  
+  You should observe that the manifest digest and layers differ from the previous image.
 
 image::repositories/rblatest2.png[]
 
 image::repositories/rblayers2.png[]
 
-* To rollback the image to the previous one, navigate to the Quay UI and click on the `Tag History` option for the repository. From there, select the tag for the previous image that you want to rollback to.
+* To roll back the image to the previous version, navigate to the Quay UI and click the `Tag History` option for the repository.
 
-image::repositories/taghistory.png[]
+image::repositories/tagh.png[]
 
-* Click on `Revert to ...`.
+* From there, select the tag of the previous image you want to restore, and click `Revert to ...`.
 
 image::repositories/revert.png[]
 
-* Click on the `Restore Tag` button. This will restore the image for that tag to the previous image.
+* Click the `Restore Tag` button. This will restore the tag to reference the previous image.
 
 image::repositories/restoretag.png[]
 
-* To verify that the image has been restored to the previous one in the tag history, go to the `Tag History` section in the Quay UI and check that the restored tag has the same manifest digest and layers as the previous image that was reverted to.
+* To verify that the rollback was successful, go to the `Tag History` section in the Quay UI and confirm that the restored tag has the same manifest digest and layers as the previous image.
 
 image::repositories/restored.png[]
 
 [#expiration]
 == Image expiration
 
-To configure an image tag to expire from Quay on a specific time and date, follow these steps:
+To configure an image tag to expire in Quay at a specific time or date, follow these steps:
 
-* Create a new image repository as already explained. I created the `olleb/expiration` repository.
+* Create a new image repository as previously explained. In this example, create a public repository named `olleb/expiration`.
 
-* Build a `1.0` image, tag it and push it to the `olleb/expiration` repository.
+* Build a `1.0` image, tag it, and push it to the `olleb/expiration` repository.
 
 [.lines_space]
 [.console-input]
@@ -168,7 +172,9 @@ podman tag localhost/exp:1.0 ${QUAY_HOSTNAME}/olleb/expiration:1.0
 podman push ${QUAY_HOSTNAME}/olleb/expiration:1.0
 ----
 
-* The label `quay.expires-after` is used to indicate the expiration time for the tag. The value of the label can be specified in a number of different formats, including a specific time and date, a relative time offset from the time of image creation, or a relative time offset from the time of tag creation. In this case, we will use the relative time offset of `5m`, which specifies that the image should expire 5 minutes after it is tagged with the `2.0` and latest `tags`.
+* The label `quay.expires-after` is used to specify the expiration time for a tag.  
+  The value can be defined in several formats, including a specific date and time, a relative time offset from image creation, or a relative time offset from tag creation.  
+  In this example, we use a relative time offset of `5m`, which means the image will expire 5 minutes after being tagged as `2.0` and `latest`.
 
 [.lines_space]
 [.console-input]
@@ -185,44 +191,56 @@ podman tag localhost/exp:2.0 ${QUAY_HOSTNAME}/olleb/expiration:latest
 podman push ${QUAY_HOSTNAME}/olleb/expiration:latest
 ----
 
-* We now have two images and three tags in our `olleb/expiration` repository. The `1.0` image has a `1.0` tag, the `2.0` image has `2.0` and `latest` tags. The `latest` and the `2.0` tag are marked as expiring soon.
+* At this point, the `olleb/expiration` repository contains two images and three tags:  
+  - The `1.0` image has the `1.0` tag.  
+  - The `2.0` image has the `2.0` and `latest` tags.  
+  The `2.0` and `latest` tags are marked as expiring soon.
 
 image::repositories/exp1.png[]
 
-After 5 minutes, both tags will be removed from the repository automatically.
+After 5 minutes, both tags will be automatically removed from the repository.
+
+image::repositories/exp2.png[]
 
 image::repositories/taghistoryautodeleted.png[]
 
-* Select the `1.0` tag, in the `Actions` drop-down list, select `Change Tags Expiration`. Set the desired `Expiration Date`.
+* To manually configure an expiration time, select the `1.0` tag.  
+  From the *Actions* drop-down list, select *Change Expiration*, and set the desired *Expiration Date*.
+
+image::repositories/exp3.png[]
 
 image::repositories/expirationdatetag.png[]
 
-TIP: Alternatively, the expiration can also be set by clicking on the `Options` icon and selecting `Change Expiration`.
+TIP: Alternatively, you can set the expiration by clicking the *Options* icon and selecting *Change Expiration*.
 
-When the tag is about to expire, a message will be displayed:
+When a tag is about to expire, a warning message is displayed:
 
 image::repositories/abouttoexpire.png[]
 
-NOTE: By default, the minimum expiration time is one hour and the maximum is 104 weeks (approximately 2 years) at the time of this writing. If you want to allow for earlier or later minimum expiration times, you can set the `LABELED_EXPIRATION_MINIMUM` property to a different time value, such as `60s` (seconds), `5m` (minutes), `24h` (hours), `7d` (days), or `2w` (weeks). This configuration must be placed in the `Config Bundle Secret` of your registry instance. An example of how to do this is explained in section xref:quay-oci.adoc#allowed[2.5.1 Configuring allowed OCI artifact types].
+NOTE: By default, the minimum expiration time is **one hour**, and the maximum is **104 weeks** (approximately two years).  
+If you need shorter or longer expiration limits, modify the `LABELED_EXPIRATION_MINIMUM` setting in the **Config Bundle Secret** of your registry instance.  
+This property accepts values such as `60s` (seconds), `5m` (minutes), `24h` (hours), `7d` (days), or `2w` (weeks).  
+For more details, see xref:quay-oci.adoc#allowed[2.5.1 Configuring allowed OCI artifact types].
 
-When the tag expires, it is deleted automatically.
+When a tag expires, it is deleted automatically.
 
-image::repositories/tagexpireddeleted.png[]
+However, even after a tag is deleted, the corresponding image can still be restored.  
+When a tag is deleted and no other tags reference the same image, the image is not immediately removed — it is marked for **garbage collection**, which by default occurs after **14 days (`2w`)**.  
+Quay’s garbage collection worker runs periodically and removes expired images once the configured *Time Machine* retention period has passed.
 
-Note that even though the tag is deleted, we can still restore the image. The reason is that when a tag is deleted and there are no other tags pointing to the same image, the image is not immediately deleted. Instead, it is marked for garbage collection, which by default occurs after 14 days (`2w`). Quay has a garbage collection worker enabled by default which runs periodically and removes the expired images when the configured *Time Machine* amount of time has passed.
-
-As we stored the image inside `olleb` organization, we can check that value by browsing to `/organization/olleb?tab=settings`.
+Because the image was stored under the `olleb` organization, you can check that value by navigating to `/organization/olleb?tab=settings`.
 
 image::repositories/orgexptime.png[]
 
-If the image stored is under the user account instead on an organization, the value can be found under user settings
+If the image was stored under a user account instead of an organization, the setting can be found under *User Settings*.
 
-The Time Machine amount time can be modified by changing the value of the `TAG_EXPIRATION_OPTIONS` array property, which must include the default expiration value `DEFAULT_TAG_EXPIRATION` in the list. An example of how to modify this value is explained in section xref:quay-oci.adoc#allowed[2.5.1 Configuring allowed OCI artifact types].
+The *Time Machine* retention period can be modified by changing the `TAG_EXPIRATION_OPTIONS` array property, which must include the default expiration value `DEFAULT_TAG_EXPIRATION` in its list.  
+An example of how to modify this value is provided in section xref:quay-oci.adoc#allowed[2.5.1 Configuring allowed OCI artifact types].
 
 For example, with the following custom configuration:
 
 image::repositories/expcfg.png[]
 
-we will see:
+you will see:
 
 image::repositories/customtm.png[]
