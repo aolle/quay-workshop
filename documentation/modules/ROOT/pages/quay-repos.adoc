@@ -1,8 +1,8 @@
-= Quay Repositories
+= Quay repositories
 include::_attributes.adoc[]
 
 [#imagerepo]
-== Creating an image repository
+== Creating an Image Repository
 
 On the main Quay landing page:
 
@@ -17,7 +17,7 @@ image::repositories/repo-config.png[]
 * Click `Create Public Repository`.
 
 [#push]
-== Pushing (and tagging) an image into the repository
+== Pushing and Tagging an Image to the Repository
 
 * Pull an image from the public registry by running the `podman pull` command followed by the image name.
 
@@ -60,7 +60,7 @@ podman push ${QUAY_HOSTNAME}/olleb/kafka:4.0.0
 image::repositories/image-pushed.png[]
 
 [#imglayers]
-== Inspecting image layers
+== Inspecting Image Layers
 
 * Navigate to the `olleb/kafka` repository.
 
@@ -73,7 +73,7 @@ image::repositories/image-pushed2.png[]
 image::repositories/img-layers.png[]
 
 [#pull]
-== Pulling an image from the repository
+== Pulling an Image from the Repository
 
 * From the Quay dashboard, locate and select the `olleb/kafka` repository.
 
@@ -91,7 +91,7 @@ image::repositories/fetchtag.png[]
   Ensure that `Podman` is installed on your system. Since the repository was created as `Public`, no login is required to pull the image.
 
 [#rollback]
-== Rolling back an image
+== Rolling Back an Image
 
 Quay provides a convenient way to review the history of tags associated with an image repository and to roll back to a previous version when needed.
 
@@ -153,7 +153,7 @@ image::repositories/restoretag.png[]
 image::repositories/restored.png[]
 
 [#expiration]
-== Image expiration
+== Image Expiration
 
 To configure an image tag to expire in Quay at a specific time or date, follow these steps:
 

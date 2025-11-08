@@ -1,8 +1,8 @@
-= Users, Organizations and Teams
+= Users and Organizations
 include::_attributes.adoc[]
 
 [#useraccounts]
-== Creating user accounts
+== Creating User Accounts
 
 To create a new user for your Red Hat Quay instance:
 
@@ -29,7 +29,7 @@ image::organizations/quay-create-account2.png[]
 * Fill in the required information, create the account, and sign in.
 
 [#orgaccounts]
-== Creating organization accounts
+== Creating Organization Accounts
 
 To create a new organization that allows sharing container image repositories:
 

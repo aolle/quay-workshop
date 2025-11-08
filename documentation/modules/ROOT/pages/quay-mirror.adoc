@@ -1,51 +1,52 @@
 = Quay Repository Mirroring
 include::_attributes.adoc[]
 
-Quay Repository mirroring allows us to mirror images from external container registries (or local registries) into our Quay cluster.
+Quay repository mirroring allows you to replicate container images from external or local registries into your Quay cluster.
 
 [#imagerepo]
-== Creating a repository to mirror from
+== Creating a Mirrored Repository
 
-* Click on `Create New Repository`.
+* Click `Create New Repository`.
 
 image::repositories/create-repo.png[]
 
-* Select the organization in the drop-down list, name the repository as `apache/httpd-mirror` and set its visibility to `Public`.
+* In the drop-down list, select the organization, name the repository `apache/httpd-mirror`, and set its visibility to `Public`.
 
 image::mirror/mirror-cfg.png[]
 
-* Click on `Create Public Repository`.
+* Click `Create Public Repository`.
 
-* Click on the `Settings` icon.
+* Click the `Settings` icon.
 
 * Change the `Repository State` to `Mirror`.
 
 image::mirror/repo-state.png[]
 
-* Click on the `Mirroring` icon.
+* Click the `Mirroring` icon.
 
-* Fill out the fields using the following values:
+* Fill in the fields with the following values:
 
-** Registry Location: `httpd`
-** Tags: `2.4.53, 2.4.48*`
-** Start Date: set the current date/time
-** Sync Interval: `1 minute`
-** Robot User: `Create robot account`
+** **Registry Location:** `httpd`
+** **Tags:** `2.4.53, 2.4.48*`
+** **Start Date:** set to the current date and time
+** **Sync Interval:** `1 minute`
+** **Skopeo Timeout Interval:** `300`
+** **Robot User:** `Create robot account`
 
 image::mirror/create-robot-acc.png[]
 
 image::mirror/robot-acc.png[]
 
-* Click on `Create robot account`.
+* Click `Create Robot Account`.
 
 image::mirror/mirror-all.png[]
 
-* Click on `Enable Mirror`.
+* Click `Enable Mirror`.
 
 [#usage]
-=== Repository usage logs, tags and tag history
+=== Repository Usage Logs, Tags, and Tag History
 
-After enabling the mirror, you can check the `Tag History`, `Tags`, and `Usage Logs` as shown below.
+After enabling mirroring, you can view the `Tag History`, `Tags`, and `Usage Logs` as shown below.
 
 image::mirror/usagelogs.png[]
 
