@@ -257,10 +257,13 @@
 <div class="sect1">
 <h2 id="imagerepo"><a class="anchor" href="#imagerepo"></a>Creating an image repository</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>On the main Quay landing page:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Click on the <code>Create New Repository</code> button.</p>
+<p>Click the <code>Create New Repository</code> button.</p>
 </li>
 </ul>
 </div>
@@ -272,7 +275,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Select the organization from the drop-down list, name the repository <code>kafka</code>, and set the visibility to <code>public</code>.</p>
+<p>Select the organization from the drop-down list, name the repository <code>kafka</code>, and set the visibility to <code>Public</code>.</p>
 </li>
 </ul>
 </div>
@@ -291,36 +294,36 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="push"><a class="anchor" href="#push"></a>Push (and tag) an image into the repository</h2>
+<h2 id="push"><a class="anchor" href="#push"></a>Pushing (and tagging) an image into the repository</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p>Pull an image from the public registry by running the <code>podman pull</code> command followed by the name of the image.</p>
+<p>Pull an image from the public registry by running the <code>podman pull</code> command followed by the image name.</p>
 </li>
 </ul>
 </div>
 <div class="listingblock lines_space console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman pull quay.io/strimzi/kafka:latest-kafka-3.2.1</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman pull quay.io/strimzi/kafka:latest-kafka-4.0.0</code></pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Tag the image with a name and a version number using the <code>podman tag</code> command.</p>
+<p>Tag the image with a name and version number using the <code>podman tag</code> command.</p>
 </li>
 </ul>
 </div>
 <div class="listingblock lines_space console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman tag quay.io/strimzi/kafka:latest-kafka-3.2.1 ${QUAY_HOSTNAME}/olleb/kafka:3.2.1</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman tag quay.io/strimzi/kafka:latest-kafka-4.0.0 ${QUAY_HOSTNAME}/olleb/kafka:4.0.0</code></pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Sign into our Quay repository using your account credentials, if you are not already signed in.</p>
+<p>Sign in to your Quay repository using your account credentials, if you are not already signed in.</p>
 </li>
 </ul>
 </div>
@@ -338,13 +341,13 @@
 </div>
 <div class="listingblock lines_space console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman push ${QUAY_HOSTNAME}/olleb/kafka:3.2.1</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman push ${QUAY_HOSTNAME}/olleb/kafka:4.0.0</code></pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Verify that the image has been successfully pushed into our Quay repository by checking that the image is listed.</p>
+<p>Verify that the image has been successfully pushed to your Quay repository by confirming that the image is listed.</p>
 </li>
 </ul>
 </div>
@@ -364,10 +367,10 @@
 <p>Navigate to the <code>olleb/kafka</code> repository.</p>
 </li>
 <li>
-<p>Click on the <code>Tags</code> icon.</p>
+<p>Click the <code>Tags</code> icon.</p>
 </li>
 <li>
-<p>Click on the <code>SHA256</code> value located under <code>MANIFEST</code> section of the <code>3.2.1</code> tag to view the layers dashboard.</p>
+<p>Under the <code>MANIFEST</code> section of the <code>4.0.0</code> tag, click the <code>SHA256</code> value to open the image layers dashboard.</p>
 </li>
 </ul>
 </div>
@@ -384,7 +387,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="pull"><a class="anchor" href="#pull"></a>Pull an image from the repository</h2>
+<h2 id="pull"><a class="anchor" href="#pull"></a>Pulling an image from the repository</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -392,10 +395,10 @@
 <p>From the Quay dashboard, locate and select the <code>olleb/kafka</code> repository.</p>
 </li>
 <li>
-<p>Click on the <code>Tags</code> tab.</p>
+<p>Click the <code>Tags</code> tab.</p>
 </li>
 <li>
-<p>Select any of the repository's tags by clicking on it, click on the <code>Fetch Tag</code> icon.</p>
+<p>Select any of the repository’s tags and click the <code>Fetch Tag</code> icon.</p>
 </li>
 </ul>
 </div>
@@ -407,7 +410,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Select <code>Podman Pull (by tag)</code> from the <code>Image Format</code> drop-down menu and click on the <code>Copy Command</code> button.</p>
+<p>From the <strong>Image Format</strong> drop-down menu, select <code>Podman Pull (by tag)</code> and click the <code>Copy Command</code> button.</p>
 </li>
 </ul>
 </div>
@@ -419,25 +422,26 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Switch to a terminal, paste the command you copied from the Quay UI, and then execute it. Make sure you have <code>Podman</code> installed on your system. Since we created the repository as <code>Public</code>, no login is required to pull the image.</p>
+<p>Switch to a terminal, paste the command you copied from the Quay UI, and execute it.
+Ensure that <code>Podman</code> is installed on your system. Since the repository was created as <code>Public</code>, no login is required to pull the image.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="rollback"><a class="anchor" href="#rollback"></a>Image rollback</h2>
+<h2 id="rollback"><a class="anchor" href="#rollback"></a>Rolling back an image</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Quay provides us with a convenient way to review the history of tags associated with an image repository.</p>
+<p>Quay provides a convenient way to review the history of tags associated with an image repository and to roll back to a previous version when needed.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Create a new image repository as already explained. In this case, create a public repository named <code>olleb/rollback</code> on Quay.</p>
+<p>Create a new image repository as previously explained. In this case, create a public repository named <code>olleb/rollback</code> on Quay.</p>
 </li>
 <li>
-<p>Build an image, tag it and push it.</p>
+<p>Build an image, tag it, and push it.</p>
 </li>
 </ul>
 </div>
@@ -453,7 +457,7 @@ podman push ${QUAY_HOSTNAME}/olleb/rollback:latest</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Verify that the image has been pushed into Quay repository. Check also the manifest digest and the layers.</p>
+<p>Verify that the image has been pushed to the Quay repository. Also, check the manifest digest and the layers.</p>
 </li>
 </ul>
 </div>
@@ -470,7 +474,7 @@ podman push ${QUAY_HOSTNAME}/olleb/rollback:latest</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Add a new layer to the Containerfile, rebuild the image, and <strong>overwrite</strong> the old one by tagging and pushing it with the same remote tag.</p>
+<p>Add a new layer to the <code>Containerfile</code>, rebuild the image, and <strong>overwrite</strong> the previous one by tagging and pushing it with the same remote tag.</p>
 </li>
 </ul>
 </div>
@@ -486,7 +490,8 @@ podman push ${QUAY_HOSTNAME}/olleb/rollback:latest</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Verify that the new image has been pushed to the Quay repository and check its manifest digest and layers in the Quay UI. You should observe that the manifest digest and layers are different from the previous image.</p>
+<p>Verify that the new image has been pushed to the Quay repository, and check its manifest digest and layers in the Quay UI.
+You should observe that the manifest digest and layers differ from the previous image.</p>
 </li>
 </ul>
 </div>
@@ -503,19 +508,19 @@ podman push ${QUAY_HOSTNAME}/olleb/rollback:latest</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>To rollback the image to the previous one, navigate to the Quay UI and click on the <code>Tag History</code> option for the repository. From there, select the tag for the previous image that you want to rollback to.</p>
+<p>To roll back the image to the previous version, navigate to the Quay UI and click the <code>Tag History</code> option for the repository.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/taghistory.png" alt="taghistory">
+<img src="_images/repositories/tagh.png" alt="tagh">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Click on <code>Revert to &#8230;&#8203;</code>.</p>
+<p>From there, select the tag of the previous image you want to restore, and click <code>Revert to &#8230;&#8203;</code>.</p>
 </li>
 </ul>
 </div>
@@ -527,7 +532,7 @@ podman push ${QUAY_HOSTNAME}/olleb/rollback:latest</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Click on the <code>Restore Tag</code> button. This will restore the image for that tag to the previous image.</p>
+<p>Click the <code>Restore Tag</code> button. This will restore the tag to reference the previous image.</p>
 </li>
 </ul>
 </div>
@@ -539,7 +544,7 @@ podman push ${QUAY_HOSTNAME}/olleb/rollback:latest</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>To verify that the image has been restored to the previous one in the tag history, go to the <code>Tag History</code> section in the Quay UI and check that the restored tag has the same manifest digest and layers as the previous image that was reverted to.</p>
+<p>To verify that the rollback was successful, go to the <code>Tag History</code> section in the Quay UI and confirm that the restored tag has the same manifest digest and layers as the previous image.</p>
 </li>
 </ul>
 </div>
@@ -554,15 +559,15 @@ podman push ${QUAY_HOSTNAME}/olleb/rollback:latest</code></pre>
 <h2 id="expiration"><a class="anchor" href="#expiration"></a>Image expiration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To configure an image tag to expire from Quay on a specific time and date, follow these steps:</p>
+<p>To configure an image tag to expire in Quay at a specific time or date, follow these steps:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Create a new image repository as already explained. I created the <code>olleb/expiration</code> repository.</p>
+<p>Create a new image repository as previously explained. In this example, create a public repository named <code>olleb/expiration</code>.</p>
 </li>
 <li>
-<p>Build a <code>1.0</code> image, tag it and push it to the <code>olleb/expiration</code> repository.</p>
+<p>Build a <code>1.0</code> image, tag it, and push it to the <code>olleb/expiration</code> repository.</p>
 </li>
 </ul>
 </div>
@@ -578,7 +583,9 @@ podman push ${QUAY_HOSTNAME}/olleb/expiration:1.0</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>The label <code>quay.expires-after</code> is used to indicate the expiration time for the tag. The value of the label can be specified in a number of different formats, including a specific time and date, a relative time offset from the time of image creation, or a relative time offset from the time of tag creation. In this case, we will use the relative time offset of <code>5m</code>, which specifies that the image should expire 5 minutes after it is tagged with the <code>2.0</code> and latest <code>tags</code>.</p>
+<p>The label <code>quay.expires-after</code> is used to specify the expiration time for a tag.
+The value can be defined in several formats, including a specific date and time, a relative time offset from image creation, or a relative time offset from tag creation.
+In this example, we use a relative time offset of <code>5m</code>, which means the image will expire 5 minutes after being tagged as <code>2.0</code> and <code>latest</code>.</p>
 </li>
 </ul>
 </div>
@@ -598,7 +605,18 @@ podman push ${QUAY_HOSTNAME}/olleb/expiration:latest</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>We now have two images and three tags in our <code>olleb/expiration</code> repository. The <code>1.0</code> image has a <code>1.0</code> tag, the <code>2.0</code> image has <code>2.0</code> and <code>latest</code> tags. The <code>latest</code> and the <code>2.0</code> tag are marked as expiring soon.</p>
+<p>At this point, the <code>olleb/expiration</code> repository contains two images and three tags:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>1.0</code> image has the <code>1.0</code> tag.</p>
+</li>
+<li>
+<p>The <code>2.0</code> image has the <code>2.0</code> and <code>latest</code> tags.
+The <code>2.0</code> and <code>latest</code> tags are marked as expiring soon.</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
@@ -608,7 +626,12 @@ podman push ${QUAY_HOSTNAME}/olleb/expiration:latest</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>After 5 minutes, both tags will be removed from the repository automatically.</p>
+<p>After 5 minutes, both tags will be automatically removed from the repository.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/repositories/exp2.png" alt="exp2">
+</div>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -618,9 +641,15 @@ podman push ${QUAY_HOSTNAME}/olleb/expiration:latest</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Select the <code>1.0</code> tag, in the <code>Actions</code> drop-down list, select <code>Change Tags Expiration</code>. Set the desired <code>Expiration Date</code>.</p>
+<p>To manually configure an expiration time, select the <code>1.0</code> tag.
+From the <strong>Actions</strong> drop-down list, select <strong>Change Expiration</strong>, and set the desired <strong>Expiration Date</strong>.</p>
 </li>
 </ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/repositories/exp3.png" alt="exp3">
+</div>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -634,13 +663,13 @@ podman push ${QUAY_HOSTNAME}/olleb/expiration:latest</code></pre>
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Alternatively, the expiration can also be set by clicking on the <code>Options</code> icon and selecting <code>Change Expiration</code>.
+Alternatively, you can set the expiration by clicking the <strong>Options</strong> icon and selecting <strong>Change Expiration</strong>.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>When the tag is about to expire, a message will be displayed:</p>
+<p>When a tag is about to expire, a warning message is displayed:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -654,24 +683,24 @@ Alternatively, the expiration can also be set by clicking on the <code>Options</
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-By default, the minimum expiration time is one hour and the maximum is 104 weeks (approximately 2 years) at the time of this writing. If you want to allow for earlier or later minimum expiration times, you can set the <code>LABELED_EXPIRATION_MINIMUM</code> property to a different time value, such as <code>60s</code> (seconds), <code>5m</code> (minutes), <code>24h</code> (hours), <code>7d</code> (days), or <code>2w</code> (weeks). This configuration must be placed in the <code>Config Bundle Secret</code> of your registry instance. An example of how to do this is explained in section <a href="quay-oci.html#allowed" class="xref page">2.5.1 Configuring allowed OCI artifact types</a>.
+By default, the minimum expiration time is <strong>one hour</strong>, and the maximum is <strong>104 weeks</strong> (approximately two years).
+If you need shorter or longer expiration limits, modify the <code>LABELED_EXPIRATION_MINIMUM</code> setting in the <strong>Config Bundle Secret</strong> of your registry instance.
+This property accepts values such as <code>60s</code> (seconds), <code>5m</code> (minutes), <code>24h</code> (hours), <code>7d</code> (days), or <code>2w</code> (weeks).
+For more details, see <a href="quay-oci.html#allowed" class="xref page">2.5.1 Configuring allowed OCI artifact types</a>.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>When the tag expires, it is deleted automatically.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/repositories/tagexpireddeleted.png" alt="tagexpireddeleted">
-</div>
+<p>When a tag expires, it is deleted automatically.</p>
 </div>
 <div class="paragraph">
-<p>Note that even though the tag is deleted, we can still restore the image. The reason is that when a tag is deleted and there are no other tags pointing to the same image, the image is not immediately deleted. Instead, it is marked for garbage collection, which by default occurs after 14 days (<code>2w</code>). Quay has a garbage collection worker enabled by default which runs periodically and removes the expired images when the configured <strong>Time Machine</strong> amount of time has passed.</p>
+<p>However, even after a tag is deleted, the corresponding image can still be restored.
+When a tag is deleted and no other tags reference the same image, the image is not immediately removed — it is marked for <strong>garbage collection</strong>, which by default occurs after <strong>14 days (<code>2w</code>)</strong>.
+Quay’s garbage collection worker runs periodically and removes expired images once the configured <strong>Time Machine</strong> retention period has passed.</p>
 </div>
 <div class="paragraph">
-<p>As we stored the image inside <code>olleb</code> organization, we can check that value by browsing to <code>/organization/olleb?tab=settings</code>.</p>
+<p>Because the image was stored under the <code>olleb</code> organization, you can check that value by navigating to <code>/organization/olleb?tab=settings</code>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -679,10 +708,11 @@ By default, the minimum expiration time is one hour and the maximum is 104 weeks
 </div>
 </div>
 <div class="paragraph">
-<p>If the image stored is under the user account instead on an organization, the value can be found under user settings</p>
+<p>If the image was stored under a user account instead of an organization, the setting can be found under <strong>User Settings</strong>.</p>
 </div>
 <div class="paragraph">
-<p>The Time Machine amount time can be modified by changing the value of the <code>TAG_EXPIRATION_OPTIONS</code> array property, which must include the default expiration value <code>DEFAULT_TAG_EXPIRATION</code> in the list. An example of how to modify this value is explained in section <a href="quay-oci.html#allowed" class="xref page">2.5.1 Configuring allowed OCI artifact types</a>.</p>
+<p>The <strong>Time Machine</strong> retention period can be modified by changing the <code>TAG_EXPIRATION_OPTIONS</code> array property, which must include the default expiration value <code>DEFAULT_TAG_EXPIRATION</code> in its list.
+An example of how to modify this value is provided in section <a href="quay-oci.html#allowed" class="xref page">2.5.1 Configuring allowed OCI artifact types</a>.</p>
 </div>
 <div class="paragraph">
 <p>For example, with the following custom configuration:</p>
@@ -693,7 +723,7 @@ By default, the minimum expiration time is one hour and the maximum is 104 weeks
 </div>
 </div>
 <div class="paragraph">
-<p>we will see:</p>
+<p>you will see:</p>
 </div>
 <div class="imageblock">
 <div class="content">
