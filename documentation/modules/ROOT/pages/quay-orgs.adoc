@@ -4,40 +4,40 @@ include::_attributes.adoc[]
 [#useraccounts]
 == Creating user accounts
 
-To create a new user for our Red Hat Quay instance:
+To create a new user for your Red Hat Quay instance:
 
 * Open a browser window and log in to the Red Hat OpenShift Container Platform web console.
 
-* From the Administrator perspective, click `Operators`, then `Installed Operators`. Select the `quay-workshop` project and the `Red Hat Quay` operator.
+* From the *Administrator* perspective, click `Operators`, then `Installed Operators`. Select the `quay-workshop` project and the `Red Hat Quay` Operator.
 
-* Select the `Quay Registry` tab and click on the recently created registry.
+* Select the *Quay Registry* tab and click the recently created registry.
 
-* Open the `Registry Endpoint`.
+* Open the *Registry Endpoint*.
 
 image::organizations/quay-registries.png[]
 
 image::organizations/quay-endpoint.png[]
 
-NOTE: Alternatively, you can also find the registry endpoint URL by navigating to the `Networking` then `Routes` section in the Red Hat OpenShift Container Platform web console.
+NOTE: Alternatively, you can find the registry endpoint URL by navigating to *Networking* > *Routes* in the Red Hat OpenShift Container Platform web console.
 
-* `Create Account`.
+* Click `Create Account`.
 
 image::organizations/quay-create-account.png[]
 
 image::organizations/quay-create-account2.png[]
 
-* Fill the data, create an account and sign in.
+* Fill in the required information, create the account, and sign in.
 
 [#orgaccounts]
-== Creating Organization accounts
+== Creating organization accounts
 
-To create a new organization that allows sharing repositories of container images:
+To create a new organization that allows sharing container image repositories:
 
 * While logged in to Red Hat Quay, click `Create New Organization`.
 
 image::organizations/quay-create-org.png[]
 
-* Type the name of the organization you want to create, and click `Create Organization`.
+* Enter the name of the organization you want to create, and click `Create Organization`.
 
 image::organizations/org-create.png[]
 
