@@ -43,7 +43,7 @@ image::install/odfoperator-install-opts.png[]
 * Click `Install`.
 
 [#storage]
-== Creating the ODF cluster
+== Creating the ODF Cluster
 
 Deploy an OpenShift Data Foundation (ODF) `StorageCluster` using the OpenShift web console.
 
@@ -110,7 +110,7 @@ image::install/create-quay-instance.png[]
 image::install/quay-create.png[]
 
 [#exportenvvar]
-== Export environment variables
+== Exporting Environment Variables
 
 IMPORTANT: It is recommended to set the `QUAY_HOSTNAME` environment variable in the working terminal before running the commands. Alternatively, you can specify the hostname directly within the commands as needed.
 
