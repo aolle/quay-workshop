@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Quay Repositories :: Red Hat Quay Workshop</title>
+    <title>Quay repositories :: Red Hat Quay Workshop</title>
     <link rel="canonical" href="https://olleb.com/quay-workshop/quay-repos.html">
     <link rel="prev" href="quay-orgs.html">
     <link rel="next" href="quay-mirror.html">
@@ -72,7 +72,7 @@
     <a class="nav-link" href="setup.html#odf">1.2.1. ODF Operator</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="setup.html#storage">1.2.2. Creating the ODF cluster</a>
+    <a class="nav-link" href="setup.html#storage">1.2.2. Creating the ODF Cluster</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="setup.html#quayoperator">1.2.3. Installing the Quay Operator</a>
@@ -81,7 +81,7 @@
     <a class="nav-link" href="setup.html#quayinstance">1.2.4. Deploying Quay</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="setup.html#exportenvvar">1.2.5. Export environment variables</a>
+    <a class="nav-link" href="setup.html#exportenvvar">1.2.5. Exporting Environment Variables</a>
   </li>
 </ul>
   </li>
@@ -96,10 +96,10 @@
     <a class="nav-link" href="quay-orgs.html">2.1 Users and Organizations</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-orgs.html#useraccounts">2.1.1 Creating user accounts</a>
+    <a class="nav-link" href="quay-orgs.html#useraccounts">2.1.1 Creating User Accounts</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-orgs.html#orgaccounts">2.1.2 Creating organization accounts</a>
+    <a class="nav-link" href="quay-orgs.html#orgaccounts">2.1.2 Creating Organization Accounts</a>
   </li>
 </ul>
   </li>
@@ -108,22 +108,22 @@
     <a class="nav-link" href="quay-repos.html">2.2 Quay Repositories</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#imagerepo">2.2.1 Creating an image repository</a>
+    <a class="nav-link" href="#imagerepo">2.2.1 Creating an Image repository</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#push">2.2.2 Pushing (and tagging) an image into the repository</a>
+    <a class="nav-link" href="#push">2.2.2 Pushing and Tagging an Image to the Repository</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#imglayers">2.2.3 Inspecting image layers</a>
+    <a class="nav-link" href="#imglayers">2.2.3 Inspecting Image Layers</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#pull">2.2.4 Pulling an image from the repository</a>
+    <a class="nav-link" href="#pull">2.2.4 Pulling an Image from the Repository</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#rollback">2.2.5 Rolling back an image</a>
+    <a class="nav-link" href="#rollback">2.2.5 Rolling Back an Image</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#expiration">2.2.6 Configuring image expiration</a>
+    <a class="nav-link" href="#expiration">2.2.6 Image Expiration</a>
   </li>
 </ul>
   </li>
@@ -133,10 +133,10 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-mirror.html#imagerepo">2.3.1 Creating a repository to mirror from</a>
+    <a class="nav-link" href="quay-mirror.html#imagerepo">2.3.1 Creating a Mirrored Repository</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="quay-mirror.html#usage">2.3.1.2 Repository usage logs, tags and tag history</a>
+    <a class="nav-link" href="quay-mirror.html#usage">2.3.1.2 Repository Usage Logs, Tags, and Tag History</a>
   </li>
 </ul>
   </li>
@@ -144,44 +144,41 @@
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-repo-notifications.html">2.4 Quay Repository Notifications</a>
+    <a class="nav-link" href="quay-repo-notifications.html">2.4 Quay repository notifications</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-repo-notifications.html#pushnotif">2.4.1 Creating a push to repository event notification</a>
+    <a class="nav-link" href="quay-repo-notifications.html#pushnotif">2.4.1 Creating a Push-to-Repository Event Notification</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-oci.html">2.5 Quay OCI-based Artifacts Repository</a>
+    <a class="nav-link" href="quay-oci.html">2.5 Quay OCI-Based Artifacts Repository</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-oci.html#allowed">2.5.1 Configuring allowed OCI artifact types</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-oci.html#helm">2.5.2 Helm charts</a>
+    <a class="nav-link" href="quay-oci.html#helm">2.5.2 Working with Helm Charts</a>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-oci.html#signed">2.5.3 Signed container images</a>
+    <a class="nav-link" href="quay-oci.html#signed">2.5.3 Signed Container Images</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="quay-oci.html#cosign">2.5.3.1 Signed container images with cosign</a>
+    <a class="nav-link" href="quay-oci.html#cosign">2.5.3.1 Signing Container Images with Cosign</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="quay-oci.html#signpgp">2.5.3.2 Signed container images with PGP (RFC4880)</a>
+    <a class="nav-link" href="quay-oci.html#signpgp">2.5.3.2 Signing Container Images with PGP (RFC4880)</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-oci.html#encrypted">2.5.4 Encrypted container images</a>
+    <a class="nav-link" href="quay-oci.html#encrypted">2.5.4 Encrypted Container Images</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="quay-oci.html#jwe">2.5.4.1 Encrypted container images with JSON Web Encryption (JWE) (RFC7516)</a>
+    <a class="nav-link" href="quay-oci.html#jwe">2.5.4.1 Encrypting Container Images with JSON Web Encryption (JWE) (RFC7516)</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="quay-oci.html#pgp">2.5.4.2 Encrypted container images with PGP (RFC4880)</a>
+    <a class="nav-link" href="quay-oci.html#pgp">2.5.4.2 Encrypting Container Images with PGP (RFC4880)</a>
   </li>
 </ul>
   </li>
@@ -253,9 +250,9 @@
  
   <div class="content">
 <article class="doc">
-<h1 class="page">Quay Repositories</h1>
+<h1 class="page">Quay repositories</h1>
 <div class="sect1">
-<h2 id="imagerepo"><a class="anchor" href="#imagerepo"></a>Creating an image repository</h2>
+<h2 id="imagerepo"><a class="anchor" href="#imagerepo"></a>Creating an Image Repository</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>On the main Quay landing page:</p>
@@ -294,7 +291,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="push"><a class="anchor" href="#push"></a>Pushing (and tagging) an image into the repository</h2>
+<h2 id="push"><a class="anchor" href="#push"></a>Pushing and Tagging an Image to the Repository</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -359,7 +356,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="imglayers"><a class="anchor" href="#imglayers"></a>Inspecting image layers</h2>
+<h2 id="imglayers"><a class="anchor" href="#imglayers"></a>Inspecting Image Layers</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -387,7 +384,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="pull"><a class="anchor" href="#pull"></a>Pulling an image from the repository</h2>
+<h2 id="pull"><a class="anchor" href="#pull"></a>Pulling an Image from the Repository</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -430,7 +427,7 @@ Ensure that <code>Podman</code> is installed on your system. Since the repositor
 </div>
 </div>
 <div class="sect1">
-<h2 id="rollback"><a class="anchor" href="#rollback"></a>Rolling back an image</h2>
+<h2 id="rollback"><a class="anchor" href="#rollback"></a>Rolling Back an Image</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Quay provides a convenient way to review the history of tags associated with an image repository and to roll back to a previous version when needed.</p>
@@ -556,7 +553,7 @@ You should observe that the manifest digest and layers differ from the previous 
 </div>
 </div>
 <div class="sect1">
-<h2 id="expiration"><a class="anchor" href="#expiration"></a>Image expiration</h2>
+<h2 id="expiration"><a class="anchor" href="#expiration"></a>Image Expiration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To configure an image tag to expire in Quay at a specific time or date, follow these steps:</p>
