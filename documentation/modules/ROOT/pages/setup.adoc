@@ -5,8 +5,8 @@ include::_attributes.adoc[]
 ====
 This tutorial was developed and tested with:
 
-* Red Hat OpenShift `4.12`
-* Red Hat Quay `3.8`
+* Red Hat OpenShift `4.19.8`
+* Red Hat Quay `3.15`
 ====
 
 [#tools]
@@ -22,89 +22,73 @@ include::partial$tools.adoc[]
 [#odf]
 == ODF Operator
 
-You can use the Red Hat OpenShift Container Platform web console to install Quay prerequisites by following these steps:
+Install OpenShift Data Foundation Operator by following these steps:
 
 * Open a browser window and log in to the Red Hat OpenShift Container Platform web console.
 
-* From the Administrator perspective, click on `Operators` and then select `OperatorHub`.
+* From the *Administrator* perspective, click `Operators`, and then select `OperatorHub`.
 
-* In the `Filter by keyword` field, type `ODF`.
+* In the *Filter by keyword* field, type `ODF`.
 
 image::install/operatorhub-odf.png[]
 
-* Select the Red Hat OpenShift Data Foundation tile and click `Install` button.
+* Select the Red Hat OpenShift Data Foundation tile and click the `Install` button.
 
 image::install/odf-install.png[]
 
-* On the Install Operator page, select `stable-4.12` from the list of available Update Channel options, and then choose A specific namespace on the cluster. Leave the default value of Installed Namespace as openshift-storage, and set the Update Approval to Automatic. Also, make sure to set `Enable` the Console Plugin.
+* On the *Install Operator* page, select `stable-4.19` from the list of available *Update Channel* options, and then choose *A specific namespace on the cluster*. Leave the default value for *Installed Namespace* as `openshift-storage`, and set *Update Approval* to `Automatic`. Also, make sure to enable the console plug-in.
 
 image::install/odfoperator-install-opts.png[]
 
 * Click `Install`.
 
 [#storage]
-== Creating the standalone object gateway
+== Creating the ODF cluster
 
-For workshop testing purposes, we will deploy the Multi-Cloud Object Gateway (MCG) component provided by the Red Hat OpenShift Data Foundation Operator.
+Deploy an OpenShift Data Foundation (ODF) `StorageCluster` using the OpenShift web console.
 
-The MCG provides a S3-compatible object storage interface for our Quay deployment managed by the Operator. The gateway is used in combination with the Kubernetes `PersistentVolume` storage, which is mounted on the gateway as a backing store for object storage, and any block-based `StorageClass` is supported.
+* From the *Administrator* perspective in the OpenShift console, navigate to `Storage` > `Data Foundation`.
+* Go to the *Storage System* tab.
+* Click `Create StorageSystem`.
 
-NOTE: This is not a high-availability (HA) solution.
+image::install/odf1.png[]
 
-* Create the NooBaa object storage:
+Select the backing storage type:
 
-[.lines_space]
-[.console-input]
-[source,bash, subs="+macros,+attributes"]
-----
-cat <<EOF | oc apply -f -
-apiVersion: noobaa.io/v1alpha1
-kind: NooBaa
-metadata:
-  name: noobaa
-  namespace: openshift-storage
-spec:
- dbResources:
-   requests:
-     cpu: '0.1'
-     memory: 1Gi
- dbType: postgres
- coreResources:
-   requests:
-     cpu: '0.1'
-     memory: 1Gi
-EOF
-----
+* On the first page of the wizard (*Backing storage*), select `Use an existing StorageClass`. For example, `gp3-csi`.
+* Click `Next`.
 
-* After some time, verify if the MCG has been provisioned:
+image::install/odf2.png[]
 
-[.lines_space]
-[.console-input]
-[source,bash, subs="+macros,+attributes"]
-----
-oc get -n openshift-storage noobaas noobaa
-----
+* Select the desired capacity and nodes.
+* Click `Next`.
 
-NOTE: After creating the Multi-Cloud Object Gateway, a new default backing store for all the `ObjectBucketClaim` issued by the Operator is automatically created.
+image::install/odf3.png[]
+
+* Leave the default options for *Security and network* and *Review and create*. Then click `Next` and `Create StorageSystem`, respectively.
+
+image::install/odf4.png[]
+
+NOTE: Wait until the OpenShift Data Foundation components are fully deployed before proceeding.
 
 [#quayoperator]
-== Installing Quay Operator
+== Installing the Quay Operator
 
-You can use the Red Hat OpenShift Container Platform web console to suscribe and deploy the `Red Hat Quay Operator`.
+Subscribe to and deploy the `Red Hat Quay Operator`.
 
 * Open a browser window and log in to the Red Hat OpenShift Container Platform web console.
 
-* From the Administrator perspective, click on `Operators` and then select `OperatorHub`.
+* From the *Administrator* perspective, click `Operators`, and then select `OperatorHub`.
 
-* In the Filter by keyword field, type `Red Hat Quay`.
+* In the *Filter by keyword* field, type `Red Hat Quay`.
     
 image::install/operatorhub-quay.png[]
 
-* Select the Red Hat Quay tile and click on the `Install` button.
+* Select the Red Hat Quay tile and click the `Install` button.
 
 image::install/quayoperator-install.png[]
 
-* On the Install Operator page, select `stable-3.8` from the list of available Update Channel options. Then, choose `All namespaces on the cluster (default)` as the installation mode and select `Automatic` for update approval.
+* On the *Install Operator* page, select `stable-3.15` from the list of available *Update Channel* options. Then, choose `All namespaces on the cluster (default)` as the installation mode and select `Automatic` for update approval.
 
 image::install/quayoperator-opts.png[]
 
@@ -113,24 +97,22 @@ image::install/quayoperator-opts.png[]
 [#quayinstance]
 == Deploying Quay
 
-* Create a new `quay-workshop` project.
+* Create a new project named `quay-workshop`.
 
-* From the Administrator perspective, navigate to `Operators` and then select `Installed Operators`. Choose the `quay-workshop` project and select the Red Hat Quay operator.
+* From the *Administrator* perspective, navigate to `Operators`, and then select `Installed Operators`. Choose the `quay-workshop` project and select the Red Hat Quay Operator.
 
-* Click `Create instance` to create a new Quay Registry instance.
+* Click `Create instance` to create a new Quay registry instance.
 
 image::install/create-quay-instance.png[]
 
-* If desired, change the name, and then click Create.
+* If desired, change the name, and then click `Create`.
 
 image::install/quay-create.png[]
-
-WARNING: Please check if the init container fails during the Quay registry deployment. If it fails, please verify if a `LimitRange` exists in the current `OCP` project. Sometimes, the `RHPDS` environment creates a `LimitRange` automatically when a new project is created.
 
 [#exportenvvar]
 == Export environment variables
 
-IMPORTANT: It is recommended to set the `QUAY_HOSTNAME` environment variable in the working terminal before executing the commands. Alternatively, the hostname can be provided directly in the commands as needed.
+IMPORTANT: It is recommended to set the `QUAY_HOSTNAME` environment variable in the working terminal before running the commands. Alternatively, you can specify the hostname directly within the commands as needed.
 
 [.lines_space]
 [.console-input]
