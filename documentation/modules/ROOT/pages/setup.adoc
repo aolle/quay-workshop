@@ -120,3 +120,46 @@ IMPORTANT: It is recommended to set the `QUAY_HOSTNAME` environment variable in 
 ----
 QUAY_HOSTNAME=$(oc get route registry-quay -n quay-workshop -o jsonpath={.spec.host})
 ----
+
+[#trustedca]
+=== Adding the Quay Certificate as a Trusted CA in OCP (Optional)
+
+This step is recommended if your Quay registry uses a self-signed or internal certificate.
+
+* Obtain the Quay registry certificate:
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+echo -n | openssl s_client -showcerts -connect $QUAY_HOSTNAME:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > quay.crt
+----
+
+* Create a ConfigMap containing the CA:
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+oc create configmap quay-ca --from-file=$QUAY_HOSTNAME=quay.crt -n openshift-config
+
+# Verify
+oc get configmap quay-ca -n openshift-config -o yaml
+----
+
+* Associate the CA with the cluster:
+
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+oc patch image.config.openshift.io/cluster --type=merge -p '{"spec":{"additionalTrustedCA":{"name":"quay-ca"}}}'
+----
+
+* Verify:
+[.lines_space]
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+oc get image.config.openshift.io/cluster -o yaml
+----

@@ -1,13 +1,13 @@
 = Clair Security Scanning
 include::_attributes.adoc[]
 
-Quay integrates with Clair to perform vulnerability scanning of container images associated with a set of Linux operating systems.
+Quay integrates with Clair to perform vulnerability scanning of container images associated with various Linux operating systems.
 
 [#cve]
-== Explore the vulnerability data (CVE's)
+== Exploring Vulnerability Data (CVEs)
 
 [#secscan]
-=== Security scan
+=== Performing a Security Scan
 
 Push a vulnerable image into the repository.
 
@@ -17,28 +17,48 @@ Push a vulnerable image into the repository.
 ----
 podman pull quay.io/wildfly/wildfly:23.0.2.Final
 podman tag quay.io/wildfly/wildfly:23.0.2.Final ${QUAY_HOSTNAME}/olleb/wildfly:23.0.2.Final
-# login if we are not already logged in
+
+# Log in if not already logged in
 podman login ${QUAY_HOSTNAME}
+
 podman push ${QUAY_HOSTNAME}/olleb/wildfly:23.0.2.Final
 ----
 
-* Navigate to our `olleb/wildfly` Quay repository.
+* Navigate to the `olleb/wildfly` repository in Quay.
 
 image::clair/repo.png[]
 
-* Click the `Security Scan` icon. We should see the Quay Security Scanner Dashboard.
+* Click the `Security Scan` icon to view the Quay Security Scanner Dashboard.
 
 image::clair/secscan-icon.png[]
 
 image::clair/security-scanner-dashboard.png[]
+
+The Security Scan dashboard provides detailed information about detected vulnerabilities:
+
+- **Advisory**: Link to the CVE or security advisory describing the vulnerability.
+- **Severity**: Level of risk associated with the vulnerability (e.g., Low, Medium, High, Critical).
+- **Package**: Name of the affected software package.
+- **Version**: Current version of the package in the image.
+- **Fixed Version**: Version of the package where the vulnerability has been resolved.
+- **Introduced in Layer**: The image layer where the vulnerable package was added.
 
 CVE detailed description:
 
 image::clair/cve.png[]
 
 [#packages]
-=== Packages
+=== Viewing Packages
 
-* Click the `Packages` icon. We should see the Quay Security Scanner Packages Dashboard.
+* Click the `Packages` icon to view the Quay Security Scanner Packages Dashboard.
 
 image::clair/packages.png[]
+
+The Packages dashboard provides information about each installed package and its vulnerabilities:
+
+- **Package Name**: Name of the installed package.
+- **Version**: Current version of the package in the image.
+- **Vuln**: Number of known vulnerabilities affecting this package.
+- **Remaining After Upgrade**: Vulnerabilities that would still exist after upgrading the package to the latest fixed version.
+- **Upgrade Impact**: Potential impact of performing the upgrade (e.g., dependency conflicts or breakage).
+- **Introduced in Layer**: The image layer where the package was added.

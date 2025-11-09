@@ -1,18 +1,18 @@
 = Quay Container Security Operator (CSO) 
 include::_attributes.adoc[]
 
-Scan pod images with the Red Hat Quay Container Security Operator (CSO).
+Scan pod images using the Red Hat Quay Container Security Operator (CSO).
 
-The Container Security Operator brings Quay and Clair metadata to Kubernetes / Red Hat OpenShift, allowing us to scan images for vulnerabilities and compliance issues. This helps ensure that the images used in our pods are secure and compliant with relevant standards.
+The Container Security Operator integrates Quay and Clair metadata into Kubernetes / Red Hat OpenShift, allowing you to scan images for vulnerabilities and compliance issues. This ensures that the images used in your pods are secure and meet relevant standards.
 
 [#install]
 == Installing the Quay CSO Operator
 
-* Open a browser window and log in to the Red Hat OpenShift Container Platform web console.
+* Open a browser and log in to the Red Hat OpenShift Container Platform web console.
 
-* From the Administrator perspective, click `Operators`, then `OperatorHub`.
+* From the Administrator perspective, click `Operators` and then `OperatorHub`.
 
-* In the `Filter by keyword` field, type `Quay`.
+* In the `Filter by keyword` field, type `Red Hat Quay`.
 
 image::cso/operatorhub-quay.png[]
 
@@ -20,69 +20,82 @@ image::cso/operatorhub-quay.png[]
 
 image::cso/cso-install.png[]
 
-* Select `stable-3.8` from the list of available `Update Channel` options. Choose `All namespaces on the cluster (default)` as the installation mode. Choose `Automatic` update approval.
+* On the `Install Operator` page, select `stable-3.15` from the `Update Channel` options. Choose `All namespaces on the cluster (default)` as the installation mode and select `Automatic` for update approval.
 
 image::cso/cso-install-params.png[]
 
-* Click `Install` to start the installation process.
+* Click `Install` to start the installation.
 
 [#vulncheck]
-== Checking the image vulnerabilities through the Red Hat OpenShift web console
+== Checking Image Vulnerabilities from the Red Hat OpenShift Web Console
 
-* Deploy a vulnerable image. For this example, we are going to deploy an old httpd vulnerable image.
+Deploy a vulnerable image to verify how the Quay Container Security Operator (CSO) detects and displays image vulnerabilities in the OpenShift console.
 
-[.lines_space]
-[.console-input]
-[source,bash, subs="+macros,+attributes"]
+* Open the Red Hat OpenShift Container Platform web console and create a new project by clicking `Projects`, then `Create Project`. Name the project `jmxtrans` and click `Create`.
+
+* With the `jmxtrans` project selected, deploy the vulnerable image by clicking `Workloads`, then `Deployments`. Click `Create Deployment`.
+
+image::cso/create-deployment.png[]
+
+* Switch to `YAML view` and replace the default image value with the image from your Quay registry. Set the number of replicas as desired, and name the deployment `jmxtrans`.
+
+[source,yaml]
 ----
-# Pull the image
-podman pull registry.redhat.io/rhel8/httpd-24:1-30
-
-# Tag the image
-podman tag registry.redhat.io/rhel8/httpd-24:1-30 ${QUAY_HOSTNAME}/olleb/httpd-24:1-30
-
-# Push it to our Quay registry
-podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: jmxtrans
+  name: 'jmxtrans'
+spec:
+  selector:
+    matchLabels:
+      app: name
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: name
+    spec:
+      containers:
+        - name: container
+          image: >-
+            quay.io/strimzi/jmxtrans:0.34.0
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
 ----
-
-* Navigate to the Quay Registry Endpoint and select the `olleb/httpd-24` repository that has been automatically created when we pulled the image before.
-
-* Select `Settings` and then click `Make Public`.
-
-* Open the Red Hat OpenShift Container Platform web console and create a new project by clicking `Projects` then `Create Project`. Name the project as `vuln-httpd` and then click `Create`.
-
-image::cso/vulnhttpd-project.png[]
-
-* In the `vuln-httpd` project, deploy the vulnerable image by clicking `Workloads` then `Deployments`. Click `Create Deployment`.
-
-* Replace the default image value with the image from our Quay registry. Set replicas as desired and set `httpd` as the custom name.
-
-image::cso/yaml.png[]
 
 * Click `Create`.
 
-* Red Hat OpenShift will start the deployment and create the pod. Go to `Workloads` then `Pods` and select one of the `httpd` pods. Select the `Vulnerabilities` tab.
+* Red Hat OpenShift will start the deployment and create the pod. Go to `Workloads` → `Pods` and select one of the `jmxtrans` pods. Then open the `Vulnerabilities` tab.
 
 image::cso/pods.png[]
 
+* Click any listed vulnerability to open its details.
+
 image::cso/vuln-tab.png[]
 
-* Click on the security scan results.
+You will see the *Image Manifest Vulnerabilities* view:
 
 image::cso/vulnimgmanifest.png[]
 
-Additionally, after installing the CSO operator, a new status related to Image Vulnerabilities is shown on the cluster overview.
+Additionally, after installing the CSO Operator, a new *Image Vulnerabilities* status appears on the *Cluster Overview* page.
 
 image::cso/overview.png[]
 
-* Click `Image Vulnerabilities`.
-
-image::cso/vuln.png[]
-
-* Click `View all` and then click on the Manifest related to `olleb/httpd-24`.
+* Click `Image Vulnerabilities`, then `View all`, and filter by the `jmxtrans` project.
 
 image::cso/vulnlist.png[]
 
-You will be redirected to the Quay Security Scanner Dashboard.
+* Click on a specific manifest entry to view more details. You will be redirected to the Quay Security Scanner Dashboard.
 
 image::cso/quayredirect.png[]
+
+By integrating the Red Hat Quay Container Security Operator (CSO) with OpenShift, we can automatically surface image vulnerabilities directly in the cluster console.
+
+This integration bridges image scanning data from Quay and Clair with running workloads, enabling proactive detection and remediation of vulnerabilities across deployed containers.

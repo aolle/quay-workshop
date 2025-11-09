@@ -6,6 +6,7 @@
 *** xref:setup.adoc#quayoperator[1.2.3. Installing the Quay Operator]
 *** xref:setup.adoc#quayinstance[1.2.4. Deploying Quay]
 *** xref:setup.adoc#exportenvvar[1.2.5. Exporting Environment Variables]
+*** xref:setup.adoc#trustedca[1.2.6. Adding the Quay Certificate as a Trusted CA in OCP (Optional)]
 
 * 2. Red Hat Quay
 ** xref:quay-orgs.adoc[2.1 Users and Organizations]
@@ -37,12 +38,12 @@
 **** xref:quay-oci.adoc#pgp[2.5.4.2 Encrypting Container Images with PGP (RFC4880)]
 
 ** xref:quay-clair.adoc[2.6 Clair Security Scanning]
-*** xref:quay-clair.adoc#cve[2.6.1 Explore the vulnerability data (CVE's)]
-**** xref:quay-clair.adoc#secscan[2.6.1.1 Security scan]
-**** xref:quay-clair.adoc#packages[2.6.1.2 Packages]
+*** xref:quay-clair.adoc#cve[2.6.1 Exploring Vulnerability Data (CVEs)]
+**** xref:quay-clair.adoc#secscan[2.6.1.1 Performing a Security Scan]
+**** xref:quay-clair.adoc#packages[2.6.1.2 Viewing Packages]
 
 ** xref:quay-cso.adoc[2.7 Quay Container Security Operator (CSO)]
 *** xref:quay-cso.adoc#install[2.7.1 Installing the Quay CSO Operator]
-*** xref:quay-cso.adoc#vulncheck[2.7.2 Checking the image vulnerabilities through the Red Hat OpenShift web console]
+*** xref:quay-cso.adoc#vulncheck[2.7.2 Checking Image Vulnerabilities from the Red Hat OpenShift Web Console]
 
 ** xref:quay-obs.adoc[2.8 Quay Observability]
