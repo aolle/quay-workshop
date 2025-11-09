@@ -83,6 +83,9 @@
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="#exportenvvar">1.2.5. Exporting Environment Variables</a>
   </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#trustedca">1.2.6. Adding the Quay Certificate as a Trusted CA in OCP (Optional)</a>
+  </li>
 </ul>
   </li>
 </ul>
@@ -190,13 +193,13 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-clair.html#cve">2.6.1 Explore the vulnerability data (CVE&#8217;s)</a>
+    <a class="nav-link" href="quay-clair.html#cve">2.6.1 Exploring Vulnerability Data (CVEs)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="quay-clair.html#secscan">2.6.1.1 Security scan</a>
+    <a class="nav-link" href="quay-clair.html#secscan">2.6.1.1 Performing a Security Scan</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="quay-clair.html#packages">2.6.1.2 Packages</a>
+    <a class="nav-link" href="quay-clair.html#packages">2.6.1.2 Viewing Packages</a>
   </li>
 </ul>
   </li>
@@ -210,7 +213,7 @@
     <a class="nav-link" href="quay-cso.html#install">2.7.1 Installing the Quay CSO Operator</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-cso.html#vulncheck">2.7.2 Checking the image vulnerabilities through the Red Hat OpenShift web console</a>
+    <a class="nav-link" href="quay-cso.html#vulncheck">2.7.2 Checking Image Vulnerabilities from the Red Hat OpenShift Web Console</a>
   </li>
 </ul>
   </li>
@@ -587,6 +590,63 @@ It is recommended to set the <code>QUAY_HOSTNAME</code> environment variable in 
 <div class="listingblock lines_space console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">QUAY_HOSTNAME=$(oc get route registry-quay -n quay-workshop -o jsonpath={.spec.host})</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="trustedca"><a class="anchor" href="#trustedca"></a>Adding the Quay Certificate as a Trusted CA in OCP (Optional)</h3>
+<div class="paragraph">
+<p>This step is recommended if your Quay registry uses a self-signed or internal certificate.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Obtain the Quay registry certificate:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo -n | openssl s_client -showcerts -connect $QUAY_HOSTNAME:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' &gt; quay.crt</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create a ConfigMap containing the CA:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc create configmap quay-ca --from-file=$QUAY_HOSTNAME=quay.crt -n openshift-config
+
+# Verify
+oc get configmap quay-ca -n openshift-config -o yaml</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Associate the CA with the cluster:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc patch image.config.openshift.io/cluster --type=merge -p '{"spec":{"additionalTrustedCA":{"name":"quay-ca"}}}'</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Verify:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>oc get image.config.openshift.io/cluster -o yaml</pre>
+</div>
 </div>
 </div>
 </div>

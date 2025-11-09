@@ -83,6 +83,9 @@
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="setup.html#exportenvvar">1.2.5. Exporting Environment Variables</a>
   </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="setup.html#trustedca">1.2.6. Adding the Quay Certificate as a Trusted CA in OCP (Optional)</a>
+  </li>
 </ul>
   </li>
 </ul>
@@ -190,13 +193,13 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-clair.html#cve">2.6.1 Explore the vulnerability data (CVE&#8217;s)</a>
+    <a class="nav-link" href="quay-clair.html#cve">2.6.1 Exploring Vulnerability Data (CVEs)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="quay-clair.html#secscan">2.6.1.1 Security scan</a>
+    <a class="nav-link" href="quay-clair.html#secscan">2.6.1.1 Performing a Security Scan</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="quay-clair.html#packages">2.6.1.2 Packages</a>
+    <a class="nav-link" href="quay-clair.html#packages">2.6.1.2 Viewing Packages</a>
   </li>
 </ul>
   </li>
@@ -210,7 +213,7 @@
     <a class="nav-link" href="#install">2.7.1 Installing the Quay CSO Operator</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#vulncheck">2.7.2 Checking the image vulnerabilities through the Red Hat OpenShift web console</a>
+    <a class="nav-link" href="#vulncheck">2.7.2 Checking Image Vulnerabilities from the Red Hat OpenShift Web Console</a>
   </li>
 </ul>
   </li>
@@ -254,10 +257,10 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Scan pod images with the Red Hat Quay Container Security Operator (CSO).</p>
+<p>Scan pod images using the Red Hat Quay Container Security Operator (CSO).</p>
 </div>
 <div class="paragraph">
-<p>The Container Security Operator brings Quay and Clair metadata to Kubernetes / Red Hat OpenShift, allowing us to scan images for vulnerabilities and compliance issues. This helps ensure that the images used in our pods are secure and compliant with relevant standards.</p>
+<p>The Container Security Operator integrates Quay and Clair metadata into Kubernetes / Red Hat OpenShift, allowing you to scan images for vulnerabilities and compliance issues. This ensures that the images used in your pods are secure and meet relevant standards.</p>
 </div>
 </div>
 </div>
@@ -267,13 +270,13 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Open a browser window and log in to the Red Hat OpenShift Container Platform web console.</p>
+<p>Open a browser and log in to the Red Hat OpenShift Container Platform web console.</p>
 </li>
 <li>
-<p>From the Administrator perspective, click <code>Operators</code>, then <code>OperatorHub</code>.</p>
+<p>From the Administrator perspective, click <code>Operators</code> and then <code>OperatorHub</code>.</p>
 </li>
 <li>
-<p>In the <code>Filter by keyword</code> field, type <code>Quay</code>.</p>
+<p>In the <code>Filter by keyword</code> field, type <code>Red Hat Quay</code>.</p>
 </li>
 </ul>
 </div>
@@ -297,7 +300,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Select <code>stable-3.8</code> from the list of available <code>Update Channel</code> options. Choose <code>All namespaces on the cluster (default)</code> as the installation mode. Choose <code>Automatic</code> update approval.</p>
+<p>On the <code>Install Operator</code> page, select <code>stable-3.15</code> from the <code>Update Channel</code> options. Choose <code>All namespaces on the cluster (default)</code> as the installation mode and select <code>Automatic</code> for update approval.</p>
 </li>
 </ul>
 </div>
@@ -309,65 +312,69 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Click <code>Install</code> to start the installation process.</p>
+<p>Click <code>Install</code> to start the installation.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="vulncheck"><a class="anchor" href="#vulncheck"></a>Checking the image vulnerabilities through the Red Hat OpenShift web console</h2>
+<h2 id="vulncheck"><a class="anchor" href="#vulncheck"></a>Checking Image Vulnerabilities from the Red Hat OpenShift Web Console</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Deploy a vulnerable image. For this example, we are going to deploy an old httpd vulnerable image.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock lines_space console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Pull the image
-podman pull registry.redhat.io/rhel8/httpd-24:1-30
-
-# Tag the image
-podman tag registry.redhat.io/rhel8/httpd-24:1-30 ${QUAY_HOSTNAME}/olleb/httpd-24:1-30
-
-# Push it to our Quay registry
-podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30</code></pre>
-</div>
+<div class="paragraph">
+<p>Deploy a vulnerable image to verify how the Quay Container Security Operator (CSO) detects and displays image vulnerabilities in the OpenShift console.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Navigate to the Quay Registry Endpoint and select the <code>olleb/httpd-24</code> repository that has been automatically created when we pulled the image before.</p>
+<p>Open the Red Hat OpenShift Container Platform web console and create a new project by clicking <code>Projects</code>, then <code>Create Project</code>. Name the project <code>jmxtrans</code> and click <code>Create</code>.</p>
 </li>
 <li>
-<p>Select <code>Settings</code> and then click <code>Make Public</code>.</p>
-</li>
-<li>
-<p>Open the Red Hat OpenShift Container Platform web console and create a new project by clicking <code>Projects</code> then <code>Create Project</code>. Name the project as <code>vuln-httpd</code> and then click <code>Create</code>.</p>
+<p>With the <code>jmxtrans</code> project selected, deploy the vulnerable image by clicking <code>Workloads</code>, then <code>Deployments</code>. Click <code>Create Deployment</code>.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/cso/vulnhttpd-project.png" alt="vulnhttpd project">
+<img src="_images/cso/create-deployment.png" alt="create deployment">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>In the <code>vuln-httpd</code> project, deploy the vulnerable image by clicking <code>Workloads</code> then <code>Deployments</code>. Click <code>Create Deployment</code>.</p>
-</li>
-<li>
-<p>Replace the default image value with the image from our Quay registry. Set replicas as desired and set <code>httpd</code> as the custom name.</p>
+<p>Switch to <code>YAML view</code> and replace the default image value with the image from your Quay registry. Set the number of replicas as desired, and name the deployment <code>jmxtrans</code>.</p>
 </li>
 </ul>
 </div>
-<div class="imageblock">
+<div class="listingblock">
 <div class="content">
-<img src="_images/cso/yaml.png" alt="yaml">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: jmxtrans
+  name: 'jmxtrans'
+spec:
+  selector:
+    matchLabels:
+      app: name
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: name
+    spec:
+      containers:
+        - name: container
+          image: &gt;-
+            quay.io/strimzi/jmxtrans:0.34.0
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -376,7 +383,7 @@ podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30</code></pre>
 <p>Click <code>Create</code>.</p>
 </li>
 <li>
-<p>Red Hat OpenShift will start the deployment and create the pod. Go to <code>Workloads</code> then <code>Pods</code> and select one of the <code>httpd</code> pods. Select the <code>Vulnerabilities</code> tab.</p>
+<p>Red Hat OpenShift will start the deployment and create the pod. Go to <code>Workloads</code> → <code>Pods</code> and select one of the <code>jmxtrans</code> pods. Then open the <code>Vulnerabilities</code> tab.</p>
 </li>
 </ul>
 </div>
@@ -385,17 +392,20 @@ podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30</code></pre>
 <img src="_images/cso/pods.png" alt="pods">
 </div>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click any listed vulnerability to open its details.</p>
+</li>
+</ul>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/cso/vuln-tab.png" alt="vuln tab">
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Click on the security scan results.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>You will see the <strong>Image Manifest Vulnerabilities</strong> view:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -403,7 +413,7 @@ podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Additionally, after installing the CSO operator, a new status related to Image Vulnerabilities is shown on the cluster overview.</p>
+<p>Additionally, after installing the CSO Operator, a new <strong>Image Vulnerabilities</strong> status appears on the <strong>Cluster Overview</strong> page.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -413,19 +423,7 @@ podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Click <code>Image Vulnerabilities</code>.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/cso/vuln.png" alt="vuln">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Click <code>View all</code> and then click on the Manifest related to <code>olleb/httpd-24</code>.</p>
+<p>Click <code>Image Vulnerabilities</code>, then <code>View all</code>, and filter by the <code>jmxtrans</code> project.</p>
 </li>
 </ul>
 </div>
@@ -434,13 +432,23 @@ podman push ${QUAY_HOSTNAME}/olleb/httpd-24:1-30</code></pre>
 <img src="_images/cso/vulnlist.png" alt="vulnlist">
 </div>
 </div>
-<div class="paragraph">
-<p>You will be redirected to the Quay Security Scanner Dashboard.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Click on a specific manifest entry to view more details. You will be redirected to the Quay Security Scanner Dashboard.</p>
+</li>
+</ul>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/cso/quayredirect.png" alt="quayredirect">
 </div>
+</div>
+<div class="paragraph">
+<p>By integrating the Red Hat Quay Container Security Operator (CSO) with OpenShift, we can automatically surface image vulnerabilities directly in the cluster console.</p>
+</div>
+<div class="paragraph">
+<p>This integration bridges image scanning data from Quay and Clair with running workloads, enabling proactive detection and remediation of vulnerabilities across deployed containers.</p>
 </div>
 </div>
 </div>
