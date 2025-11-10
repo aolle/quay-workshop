@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Quay Repository Notifications :: Red Hat Quay Workshop</title>
-    <link rel="canonical" href="https://olleb.com/quay-workshop/3.15/quay-repo-notifications.html">
-    <link rel="prev" href="quay-mirror.html">
-    <link rel="next" href="quay-oci.html">
+    <title>Quay Container Security Operator (CSO) :: Red Hat Quay Workshop</title>
+    <link rel="canonical" href="https://olleb.com/quay-workshop/quay-cso.html">
+    <link rel="prev" href="quay-clair.html">
+    <link rel="next" href="quay-obs.html">
     <meta name="generator" content="Antora 3.0.3">
-    <link rel="stylesheet" href="../_/css/site.css">
-<link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./_/css/site.css">
+<link rel="icon" href="./_/img/favicon.ico" type="image/x-icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../_/img/RHDLogo.svg" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="./_/img/RHDLogo.svg" height="40px" alt="Red Hat Developer Program"></a>
       <a class="navbar-item" style="font-size: 24px; color: white" href="https://olleb.com/quay-workshop">Red Hat Quay Workshop</a>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -48,7 +48,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="ROOT" data-version="3.15">
+<div class="nav-container" data-component="ROOT" data-version="master">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -145,12 +145,12 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="quay-repo-notifications.html">2.4 Quay repository notifications</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#pushnotif">2.4.1 Creating a Push-to-Repository Event Notification</a>
+    <a class="nav-link" href="quay-repo-notifications.html#pushnotif">2.4.1 Creating a Push-to-Repository Event Notification</a>
   </li>
 </ul>
   </li>
@@ -205,15 +205,15 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="quay-cso.html">2.7 Quay Container Security Operator (CSO)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-cso.html#install">2.7.1 Installing the Quay CSO Operator</a>
+    <a class="nav-link" href="#install">2.7.1 Installing the Quay CSO Operator</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-cso.html#vulncheck">2.7.2 Checking Image Vulnerabilities from the Red Hat OpenShift Web Console</a>
+    <a class="nav-link" href="#vulncheck">2.7.2 Checking Image Vulnerabilities from the Red Hat OpenShift Web Console</a>
   </li>
 </ul>
   </li>
@@ -237,15 +237,15 @@
   <ul>
     <li><a href="index.html">Red Hat Quay Workshop</a></li>
     <li>2. Red Hat Quay</li>
-    <li><a href="quay-repo-notifications.html">2.4 Quay repository notifications</a></li>
+    <li><a href="quay-cso.html">2.7 Quay Container Security Operator (CSO)</a></li>
   </ul>
 </nav>
 <div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">3.15</button>
+  <button class="version-menu-toggle" title="Show other versions of page">main</button>
   <div class="version-menu">
-    <a class="version is-current" href="quay-repo-notifications.html">3.15</a>
-    <a class="version" href="../v3.8/quay-repo-notifications.html">v3.8</a>
-    <a class="version" href="../v3.7/quay-repo-notifications.html">v3.7</a>
+    <a class="version is-current" href="quay-cso.html">main</a>
+    <a class="version" href="v3.8/quay-cso.html">v3.8</a>
+    <a class="version" href="v3.7/quay-cso.html">v3.7</a>
   </div>
 </div>
   <div style="padding: 0 0.5rem 0 0.75rem;"><a href="https://olleb.com" target="_blank" rel="noopener noreferrer"> © 2025 - Àngel Ollé Blázquez</a></div>
@@ -253,111 +253,208 @@
  
   <div class="content">
 <article class="doc">
-<h1 class="page">Quay Repository Notifications</h1>
+<h1 class="page">Quay Container Security Operator (CSO)</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Quay supports adding notifications to a repository for various events that occur during the repository lifecycle, such as when a new image is pushed or a tag is deleted.</p>
+<p>Scan pod images using the Red Hat Quay Container Security Operator (CSO).</p>
+</div>
+<div class="paragraph">
+<p>The Container Security Operator integrates Quay and Clair metadata into Kubernetes / Red Hat OpenShift, allowing you to scan images for vulnerabilities and compliance issues. This ensures that the images used in your pods are secure and meet relevant standards.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="pushnotif"><a class="anchor" href="#pushnotif"></a>Creating a Push-to-Repository Event Notification</h2>
+<h2 id="install"><a class="anchor" href="#install"></a>Installing the Quay CSO Operator</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p>From the Red Hat Quay Dashboard, navigate to the <code>olleb/kafka</code> repository. Recall from <a href="quay-repos.html" class="xref page">2.2 Quay Repositories</a> that we previously created and pushed a <code>strimzi/kafka</code> image.</p>
+<p>Open a browser and log in to the Red Hat OpenShift Container Platform web console.</p>
 </li>
 <li>
-<p>Click <code>Settings</code>.</p>
+<p>From the Administrator perspective, click <code>Operators</code> and then <code>OperatorHub</code>.</p>
 </li>
 <li>
-<p>Click the <code>+ Create Notification</code> button.</p>
+<p>In the <code>Filter by keyword</code> field, type <code>Red Hat Quay</code>.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/reponotifications/notifbutton.png" alt="notifbutton">
+<img src="_images/cso/operatorhub-quay.png" alt="operatorhub quay">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>In the <code>When this event occurs</code> drop-down menu, select <code>Push to Repository</code>.</p>
+<p>Select the <code>Red Hat Quay Container Security Operator</code> tile and click <code>Install</code>.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/reponotifications/event-list.png" alt="event list">
+<img src="_images/cso/cso-install.png" alt="cso install">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Under the <code>Then issue a notification</code> drop-down menu, select <code>Red Hat Quay Notification</code>.</p>
+<p>On the <code>Install Operator</code> page, select <code>stable-3.15</code> from the <code>Update Channel</code> options. Choose <code>All namespaces on the cluster (default)</code> as the installation mode and select <code>Automatic</code> for update approval.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/reponotifications/notification-actions.png" alt="notification actions">
+<img src="_images/cso/cso-install-params.png" alt="cso install params">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>In the <code>Recipient</code> drop-down menu, select <code>owners</code>.</p>
+<p>Click <code>Install</code> to start the installation.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="vulncheck"><a class="anchor" href="#vulncheck"></a>Checking Image Vulnerabilities from the Red Hat OpenShift Web Console</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Deploy a vulnerable image to verify how the Quay Container Security Operator (CSO) detects and displays image vulnerabilities in the OpenShift console.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the Red Hat OpenShift Container Platform web console and create a new project by clicking <code>Projects</code>, then <code>Create Project</code>. Name the project <code>jmxtrans</code> and click <code>Create</code>.</p>
 </li>
 <li>
-<p>In the <code>Notification title</code> text field, enter <code>A new image has been pushed into the repository</code>.</p>
+<p>With the <code>jmxtrans</code> project selected, deploy the vulnerable image by clicking <code>Workloads</code>, then <code>Deployments</code>. Click <code>Create Deployment</code>.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/reponotifications/notifications-all.png" alt="notifications all">
+<img src="_images/cso/create-deployment.png" alt="create deployment">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Click <code>Create Notification</code>.</p>
+<p>Switch to <code>YAML view</code> and replace the default image value with the image from your Quay registry. Set the number of replicas as desired, and name the deployment <code>jmxtrans</code>.</p>
 </li>
 </ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: jmxtrans
+  name: 'jmxtrans'
+spec:
+  selector:
+    matchLabels:
+      app: name
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: name
+    spec:
+      containers:
+        - name: container
+          image: &gt;-
+            quay.io/strimzi/jmxtrans:0.34.0
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click <code>Create</code>.</p>
+</li>
+<li>
+<p>Red Hat OpenShift will start the deployment and create the pod. Go to <code>Workloads</code> → <code>Pods</code> and select one of the <code>jmxtrans</code> pods. Then open the <code>Vulnerabilities</code> tab.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/cso/pods.png" alt="pods">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click any listed vulnerability to open its details.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/cso/vuln-tab.png" alt="vuln tab">
+</div>
 </div>
 <div class="paragraph">
-<p>Push a new image or add a new tag to the existing one in the repository.</p>
+<p>You will see the <strong>Image Manifest Vulnerabilities</strong> view:</p>
 </div>
-<div class="listingblock lines_space console-input">
+<div class="imageblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman pull quay.io/strimzi/kafka:latest-kafka-3.0.0
-podman tag quay.io/strimzi/kafka:latest-kafka-3.0.0 ${QUAY_HOSTNAME}/olleb/kafka:3.0.0
-# Log in if you are not already authenticated
-podman login ${QUAY_HOSTNAME}
-podman push ${QUAY_HOSTNAME}/olleb/kafka:3.0.0</code></pre>
+<img src="_images/cso/vulnimgmanifest.png" alt="vulnimgmanifest">
 </div>
 </div>
 <div class="paragraph">
-<p>After a few moments, a notification will appear at the top of the dashboard indicating that a new image has been pushed to the repository.</p>
+<p>Additionally, after installing the CSO Operator, a new <strong>Image Vulnerabilities</strong> status appears on the <strong>Cluster Overview</strong> page.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/reponotifications/notification.png" alt="notification">
+<img src="_images/cso/overview.png" alt="overview">
 </div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click <code>Image Vulnerabilities</code>, then <code>View all</code>, and filter by the <code>jmxtrans</code> project.</p>
+</li>
+</ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/reponotifications/notifications.png" alt="notifications">
+<img src="_images/cso/vulnlist.png" alt="vulnlist">
 </div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click on a specific manifest entry to view more details. You will be redirected to the Quay Security Scanner Dashboard.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/cso/quayredirect.png" alt="quayredirect">
+</div>
+</div>
+<div class="paragraph">
+<p>By integrating the Red Hat Quay Container Security Operator (CSO) with OpenShift, we can automatically surface image vulnerabilities directly in the cluster console.</p>
+</div>
+<div class="paragraph">
+<p>This integration bridges image scanning data from Quay and Clair with running workloads, enabling proactive detection and remediation of vulnerabilities across deployed containers.</p>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="quay-mirror.html">2.3 Quay Repository Mirroring</a></span>
-  <span class="next"><a href="quay-oci.html">2.5 Quay OCI-Based Artifacts Repository</a></span>
+  <span class="prev"><a href="quay-clair.html">2.6 Clair Security Scanning</a></span>
+  <span class="next"><a href="quay-obs.html">2.8 Quay Observability</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -369,8 +466,8 @@ podman push ${QUAY_HOSTNAME}/olleb/kafka:3.0.0</code></pre>
 <footer class="footer">
   <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
 </footer>
-<script src="../_/js/vendor/clipboard.js"></script>
-<script src="../_/js/site.js"></script>
-<script async src="../_/js/vendor/highlight.js"></script>
+<script src="./_/js/vendor/clipboard.js"></script>
+<script src="./_/js/site.js"></script>
+<script async src="./_/js/vendor/highlight.js"></script>
   </body>
 </html>
