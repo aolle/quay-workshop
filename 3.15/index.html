@@ -3,19 +3,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Quay Repository Notifications :: Red Hat Quay Workshop</title>
-    <link rel="canonical" href="https://olleb.com/quay-workshop/quay-repo-notifications.html">
-    <link rel="prev" href="quay-mirror.html">
-    <link rel="next" href="quay-oci.html">
+    <title>Red Hat Quay 3.15 Workshop :: Red Hat Quay Workshop</title>
+    <link rel="canonical" href="https://olleb.com/quay-workshop/3.15/index.html">
+    <link rel="next" href="setup.html">
     <meta name="generator" content="Antora 3.0.3">
-    <link rel="stylesheet" href="./_/css/site.css">
-<link rel="icon" href="./_/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../_/css/site.css">
+<link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="./_/img/RHDLogo.svg" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../_/img/RHDLogo.svg" height="40px" alt="Red Hat Developer Program"></a>
       <a class="navbar-item" style="font-size: 24px; color: white" href="https://olleb.com/quay-workshop">Red Hat Quay Workshop</a>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -48,7 +47,7 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="ROOT" data-version="master">
+<div class="nav-container" data-component="ROOT" data-version="3.15">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -145,12 +144,12 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="quay-repo-notifications.html">2.4 Quay repository notifications</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#pushnotif">2.4.1 Creating a Push-to-Repository Event Notification</a>
+    <a class="nav-link" href="quay-repo-notifications.html#pushnotif">2.4.1 Creating a Push-to-Repository Event Notification</a>
   </li>
 </ul>
   </li>
@@ -236,16 +235,15 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Red Hat Quay Workshop</a></li>
-    <li>2. Red Hat Quay</li>
-    <li><a href="quay-repo-notifications.html">2.4 Quay repository notifications</a></li>
+    <li><a href="index.html">Red Hat Quay 3.15 Workshop</a></li>
   </ul>
 </nav>
 <div class="page-versions">
-  <button class="version-menu-toggle" title="Show other versions of page">main</button>
+  <button class="version-menu-toggle" title="Show other versions of page">3.15</button>
   <div class="version-menu">
-    <a class="version is-current" href="quay-repo-notifications.html">main</a>
-    <a class="version" href="v3.8/quay-repo-notifications.html">v3.8</a>
-    <a class="version" href="v3.7/quay-repo-notifications.html">v3.7</a>
+    <a class="version is-current" href="index.html">3.15</a>
+    <a class="version" href="../v3.8/index.html">v3.8</a>
+    <a class="version" href="../v3.7/index.html">v3.7</a>
   </div>
 </div>
   <div style="padding: 0 0.5rem 0 0.75rem;"><a href="https://olleb.com" target="_blank" rel="noopener noreferrer"> © 2025 - Àngel Ollé Blázquez</a></div>
@@ -253,111 +251,29 @@
  
   <div class="content">
 <article class="doc">
-<h1 class="page">Quay Repository Notifications</h1>
-<div id="preamble">
+<h1 class="page">Red Hat Quay 3.15 Workshop</h1>
+<div class="sect1 text-center strong">
+<h2>Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Quay supports adding notifications to a repository for various events that occur during the repository lifecycle, such as when a new image is pushed or a tag is deleted.</p>
+<p>Red Hat Quay is a distributed and highly available container image registry for your enterprise.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="pushnotif"><a class="anchor" href="#pushnotif"></a>Creating a Push-to-Repository Event Notification</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>From the Red Hat Quay Dashboard, navigate to the <code>olleb/kafka</code> repository. Recall from <a href="quay-repos.html" class="xref page">2.2 Quay Repositories</a> that we previously created and pushed a <code>strimzi/kafka</code> image.</p>
-</li>
-<li>
-<p>Click <code>Settings</code>.</p>
-</li>
-<li>
-<p>Click the <code>+ Create Notification</code> button.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/reponotifications/notifbutton.png" alt="notifbutton">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>In the <code>When this event occurs</code> drop-down menu, select <code>Push to Repository</code>.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/reponotifications/event-list.png" alt="event list">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Under the <code>Then issue a notification</code> drop-down menu, select <code>Red Hat Quay Notification</code>.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/reponotifications/notification-actions.png" alt="notification actions">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>In the <code>Recipient</code> drop-down menu, select <code>owners</code>.</p>
-</li>
-<li>
-<p>In the <code>Notification title</code> text field, enter <code>A new image has been pushed into the repository</code>.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/reponotifications/notifications-all.png" alt="notifications all">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Click <code>Create Notification</code>.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Push a new image or add a new tag to the existing one in the repository.</p>
-</div>
-<div class="listingblock lines_space console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman pull quay.io/strimzi/kafka:latest-kafka-3.0.0
-podman tag quay.io/strimzi/kafka:latest-kafka-3.0.0 ${QUAY_HOSTNAME}/olleb/kafka:3.0.0
-# Log in if you are not already authenticated
-podman login ${QUAY_HOSTNAME}
-podman push ${QUAY_HOSTNAME}/olleb/kafka:3.0.0</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>After a few moments, a notification will appear at the top of the dashboard indicating that a new image has been pushed to the repository.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/reponotifications/notification.png" alt="notification">
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/reponotifications/notifications.png" alt="notifications">
-</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+This is not an official guide or workshop provided by Red Hat. For more information on training or guidelines related to this topic or product, please reach out to your designated Red Hat representative.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="quay-mirror.html">2.3 Quay Repository Mirroring</a></span>
-  <span class="next"><a href="quay-oci.html">2.5 Quay OCI-Based Artifacts Repository</a></span>
+  <span class="next"><a href="setup.html">1. Environment Setup</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -369,8 +285,8 @@ podman push ${QUAY_HOSTNAME}/olleb/kafka:3.0.0</code></pre>
 <footer class="footer">
   <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
 </footer>
-<script src="./_/js/vendor/clipboard.js"></script>
-<script src="./_/js/site.js"></script>
-<script async src="./_/js/vendor/highlight.js"></script>
+<script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
   </body>
 </html>
