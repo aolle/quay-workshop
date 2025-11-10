@@ -1,4 +1,4 @@
-= Quay Repository Mirroring
+= Repository Mirroring
 include::_attributes.adoc[]
 
 Quay repository mirroring allows you to replicate container images from external or local registries into your Quay cluster.

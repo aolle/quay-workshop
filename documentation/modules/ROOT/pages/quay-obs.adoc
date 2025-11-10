@@ -1,4 +1,4 @@
-= Quay Observability
+= Observability
 include::_attributes.adoc[]
 
 Red Hat OpenShift provides built-in observability tools for monitoring the health and performance of the system. The Quay Operator adds an embedded Quay Dashboard to the OpenShift console, where we can monitor the health, rates, latency, and more of our Quay registry.

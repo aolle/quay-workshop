@@ -1,4 +1,4 @@
-= Clair Security Scanning
+= Security Scanning (Clair)
 include::_attributes.adoc[]
 
 Quay integrates with Clair to perform vulnerability scanning of container images associated with various Linux operating systems.

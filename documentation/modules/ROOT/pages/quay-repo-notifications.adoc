@@ -1,4 +1,4 @@
-= Quay Repository Notifications
+= Repository Notifications
 include::_attributes.adoc[]
 
 Quay supports adding notifications to a repository for various events that occur during the repository lifecycle, such as when a new image is pushed or a tag is deleted.

@@ -1,4 +1,4 @@
-= Quay OCI-Based Artifacts Repository
+= OCI-Based Artifacts
 include::_attributes.adoc[]
 
 Quay can be used to store OCI-based artifacts like Helm charts, encrypted container images, signed images, zstd compressed images, etc. 

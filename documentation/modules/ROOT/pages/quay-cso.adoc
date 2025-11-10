@@ -1,4 +1,4 @@
-= Quay Container Security Operator (CSO) 
+= Container Security Operator (CSO) 
 include::_attributes.adoc[]
 
 Scan pod images using the Red Hat Quay Container Security Operator (CSO).

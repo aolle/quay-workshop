@@ -1,4 +1,4 @@
-= Quay repositories
+= Repositories
 include::_attributes.adoc[]
 
 [#imagerepo]

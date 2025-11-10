@@ -1,4 +1,4 @@
-= Environment Setup
+= Prerequisites
 include::_attributes.adoc[]
 
 [NOTE,subs="attributes+,+macros"]
@@ -9,15 +9,9 @@ This tutorial was developed and tested with:
 * Red Hat Quay `3.15`
 ====
 
-[#tools]
-== Container Management Tools
-
 The following tools are required to run the exercises in this tutorial. Please ensure that they are installed and properly configured before proceeding with any of the tutorial chapters.
 
 include::partial$tools.adoc[]
-
-[#quay]
-== Red Hat Quay Prerequisites
 
 [#odf]
 == ODF Operator
