@@ -58,32 +58,74 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="setup.html">1. Environment Setup</a>
+    <a class="nav-link" href="setup.html">Prerequisites</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="setup.html#tools">1.1. Container Management Tools</a>
+    <a class="nav-link" href="setup.html#odf">ODF Operator</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="setup.html#storage">Creating the ODF Cluster</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="setup.html#quayoperator">Installing the Quay Operator</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="setup.html#quayinstance">Deploying Quay</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="setup.html#exportenvvar">Exporting Environment Variables</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="setup.html#trustedca">Adding the Quay Certificate as a Trusted CA in OCP (Optional)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="quay-orgs.html">Users and Organizations</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-orgs.html#useraccounts">Creating User Accounts</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-orgs.html#orgaccounts">Creating Organization Accounts</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="quay-repos.html">Repositories</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-repos.html#imagerepo">Creating an Image Repository</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-repos.html#push">Pushing and Tagging an Image</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-repos.html#imglayers">Inspecting Image Layers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-repos.html#pull">Pulling an Image</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-repos.html#rollback">Rolling Back an Image</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-repos.html#expiration">Image Expiration</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="quay-mirror.html">Repository Mirroring</a>
+<ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="setup.html#quay">1.2. Red Hat Quay Prerequisites</a>
+    <a class="nav-link" href="quay-mirror.html#imagerepo">Creating a Mirrored Repository</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="setup.html#odf">1.2.1. ODF Operator</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="setup.html#storage">1.2.2. Creating the ODF Cluster</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="setup.html#quayoperator">1.2.3. Installing the Quay Operator</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="setup.html#quayinstance">1.2.4. Deploying Quay</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="setup.html#exportenvvar">1.2.5. Exporting Environment Variables</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="setup.html#trustedca">1.2.6. Adding the Quay Certificate as a Trusted CA in OCP (Optional)</a>
+    <a class="nav-link" href="quay-mirror.html#usage">Repository Usage Logs, Tags, and Tag History</a>
   </li>
 </ul>
   </li>
@@ -91,133 +133,91 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">2. Red Hat Quay</span>
+    <a class="nav-link" href="quay-repo-notifications.html">Repository Notifications</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-orgs.html">2.1 Users and Organizations</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-orgs.html#useraccounts">2.1.1 Creating User Accounts</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-orgs.html#orgaccounts">2.1.2 Creating Organization Accounts</a>
+    <a class="nav-link" href="quay-repo-notifications.html#pushnotif">Creating a Push-to-Repository Event Notification</a>
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="quay-oci.html">OCI-Based Artifacts</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-oci.html#helm">Working with Helm Charts</a>
+  </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-repos.html">2.2 Quay Repositories</a>
+    <a class="nav-link" href="quay-oci.html#signed">Signed Container Images</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-repos.html#imagerepo">2.2.1 Creating an Image repository</a>
+    <a class="nav-link" href="quay-oci.html#cosign">Signing Container Images with Cosign</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-repos.html#push">2.2.2 Pushing and Tagging an Image to the Repository</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-repos.html#imglayers">2.2.3 Inspecting Image Layers</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-repos.html#pull">2.2.4 Pulling an Image from the Repository</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-repos.html#rollback">2.2.5 Rolling Back an Image</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-repos.html#expiration">2.2.6 Image Expiration</a>
+    <a class="nav-link" href="quay-oci.html#signpgp">Signing Container Images with PGP (RFC4880)</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-mirror.html">2.3 Quay Repository Mirroring</a>
+    <a class="nav-link" href="quay-oci.html#encrypted">Encrypted Container Images</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="quay-oci.html#jwe">Encrypting Container Images with JSON Web Encryption (JWE) (RFC7516)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="quay-oci.html#pgp">Encrypting Container Images with PGP (RFC4880)</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-mirror.html#imagerepo">2.3.1 Creating a Mirrored Repository</a>
+    <a class="nav-link" href="quay-clair.html">Security Scanning (Clair)</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="quay-mirror.html#usage">2.3.1.2 Repository Usage Logs, Tags, and Tag History</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-repo-notifications.html">2.4 Quay repository notifications</a>
+    <a class="nav-link" href="quay-clair.html#cve">Exploring Vulnerability Data (CVEs)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-repo-notifications.html#pushnotif">2.4.1 Creating a Push-to-Repository Event Notification</a>
+    <a class="nav-link" href="quay-clair.html#secscan">Performing a Security Scan</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="quay-clair.html#packages">Viewing Packages</a>
   </li>
 </ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="quay-cso.html">Container Security Operator (CSO)</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-cso.html#install">Installing the CSO Operator</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-oci.html">2.5 Quay OCI-Based Artifacts Repository</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-oci.html#helm">2.5.2 Working with Helm Charts</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-oci.html#signed">2.5.3 Signed Container Images</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="quay-oci.html#cosign">2.5.3.1 Signing Container Images with Cosign</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="quay-oci.html#signpgp">2.5.3.2 Signing Container Images with PGP (RFC4880)</a>
+    <a class="nav-link" href="quay-cso.html#vulncheck">Checking Image Vulnerabilities from the OpenShift Web Console</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="3">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="quay-obs.html">Observability</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-oci.html#encrypted">2.5.4 Encrypted Container Images</a>
+    <a class="nav-link" href="#quay-troubleshooting.adoc">Troubleshooting and Tips</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="quay-oci.html#jwe">2.5.4.1 Encrypting Container Images with JSON Web Encryption (JWE) (RFC7516)</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="quay-oci.html#pgp">2.5.4.2 Encrypting Container Images with PGP (RFC4880)</a>
-  </li>
-</ul>
-  </li>
-</ul>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#quay-troubleshooting.adoc#tls">TLS and Insecure Registry Configuration</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-clair.html">2.6 Clair Security Scanning</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-clair.html#cve">2.6.1 Exploring Vulnerability Data (CVEs)</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="quay-clair.html#secscan">2.6.1.1 Performing a Security Scan</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="quay-clair.html#packages">2.6.1.2 Viewing Packages</a>
-  </li>
-</ul>
-  </li>
-</ul>
+    <a class="nav-link" href="#quay-troubleshooting.adoc#cosign">cosign and Registry Trust Issues</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-cso.html">2.7 Quay Container Security Operator (CSO)</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-cso.html#install">2.7.1 Installing the Quay CSO Operator</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-cso.html#vulncheck">2.7.2 Checking Image Vulnerabilities from the Red Hat OpenShift Web Console</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-obs.html">2.8 Quay Observability</a>
+    <a class="nav-link" href="#quay-troubleshooting.adoc#gpg">GPG Key Cleanup</a>
   </li>
 </ul>
   </li>
@@ -274,7 +274,7 @@ This is not an official guide or workshop provided by Red Hat. For more informat
 </div>
 </div>
 <nav class="pagination">
-  <span class="next"><a href="setup.html">1. Environment Setup</a></span>
+  <span class="next"><a href="setup.html">Prerequisites</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
