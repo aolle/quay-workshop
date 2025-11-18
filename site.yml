@@ -7,7 +7,7 @@ site:
   start_page: quay-workshop::index.adoc
 
 content:
-  branches: [v*, main]
+  branches: [main]
   sources:
     - url: .
       start_path: documentation
@@ -32,8 +32,6 @@ ui:
     - path: .nojekyll
     - path: ui.yml
       contents: "static_files: [ .nojekyll ]"
-    - path: js/version-name.js
-      contents: ./supplemental-ui/js/version-name.js
 
 output:
   dir: ./gh-pages
