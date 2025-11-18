@@ -1,0 +1,84 @@
+= Troubleshooting and Tips
+include::_attributes.adoc[]
+
+This section provides solutions and examples for common issues encountered during the Quay workshop, such as TLS problems, insecure registries, and certificate handling across tools like `podman`, `helm`, or `cosign`.
+
+[#tls]
+== TLS and Insecure Registry Configuration
+
+When using self-signed certificates or non-trusted CAs, you might need to disable TLS verification or configure trust stores.
+
+=== podman examples
+
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+podman login ${QUAY_HOSTNAME} --tls-verify=false
+podman push --encryption-key jwe:public-key.pem ${QUAY_HOSTNAME}/demo/mysql-80:80 --tls-verify=false
+----
+
+=== helm examples
+
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+helm registry login ${QUAY_HOSTNAME} --insecure
+helm push demo-chart-0.0.3.tgz oci://${QUAY_HOSTNAME}/demo/helm
+helm env
+----
+
+If your system uses self-signed certificates, ensure the certificate is trusted by your OS or container tools.
+
+* Debian-based systems:
++
+[.console-input]
+[source,bash]
+----
+sudo cp quay.crt /usr/local/share/ca-certificates/
+sudo update-ca-certificates
+----
+
+* Fedora-based systems:
++
+[.console-input]
+[source,bash]
+----
+sudo cp quay.crt /etc/pki/ca-trust/source/anchors/
+sudo update-ca-trust
+----
+
+[#cosign]
+== cosign and Registry Trust Issues
+
+In some cases, `cosign sign` fails to use the `--allow-insecure-registry` flag.
+
+Workaround:
+
+* Download the full certificate chain from your registry:
++
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+curl -k https://${QUAY_HOSTNAME}/v2/ > quay.crt
+----
+
+* Add it to your system trust as shown in the previous section.
+
+Then retry:
++
+[.console-input]
+[source,bash, subs="+macros,+attributes"]
+----
+cosign sign --key cosign.key ${QUAY_HOSTNAME}/demo/app:latest
+----
+
+[#gpg]
+== GPG Key Cleanup
+
+If you created temporary GPG keys for image signing, remove them after finishing the workshop.
+
+[.console-input]
+[source,bash]
+----
+gpg --delete-secret-and-public-key "user@example.com"
+----

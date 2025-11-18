@@ -17,7 +17,7 @@ image::repositories/repo-config.png[]
 * Click `Create Public Repository`.
 
 [#push]
-== Pushing and Tagging an Image to the Repository
+== Pushing and Tagging an Image
 
 * Pull an image from the public registry by running the `podman pull` command followed by the image name.
 
@@ -73,7 +73,7 @@ image::repositories/image-pushed2.png[]
 image::repositories/img-layers.png[]
 
 [#pull]
-== Pulling an Image from the Repository
+== Pulling an Image
 
 * From the Quay dashboard, locate and select the `olleb/kafka` repository.
 

@@ -46,6 +46,8 @@ image::mirror/mirror-all.png[]
 [#usage]
 === Repository Usage Logs, Tags, and Tag History
 
+// TODO: move to another section?
+
 After enabling mirroring, you can view the `Tag History`, `Tags`, and `Usage Logs` as shown below.
 
 image::mirror/usagelogs.png[]

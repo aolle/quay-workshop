@@ -116,7 +116,7 @@ QUAY_HOSTNAME=$(oc get route registry-quay -n quay-workshop -o jsonpath={.spec.h
 ----
 
 [#trustedca]
-=== Adding the Quay Certificate as a Trusted CA in OCP (Optional)
+== Adding the Quay Certificate as a Trusted CA in OCP (Optional)
 
 This step is recommended if your Quay registry uses a self-signed or internal certificate.
 

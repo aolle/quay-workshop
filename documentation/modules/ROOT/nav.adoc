@@ -40,7 +40,7 @@
 *** xref:quay-clair.adoc#packages[Viewing Packages]
 
 * xref:quay-cso.adoc[Container Security Operator (CSO)]
-** xref:quay-cso.adoc#install[Installing the CSO Operator]
+** xref:quay-cso.adoc#install[Installing the Quay CSO Operator]
 ** xref:quay-cso.adoc#vulncheck[Checking Image Vulnerabilities from the OpenShift Web Console]
 
 * xref:quay-obs.adoc[Observability]

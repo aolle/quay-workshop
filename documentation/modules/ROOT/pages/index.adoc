@@ -5,6 +5,7 @@
 [.text-center.strong]
 == Introduction
 
-Red Hat Quay is a distributed and highly available container image registry for your enterprise.
+Red Hat Quay is a container image registry that provides secure and reliable storage, distribution, and management of container images. It's built for enterprise environments, offering scalability, automation, and seamless integration with OpenShift.
 
-IMPORTANT: This is not an official guide or workshop provided by Red Hat. For more information on training or guidelines related to this topic or product, please reach out to your designated Red Hat representative.
+IMPORTANT: This is not an official guide or workshop provided by Red Hat.
+For official training, documentation, or guidance related to this product, please contact your designated Red Hat representative.
