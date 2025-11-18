@@ -3,10 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Repository Mirroring :: Red Hat Quay Workshop</title>
-    <link rel="canonical" href="https://olleb.com/quay-workshop/quay-mirror.html">
-    <link rel="prev" href="quay-repos.html">
-    <link rel="next" href="quay-repo-notifications.html">
+    <title>Troubleshooting and Tips :: Red Hat Quay Workshop</title>
+    <link rel="canonical" href="https://olleb.com/quay-workshop/quay-troubleshooting.html">
+    <link rel="prev" href="quay-obs.html">
     <meta name="generator" content="Antora 3.0.3">
     <link rel="stylesheet" href="./_/css/site.css">
 <link rel="icon" href="./_/img/favicon.ico" type="image/x-icon">
@@ -117,16 +116,16 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="quay-mirror.html">Repository Mirroring</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="#imagerepo">Creating a Mirrored Repository</a>
+    <a class="nav-link" href="quay-mirror.html#imagerepo">Creating a Mirrored Repository</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#usage">Repository Usage Logs, Tags, and Tag History</a>
+    <a class="nav-link" href="quay-mirror.html#usage">Repository Usage Logs, Tags, and Tag History</a>
   </li>
 </ul>
   </li>
@@ -207,18 +206,18 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="quay-obs.html">Observability</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="quay-troubleshooting.html">Troubleshooting and Tips</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-troubleshooting.html#tls">TLS and Insecure Registry Configuration</a>
+    <a class="nav-link" href="#tls">TLS and Insecure Registry Configuration</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-troubleshooting.html#cosign">cosign and Registry Trust Issues</a>
+    <a class="nav-link" href="#cosign">cosign and Registry Trust Issues</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-troubleshooting.html#gpg">GPG Key Cleanup</a>
+    <a class="nav-link" href="#gpg">GPG Key Cleanup</a>
   </li>
 </ul>
   </li>
@@ -236,153 +235,125 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Red Hat Quay Workshop</a></li>
-    <li><a href="quay-mirror.html">Repository Mirroring</a></li>
+    <li><a href="quay-troubleshooting.html">Troubleshooting and Tips</a></li>
   </ul>
 </nav>
   <div style="padding: 0 0.5rem 0 0.75rem;"><a href="https://olleb.com" target="_blank" rel="noopener noreferrer"> © 2025 - Àngel Ollé Blázquez</a></div>
 </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Repository Mirroring</h1>
+<h1 class="page">Troubleshooting and Tips</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Quay repository mirroring allows you to replicate container images from external or local registries into your Quay cluster.</p>
+<p>This section provides solutions and examples for common issues encountered during the Quay workshop, such as TLS problems, insecure registries, and certificate handling across tools like <code>podman</code>, <code>helm</code>, or <code>cosign</code>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="imagerepo"><a class="anchor" href="#imagerepo"></a>Creating a Mirrored Repository</h2>
+<h2 id="tls"><a class="anchor" href="#tls"></a>TLS and Insecure Registry Configuration</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Click <code>Create New Repository</code>.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/repositories/create-repo.png" alt="create repo">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>In the drop-down list, select the organization, name the repository <code>apache/httpd-mirror</code>, and set its visibility to <code>Public</code>.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/mirror/mirror-cfg.png" alt="mirror cfg">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Click <code>Create Public Repository</code>.</p>
-</li>
-<li>
-<p>Click the <code>Settings</code> icon.</p>
-</li>
-<li>
-<p>Change the <code>Repository State</code> to <code>Mirror</code>.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/mirror/repo-state.png" alt="repo state">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Click the <code>Mirroring</code> icon.</p>
-</li>
-<li>
-<p>Fill in the fields with the following values:</p>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Registry Location:</strong> <code>httpd</code></p>
-</li>
-<li>
-<p><strong>Tags:</strong> <code>2.4.53, 2.4.48*</code></p>
-</li>
-<li>
-<p><strong>Start Date:</strong> set to the current date and time</p>
-</li>
-<li>
-<p><strong>Sync Interval:</strong> <code>1 minute</code></p>
-</li>
-<li>
-<p><strong>Skopeo Timeout Interval:</strong> <code>300</code></p>
-</li>
-<li>
-<p><strong>Robot User:</strong> <code>Create robot account</code></p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/mirror/create-robot-acc.png" alt="create robot acc">
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/mirror/robot-acc.png" alt="robot acc">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Click <code>Create Robot Account</code>.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/mirror/mirror-all.png" alt="mirror all">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Click <code>Enable Mirror</code>.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>When using self-signed certificates or non-trusted CAs, you might need to disable TLS verification or configure trust stores.</p>
 </div>
 <div class="sect2">
-<h3 id="usage"><a class="anchor" href="#usage"></a>Repository Usage Logs, Tags, and Tag History</h3>
+<h3 id="_podman_examples"><a class="anchor" href="#_podman_examples"></a>podman examples</h3>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman login ${QUAY_HOSTNAME} --tls-verify=false
+podman push --encryption-key jwe:public-key.pem ${QUAY_HOSTNAME}/demo/mysql-80:80 --tls-verify=false</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_helm_examples"><a class="anchor" href="#_helm_examples"></a>helm examples</h3>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">helm registry login ${QUAY_HOSTNAME} --insecure
+helm push demo-chart-0.0.3.tgz oci://${QUAY_HOSTNAME}/demo/helm
+helm env</code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>After enabling mirroring, you can view the <code>Tag History</code>, <code>Tags</code>, and <code>Usage Logs</code> as shown below.</p>
+<p>If your system uses self-signed certificates, ensure the certificate is trusted by your OS or container tools.</p>
 </div>
-<div class="imageblock">
+<div class="ulist">
+<ul>
+<li>
+<p>Debian-based systems:</p>
+<div class="listingblock console-input">
 <div class="content">
-<img src="_images/mirror/usagelogs.png" alt="usagelogs">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo cp quay.crt /usr/local/share/ca-certificates/
+sudo update-ca-certificates</code></pre>
 </div>
 </div>
-<div class="imageblock">
+</li>
+<li>
+<p>Fedora-based systems:</p>
+<div class="listingblock console-input">
 <div class="content">
-<img src="_images/mirror/tag-history.png" alt="tag history">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sudo cp quay.crt /etc/pki/ca-trust/source/anchors/
+sudo update-ca-trust</code></pre>
 </div>
 </div>
-<div class="imageblock">
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="cosign"><a class="anchor" href="#cosign"></a>cosign and Registry Trust Issues</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In some cases, <code>cosign sign</code> fails to use the <code>--allow-insecure-registry</code> flag.</p>
+</div>
+<div class="paragraph">
+<p>Workaround:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download the full certificate chain from your registry:</p>
+<div class="listingblock console-input">
 <div class="content">
-<img src="_images/mirror/tags.png" alt="tags">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -k <a href="https://${QUAY_HOSTNAME}/v2/" class="bare">https://${QUAY_HOSTNAME}/v2/</a> &gt; quay.crt</code></pre>
 </div>
+</div>
+</li>
+<li>
+<p>Add it to your system trust as shown in the previous section.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Then retry:</p>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cosign sign --key cosign.key ${QUAY_HOSTNAME}/demo/app:latest</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="gpg"><a class="anchor" href="#gpg"></a>GPG Key Cleanup</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you created temporary GPG keys for image signing, remove them after finishing the workshop.</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">gpg --delete-secret-and-public-key "user@example.com"</code></pre>
 </div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="quay-repos.html">Repositories</a></span>
-  <span class="next"><a href="quay-repo-notifications.html">Repository Notifications</a></span>
+  <span class="prev"><a href="quay-obs.html">Observability</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
