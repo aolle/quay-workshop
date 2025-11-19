@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Security Scanning (Clair) :: Red Hat Quay Workshop</title>
-    <link rel="canonical" href="https://olleb.com/quay-workshop/quay-clair.html">
-    <link rel="prev" href="quay-oci.html">
-    <link rel="next" href="quay-cso.html">
+    <title>Quay Integration with Keycloak (OpenID Connect) :: Red Hat Quay Workshop</title>
+    <link rel="canonical" href="https://olleb.com/quay-workshop/quay-keycloak.html">
+    <link rel="prev" href="quay-obs.html">
+    <link rel="next" href="quay-troubleshooting.html">
     <meta name="generator" content="Antora 3.0.3">
     <link rel="stylesheet" href="./_/css/site.css">
 <link rel="icon" href="./_/img/favicon.ico" type="image/x-icon">
@@ -177,19 +177,19 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="quay-clair.html">Security Scanning (Clair)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="#cve">Exploring Vulnerability Data (CVEs)</a>
+    <a class="nav-link" href="quay-clair.html#cve">Exploring Vulnerability Data (CVEs)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#secscan">Performing a Security Scan</a>
+    <a class="nav-link" href="quay-clair.html#secscan">Performing a Security Scan</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#packages">Viewing Packages</a>
+    <a class="nav-link" href="quay-clair.html#packages">Viewing Packages</a>
   </li>
 </ul>
   </li>
@@ -210,18 +210,18 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="quay-obs.html">Observability</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="quay-keycloak.html">Quay Integration with Keycloak (OpenID Connect)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-keycloak.html#keycloakconfig">Configuring Keycloak for Quay</a>
+    <a class="nav-link" href="#keycloakconfig">Configuring Keycloak for Quay</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-keycloak.html#quayconfig">Configuring Quay to Use Keycloak as an OpenID Provider</a>
+    <a class="nav-link" href="#quayconfig">Configuring Quay to Use Keycloak as an OpenID Provider</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-keycloak.html#testlogin">Testing OpenID Login</a>
+    <a class="nav-link" href="#testlogin">Testing OpenID Login</a>
   </li>
 </ul>
   </li>
@@ -254,148 +254,434 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Red Hat Quay Workshop</a></li>
-    <li><a href="quay-clair.html">Security Scanning (Clair)</a></li>
+    <li><a href="quay-keycloak.html">Quay Integration with Keycloak (OpenID Connect)</a></li>
   </ul>
 </nav>
   <div style="padding: 0 0.5rem 0 0.75rem;"><a href="https://olleb.com" target="_blank" rel="noopener noreferrer"> © 2025 - Àngel Ollé Blázquez</a></div>
 </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Security Scanning (Clair)</h1>
-<div id="preamble">
+<h1 class="page">Quay Integration with Keycloak (OpenID Connect)</h1>
+<div class="sect1">
+<h2 id="keycloakconfig"><a class="anchor" href="#keycloakconfig"></a>Configuring Keycloak for Quay</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Quay integrates with Clair to perform vulnerability scanning of container images associated with various Linux operating systems.</p>
+<p>This section describes how to prepare Red Hat build of Keycloak so that Quay can use it as an external identity provider through the OpenID Connect (OIDC) protocol. These steps include creating a new realm, defining a Quay client, configuring redirect URIs, assigning the required scopes, and preparing user identities.</p>
+</div>
+<div class="paragraph">
+<p>The following subsections assume that the Keycloak Operator is already installed and that a Keycloak instance is running in the cluster.</p>
+</div>
+<div class="sect2">
+<h3 id="_creating_a_new_realm_optional"><a class="anchor" href="#_creating_a_new_realm_optional"></a>Creating a New Realm (Optional)</h3>
+<div class="paragraph">
+<p>Quay can be integrated into an existing realm, such as the default realm. However, it is recommended to create a dedicated realm to logically separate workshop environment.</p>
+</div>
+<div class="paragraph">
+<p>To create a new realm:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Log in to the Keycloak administration console.</p>
+</li>
+<li>
+<p>Navigate to <strong>Manage realms</strong>.</p>
+</li>
+<li>
+<p>Click on <strong>Create Realm</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/rhbk/rhbk1.png" alt="rhbk1">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Provide a name, such as <code>quay</code>.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong> to create the new realm.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/rhbk/rhbk2.png" alt="rhbk2">
+</div>
+</div>
+<div class="paragraph">
+<p>The remainder of this configuration will assume that the realm name is <code>quay</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_a_quay_client"><a class="anchor" href="#_creating_a_quay_client"></a>Creating a Quay Client</h3>
+<div class="paragraph">
+<p>A Keycloak client represents an application that will interact with Keycloak for authentication. In this case, Quay will use the client to perform OpenID Connect authorization flows.</p>
+</div>
+<div class="paragraph">
+<p>To create the client:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In the selected realm, navigate to <strong>Clients → Create Client</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/rhbk/rhbk3.png" alt="rhbk3">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Set the <strong>Client Type</strong> to <code>OpenID Connect</code>.</p>
+</li>
+<li>
+<p>Enter a <strong>Client ID</strong> such as <code>quay</code>.</p>
+</li>
+<li>
+<p>Click <strong>Next</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/rhbk/rhbk4.png" alt="rhbk4">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Set <strong>Client authentication</strong> to <strong>On</strong>.</p>
+</li>
+<li>
+<p>Enable the <strong>Standard flow</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Next</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/rhbk/rhbk5.png" alt="rhbk5">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Add valid redirect URIs (replace <code>$QUAY_HOSTNAME</code> with your Quay registry hostname):</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://$QUAY_HOSTNAME/oauth2/sso/callback" class="bare">https://$QUAY_HOSTNAME/oauth2/sso/callback</a></p>
+</li>
+<li>
+<p><a href="https://$QUAY_HOSTNAME/oauth2/sso/callback/attach" class="bare">https://$QUAY_HOSTNAME/oauth2/sso/callback/attach</a></p>
+</li>
+<li>
+<p><a href="https://$QUAY_HOSTNAME/oauth2/sso/callback/cli" class="bare">https://$QUAY_HOSTNAME/oauth2/sso/callback/cli</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click <strong>Save</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The service <code>sso</code> (service name) is required later when configuring OIDC in Quay.
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/rhbk/rhbk6.png" alt="rhbk6">
+</div>
+</div>
+<div class="paragraph">
+<p>The newly created client will be later referenced in the Quay configuration bundle.</p>
+</div>
+<div class="paragraph">
+<p>After creating the client, copy its credentials:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the client in Keycloak.</p>
+</li>
+<li>
+<p>Navigate to <strong>Credentials</strong>.</p>
+</li>
+<li>
+<p>Copy the <strong>Client Secret</strong>.</p>
+</li>
+<li>
+<p>Store it securely; you will paste it later into the <code>CLIENT_SECRET</code> field of the <code>SSO_LOGIN_CONFIG</code> section in Quay&#8217;s <code>config.yaml</code>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/rhbk/rhbk6-2.png" alt="rhbk6 2">
+</div>
+</div>
+<div class="paragraph">
+<p>Without this secret, Quay cannot complete OIDC authentication with Keycloak.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_users"><a class="anchor" href="#_creating_users"></a>Creating Users</h3>
+<div class="paragraph">
+<p>Keycloak requires user identities to authenticate into Quay. For this workshop, we will create local users:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Navigate to <strong>Users → Create New User</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/rhbk/rhbk7.png" alt="rhbk7">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Provide a username (for example, <code>mao</code>) and click <strong>Create</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/rhbk/rhbk8.png" alt="rhbk8">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Go to <strong>Credentials</strong> and set an initial password.
+Enable <strong>Temporary</strong> if the user must reset it on first login.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/rhbk/rhbk9.png" alt="rhbk9">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/rhbk/rhbk10.png" alt="rhbk10">
+</div>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="cve"><a class="anchor" href="#cve"></a>Exploring Vulnerability Data (CVEs)</h2>
+<h2 id="quayconfig"><a class="anchor" href="#quayconfig"></a>Configuring Quay to Use Keycloak as an OpenID Provider</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="secscan"><a class="anchor" href="#secscan"></a>Performing a Security Scan</h3>
 <div class="paragraph">
-<p>Push a vulnerable image into the repository.</p>
-</div>
-<div class="listingblock lines_space console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman pull quay.io/wildfly/wildfly:23.0.2.Final
-podman tag quay.io/wildfly/wildfly:23.0.2.Final ${QUAY_HOSTNAME}/olleb/wildfly:23.0.2.Final
-
-# Log in if not already logged in
-podman login ${QUAY_HOSTNAME}
-
-podman push ${QUAY_HOSTNAME}/olleb/wildfly:23.0.2.Final</code></pre>
-</div>
+<p>Edit the Quay Configuration Bundle:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Navigate to the <code>olleb/wildfly</code> repository in Quay.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/clair/repo.png" alt="repo">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Click the <code>Security Scan</code> icon to view the Quay Security Scanner Dashboard.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/clair/secscan-icon.png" alt="secscan icon">
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/clair/security-scanner-dashboard.png" alt="security scanner dashboard">
-</div>
-</div>
-<div class="paragraph">
-<p>The Security Scan dashboard provides detailed information about detected vulnerabilities:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Advisory</strong>: Link to the CVE or security advisory describing the vulnerability.</p>
-</li>
-<li>
-<p><strong>Severity</strong>: Level of risk associated with the vulnerability (e.g., Low, Medium, High, Critical).</p>
-</li>
-<li>
-<p><strong>Package</strong>: Name of the affected software package.</p>
-</li>
-<li>
-<p><strong>Version</strong>: Current version of the package in the image.</p>
-</li>
-<li>
-<p><strong>Fixed Version</strong>: Version of the package where the vulnerability has been resolved.</p>
-</li>
-<li>
-<p><strong>Introduced in Layer</strong>: The image layer where the vulnerable package was added.</p>
+<p>Navigate to the namespace where your QuayRegistry is deployed (e.g., <code>quay-workshop</code>):</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>CVE detailed description:</p>
+<p>Operators → Installed Operators → Red Hat Quay → Quay Registries</p>
+</div>
+<div class="paragraph">
+<p>Click your QuayRegistry instance.</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/clair/cve.png" alt="cve">
+<img src="_images/rhbk/rhbk11.png" alt="rhbk11">
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="packages"><a class="anchor" href="#packages"></a>Viewing Packages</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Click the <code>Packages</code> icon to view the Quay Security Scanner Packages Dashboard.</p>
+<p>In the <strong>Resources</strong> tab, locate the configuration bundle Secret (name begins with <code>registry-config-bundle-</code>).</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/clair/packages.png" alt="packages">
+<img src="_images/rhbk/rhbk12.png" alt="rhbk12">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the Secret, edit the <code>config.yml</code> key,</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/rhbk/rhbk13.png" alt="rhbk13">
 </div>
 </div>
 <div class="paragraph">
-<p>The Packages dashboard provides information about each installed package and its vulnerabilities:</p>
+<p>and add:</p>
+</div>
+<div class="paragraph">
+<p>In the following configuration snippet, replace the placeholders with your real values:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Package Name</strong>: Name of the installed package.</p>
+<p>Replace <code>&lt;CLIENT_SECRET&gt;</code> with the client secret obtained from your Keycloak client.</p>
 </li>
 <li>
-<p><strong>Version</strong>: Current version of the package in the image.</p>
-</li>
-<li>
-<p><strong>Vuln</strong>: Number of known vulnerabilities affecting this package.</p>
-</li>
-<li>
-<p><strong>Remaining After Upgrade</strong>: Vulnerabilities that would still exist after upgrading the package to the latest fixed version.</p>
-</li>
-<li>
-<p><strong>Upgrade Impact</strong>: Potential impact of performing the upgrade (e.g., dependency conflicts or breakage).</p>
-</li>
-<li>
-<p><strong>Introduced in Layer</strong>: The image layer where the package was added.</p>
+<p>Replace <code>&lt;KEYCLOAK_HOSTNAME&gt;</code> with the hostname of your Keycloak instance.</p>
 </li>
 </ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">AUTHENTICATION_TYPE: OIDC
+SSO_LOGIN_CONFIG:
+   CLIENT_ID: quay
+   CLIENT_SECRET: &lt;CLIENT_SECRET&gt;
+   OIDC_SERVER: https://&lt;KEYCLOAK_HOSTNAME&gt;/realms/quay/
+   SERVICE_NAME: Red Hat build of Keycloak
+   VERIFIED_EMAIL_CLAIM_NAME: email
+   PREFERRED_USERNAME_CLAIM_NAME: preferred_username
+   LOGIN_SCOPES:
+      - openid</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/rhbk/rhbk14.png" alt="rhbk14">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Save the Secret.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The Quay Operator will detect the update and perform a controlled reconciliation:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Deploy new Quay pods using the updated configuration.</p>
+</li>
+<li>
+<p>Gracefully terminate old pods.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>After reconciliation, the Quay login screen will display a <strong>"Sign in with RedHat build of Keycloak"</strong> button.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="testlogin"><a class="anchor" href="#testlogin"></a>Testing OpenID Login</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Once the OIDC configuration is applied and reconciled:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Open the Quay UI in your browser.
+The login screen should include the OIDC option.</p>
+</li>
+<li>
+<p>Click <strong>Sign in with Red Hat build of Keycloak</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/rhbk/rhbk15.png" alt="rhbk15">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You will be redirected to the Keycloak login page for the configured realm and client.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/rhbk/rhbk16.png" alt="rhbk16">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Enter Keycloak credentials.</p>
+</li>
+<li>
+<p>Update any required user information.</p>
+</li>
+<li>
+<p>If successful, Keycloak issues an ID token and redirects back to Quay.</p>
+</li>
+<li>
+<p>Quay validates the token and:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Automatically creates the user on first login (unless disabled)</p>
+</li>
+<li>
+<p>Maps email and profile fields from the token</p>
+</li>
+<li>
+<p>Optionally synchronizes groups if configuredc</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/rhbk/rhbk17.png" alt="rhbk17">
+</div>
+</div>
+<div class="paragraph">
+<p>You should now be logged into Quay under your Keycloak identity.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/rhbk/rhbk18.png" alt="rhbk18">
 </div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="quay-oci.html">OCI-Based Artifacts</a></span>
-  <span class="next"><a href="quay-cso.html">Container Security Operator (CSO)</a></span>
+  <span class="prev"><a href="quay-obs.html">Observability</a></span>
+  <span class="next"><a href="quay-troubleshooting.html">Troubleshooting and Tips</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

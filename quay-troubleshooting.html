@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Troubleshooting and Tips :: Red Hat Quay Workshop</title>
     <link rel="canonical" href="https://olleb.com/quay-workshop/quay-troubleshooting.html">
-    <link rel="prev" href="quay-obs.html">
+    <link rel="prev" href="quay-keycloak.html">
     <meta name="generator" content="Antora 3.0.3">
     <link rel="stylesheet" href="./_/css/site.css">
 <link rel="icon" href="./_/img/favicon.ico" type="image/x-icon">
@@ -77,6 +77,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="setup.html#trustedca">Adding the Quay Certificate as a Trusted CA in OCP (Optional)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="setup.html#keycloak">Installing Red Hat build of Keycloak (Optional)</a>
   </li>
 </ul>
   </li>
@@ -205,6 +208,21 @@
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="quay-obs.html">Observability</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="quay-keycloak.html">Quay Integration with Keycloak (OpenID Connect)</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-keycloak.html#keycloakconfig">Configuring Keycloak for Quay</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-keycloak.html#quayconfig">Configuring Quay to Use Keycloak as an OpenID Provider</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-keycloak.html#testlogin">Testing OpenID Login</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -353,7 +371,7 @@ sudo update-ca-trust</code></pre>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="quay-obs.html">Observability</a></span>
+  <span class="prev"><a href="quay-keycloak.html">Quay Integration with Keycloak (OpenID Connect)</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
