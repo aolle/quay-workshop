@@ -39,13 +39,31 @@ image::install/odfoperator-install-opts.png[]
 [#storage]
 == Creating the ODF Cluster
 
-Deploy an OpenShift Data Foundation (ODF) `StorageCluster` using the OpenShift web console.
+OpenShift Data Foundation (ODF) offers multiple deployment models depending on the storage capabilities required by the workload. In this guide, we focus on
+the *Multicloud Object Gateway* (MCG) mode, which provides a lightweight and S3-centric object storage service.
+
+The *Multicloud Object Gateway* (MCG) is the lightweight deployment mode of ODF. Unlike the full storage deployment that includes a complete Ceph cluster, the MCG mode provides only an S3-compatible object storage gateway layer. It is primarily designed for:
+
+* Distributed caching use cases
+* Cloud-to-cloud or on-prem-to-cloud replication
+* Unified access to remote buckets
+* Workloads that require S3 object storage only (no block or file storage)
+
+Because the MCG does not deploy a full Ceph data plane, it has significantly lower resource consumption and is often referred to as a *lightweight mode*.
+
+With this context in mind, the next step is to create the ODF resources in the cluster. The deployment process begins by creating an ODF `StorageCluster` through the OpenShift web console.
+
+Proceed with the following steps to deploy the ODF `StorageCluster` in Multicloud Object Gateway mode.
 
 * From the *Administrator* perspective in the OpenShift console, navigate to `Storage` > `Data Foundation`.
 * Go to the *Storage System* tab.
 * Click `Create StorageSystem`.
 
 image::install/odf1.png[]
+
+Deployment type:
+
+* MultiCloud Object Gateway. 
 
 Select the backing storage type:
 
@@ -54,14 +72,9 @@ Select the backing storage type:
 
 image::install/odf2.png[]
 
-* Select the desired capacity and nodes.
-* Click `Next`.
+* Then click `Next` and `Create StorageSystem`.
 
 image::install/odf3.png[]
-
-* Leave the default options for *Security and network* and *Review and create*. Then click `Next` and `Create StorageSystem`, respectively.
-
-image::install/odf4.png[]
 
 NOTE: Wait until the OpenShift Data Foundation components are fully deployed before proceeding.
 
