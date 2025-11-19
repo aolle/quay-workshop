@@ -5,6 +5,7 @@
 ** xref:setup.adoc#quayinstance[Deploying Quay]
 ** xref:setup.adoc#exportenvvar[Exporting Environment Variables]
 ** xref:setup.adoc#trustedca[Adding the Quay Certificate as a Trusted CA in OCP (Optional)]
+** xref:setup.adoc#keycloak[Installing Red Hat build of Keycloak (Optional)]
 
 * xref:quay-orgs.adoc[Users and Organizations]
 ** xref:quay-orgs.adoc#useraccounts[Creating User Accounts]
@@ -44,6 +45,11 @@
 ** xref:quay-cso.adoc#vulncheck[Checking Image Vulnerabilities from the OpenShift Web Console]
 
 * xref:quay-obs.adoc[Observability]
+
+* xref:quay-keycloak.adoc[Quay Integration with Keycloak (OpenID Connect)]
+** xref:quay-keycloak.adoc#keycloakconfig[Configuring Keycloak for Quay]
+** xref:quay-keycloak.adoc#quayconfig[Configuring Quay to Use Keycloak as an OpenID Provider]
+** xref:quay-keycloak.adoc#testlogin[Testing OpenID Login]
 
 * xref:quay-troubleshooting.adoc[Troubleshooting and Tips]
 ** xref:quay-troubleshooting.adoc#tls[TLS and Insecure Registry Configuration]
