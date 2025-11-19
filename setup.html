@@ -399,7 +399,36 @@
 <h2 id="storage"><a class="anchor" href="#storage"></a>Creating the ODF Cluster</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Deploy an OpenShift Data Foundation (ODF) <code>StorageCluster</code> using the OpenShift web console.</p>
+<p>OpenShift Data Foundation (ODF) offers multiple deployment models depending on the storage capabilities required by the workload. In this guide, we focus on
+the <strong>Multicloud Object Gateway</strong> (MCG) mode, which provides a lightweight and S3-centric object storage service.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>Multicloud Object Gateway</strong> (MCG) is the lightweight deployment mode of ODF. Unlike the full storage deployment that includes a complete Ceph cluster, the MCG mode provides only an S3-compatible object storage gateway layer. It is primarily designed for:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Distributed caching use cases</p>
+</li>
+<li>
+<p>Cloud-to-cloud or on-prem-to-cloud replication</p>
+</li>
+<li>
+<p>Unified access to remote buckets</p>
+</li>
+<li>
+<p>Workloads that require S3 object storage only (no block or file storage)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Because the MCG does not deploy a full Ceph data plane, it has significantly lower resource consumption and is often referred to as a <strong>lightweight mode</strong>.</p>
+</div>
+<div class="paragraph">
+<p>With this context in mind, the next step is to create the ODF resources in the cluster. The deployment process begins by creating an ODF <code>StorageCluster</code> through the OpenShift web console.</p>
+</div>
+<div class="paragraph">
+<p>Proceed with the following steps to deploy the ODF <code>StorageCluster</code> in Multicloud Object Gateway mode.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -418,6 +447,16 @@
 <div class="content">
 <img src="_images/install/odf1.png" alt="odf1">
 </div>
+</div>
+<div class="paragraph">
+<p>Deployment type:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>MultiCloud Object Gateway.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>Select the backing storage type:</p>
@@ -440,28 +479,13 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Select the desired capacity and nodes.</p>
-</li>
-<li>
-<p>Click <code>Next</code>.</p>
+<p>Then click <code>Next</code> and <code>Create StorageSystem</code>.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/install/odf3.png" alt="odf3">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Leave the default options for <strong>Security and network</strong> and <strong>Review and create</strong>. Then click <code>Next</code> and <code>Create StorageSystem</code>, respectively.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/install/odf4.png" alt="odf4">
 </div>
 </div>
 <div class="admonitionblock note">
