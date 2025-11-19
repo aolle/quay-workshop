@@ -11,7 +11,7 @@
 ** xref:quay-orgs.adoc#useraccounts[Creating User Accounts]
 ** xref:quay-orgs.adoc#orgaccounts[Creating Organization Accounts]
 
-* xref:quay-repos.adoc[Repositories]
+* xref:quay-repos.adoc[Repository Management]
 ** xref:quay-repos.adoc#imagerepo[Creating an Image Repository]
 ** xref:quay-repos.adoc#push[Pushing and Tagging an Image]
 ** xref:quay-repos.adoc#imglayers[Inspecting Image Layers]

@@ -7,7 +7,7 @@ This section describes how to prepare Red Hat build of Keycloak so that Quay can
 
 The following subsections assume that the Keycloak Operator is already installed and that a Keycloak instance is running in the cluster.
 
-=== Creating a New Realm (Optional)
+=== Creating a New Realm
 
 Quay can be integrated into an existing realm, such as the default realm. However, it is recommended to create a dedicated realm to logically separate workshop environment.
 
