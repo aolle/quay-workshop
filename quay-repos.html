@@ -694,7 +694,6 @@ Alternatively, you can set the expiration by clicking the <strong>Options</stron
 By default, the minimum expiration time is <strong>one hour</strong>, and the maximum is <strong>104 weeks</strong> (approximately two years).
 If you need shorter or longer expiration limits, modify the <code>LABELED_EXPIRATION_MINIMUM</code> setting in the <strong>Config Bundle Secret</strong> of your registry instance.
 This property accepts values such as <code>60s</code> (seconds), <code>5m</code> (minutes), <code>24h</code> (hours), <code>7d</code> (days), or <code>2w</code> (weeks).
-For more details, see <a href="quay-oci.html#allowed" class="xref page">2.5.1 Configuring allowed OCI artifact types</a>.
 </td>
 </tr>
 </table>
@@ -719,8 +718,7 @@ Quay’s garbage collection worker runs periodically and removes expired images 
 <p>If the image was stored under a user account instead of an organization, the setting can be found under <strong>User Settings</strong>.</p>
 </div>
 <div class="paragraph">
-<p>The <strong>Time Machine</strong> retention period can be modified by changing the <code>TAG_EXPIRATION_OPTIONS</code> array property, which must include the default expiration value <code>DEFAULT_TAG_EXPIRATION</code> in its list.
-An example of how to modify this value is provided in section <a href="quay-oci.html#allowed" class="xref page">2.5.1 Configuring allowed OCI artifact types</a>.</p>
+<p>The <strong>Time Machine</strong> retention period can be modified by changing the <code>TAG_EXPIRATION_OPTIONS</code> array property, which must include the default expiration value <code>DEFAULT_TAG_EXPIRATION</code> in its list.</p>
 </div>
 <div class="paragraph">
 <p>For example, with the following custom configuration:</p>
