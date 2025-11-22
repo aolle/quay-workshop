@@ -6,7 +6,7 @@ Quay supports adding notifications to a repository for various events that occur
 [#pushnotif]
 == Creating a Push-to-Repository Event Notification
 
-* From the Red Hat Quay Dashboard, navigate to the `olleb/kafka` repository. Recall from xref:quay-repos.adoc[Repositories] that we previously created and pushed a `strimzi/kafka` image.
+* From the Red Hat Quay Dashboard, navigate to the `olleb/kafka` repository. Recall from xref:quay-repos.adoc[Repository Management] that this repository was previously created when we pushed the `strimzi/kafka` image.
 
 * Click `Settings`.
 

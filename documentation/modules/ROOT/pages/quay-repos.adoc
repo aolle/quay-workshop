@@ -220,7 +220,6 @@ image::repositories/abouttoexpire.png[]
 NOTE: By default, the minimum expiration time is **one hour**, and the maximum is **104 weeks** (approximately two years).  
 If you need shorter or longer expiration limits, modify the `LABELED_EXPIRATION_MINIMUM` setting in the **Config Bundle Secret** of your registry instance.  
 This property accepts values such as `60s` (seconds), `5m` (minutes), `24h` (hours), `7d` (days), or `2w` (weeks).  
-For more details, see xref:quay-oci.adoc#allowed[2.5.1 Configuring allowed OCI artifact types].
 
 When a tag expires, it is deleted automatically.
 
@@ -235,8 +234,8 @@ image::repositories/orgexptime.png[]
 If the image was stored under a user account instead of an organization, the setting can be found under *User Settings*.
 
 The *Time Machine* retention period can be modified by changing the `TAG_EXPIRATION_OPTIONS` array property, which must include the default expiration value `DEFAULT_TAG_EXPIRATION` in its list.  
-An example of how to modify this value is provided in section xref:quay-oci.adoc#allowed[2.5.1 Configuring allowed OCI artifact types].
 
+// TODO explain custom config (secret bundle)
 For example, with the following custom configuration:
 
 image::repositories/expcfg.png[]
