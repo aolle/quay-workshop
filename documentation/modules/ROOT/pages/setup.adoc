@@ -316,7 +316,7 @@ image::rhbk/rhbk12.png[]
 * Add or replace the key `extra_ca_cert_certificate_rhbk` under the `data` section:
 
 [.lines_space]
-[.console-input]c
+[.console-input]
 [source,yaml]
 ----
 kind: Secret
@@ -329,7 +329,5 @@ data:
 type: Opaque
 <..>
 ----
-
-image::rhbk/rhbk20.png[]
 
 * Save the changes using the **Save** button.
