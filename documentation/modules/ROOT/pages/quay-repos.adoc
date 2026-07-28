@@ -1,107 +1,134 @@
-= Repositories
+= Repository Management
 include::_attributes.adoc[]
 
 [#imagerepo]
 == Creating an Image Repository
 
-On the main Quay landing page:
+To store container images in Red Hat Quay, you must create a repository inside a user account or an organization.
 
-* Click the `Create New Repository` button.
+* From the left navigation menu, click **Repositories**.
 
-image::repositories/create-repo.png[]
+* Click **Create Repository**.
 
-* Select the organization from the drop-down list, name the repository `kafka`, and set the visibility to `Public`.
+image::repositories/create-repo.png[Create Repository Button]
 
-image::repositories/repo-config.png[]
+* Configure the new repository:
+** **Organization/Namespace:** Select `olleb` from the drop-down menu.
+** **Repository Name:** Enter `kafka`.
+** **Repository Visibility:** Select **Public**.
 
-* Click `Create Public Repository`.
+image::repositories/repo-config.png[Repository Configuration Form]
+
+* Click **Create** to finish.
 
 [#push]
 == Pushing and Tagging an Image
 
-* Pull an image from the public registry by running the `podman pull` command followed by the image name.
+In this section, you will download a sample container image, tag it for your Quay registry, and push it to your repository.
+
+* Download the sample Kafka image from the upstream Quay repository:
 
 [.lines_space]
 [.console-input]
-[source,bash, subs="+macros,+attributes"]
+[source,bash,subs="+macros,+attributes"]
 ----
 podman pull quay.io/strimzi/kafka:latest-kafka-4.0.0
 ----
 
-* Tag the image with a name and version number using the `podman tag` command.
+* Tag the downloaded image with your Quay registry hostname, organization name, repository, and a new tag:
 
 [.lines_space]
 [.console-input]
-[source,bash, subs="+macros,+attributes"]
+[source,bash,subs="+macros,+attributes"]
 ----
 podman tag quay.io/strimzi/kafka:latest-kafka-4.0.0 ${QUAY_HOSTNAME}/olleb/kafka:4.0.0
 ----
 
-* Sign in to your Quay repository using your account credentials, if you are not already signed in.
+* Log in to your Quay registry using your credentials:
 
 [.lines_space]
 [.console-input]
-[source,bash, subs="+macros,+attributes"]
+[source,bash,subs="+macros,+attributes"]
 ----
 podman login ${QUAY_HOSTNAME}
 ----
 
-* Push the image to the Quay repository using the `podman push` command.
+* Push the tagged image to your Quay repository:
 
 [.lines_space]
 [.console-input]
-[source,bash, subs="+macros,+attributes"]
+[source,bash,subs="+macros,+attributes"]
 ----
 podman push ${QUAY_HOSTNAME}/olleb/kafka:4.0.0
 ----
 
-* Verify that the image has been successfully pushed to your Quay repository by confirming that the image is listed.
+* In the Quay web console, navigate to **Repositories** > **olleb/kafka** and verify that the `4.0.0` tag appears in the **Tags** tab.
 
-image::repositories/image-pushed.png[]
+image::repositories/image-pushed.png[Image Pushed to Quay]
 
 [#imglayers]
 == Inspecting Image Layers
 
-* Navigate to the `olleb/kafka` repository.
+Container images are composed of multiple read-only layers. Red Hat Quay provides full visibility into the image layers, software packages, and security vulnerability reports.
 
-* Click the `Tags` icon.
+* Inside the `olleb/kafka` repository, select the **Tags** tab.
 
-* Under the `MANIFEST` section of the `4.0.0` tag, click the `SHA256` value to open the image layers dashboard.
+* Click directly on the `4.0.0` tag name to open the detailed view of the image manifest.
 
-image::repositories/image-pushed2.png[]
+image::repositories/image-pushed2.png[Tags List in Quay]
 
-image::repositories/img-layers.png[]
+* In the top menu of the tag view, explore the available sections:
+** **Details:** Displays image metadata including tag name, digest, size, creation date, vulnerability summary, labels, and copyable pull commands.
+** **Layers:** Breakdown of individual filesystem layers, build commands, and sizes.
+** **Security Report:** Vulnerability assessment scan results for the image layers.
+** **Packages:** Complete inventory of software packages and dependencies detected inside the image.
+
+image::repositories/imag-tag.png[Img details]
+
+* Click on the **Layers** tab to inspect the step-by-step construction of the container image.
+
+image::repositories/img-layers.png[Image Layers Breakdown]
 
 [#pull]
 == Pulling an Image
 
-* From the Quay dashboard, locate and select the `olleb/kafka` repository.
+Because the `olleb/kafka` repository was created with **Public** visibility, any user can pull images from it without requiring authentication.
 
-* Click the `Tags` tab.
+* Navigate to **Repositories** > **olleb/kafka** and select the **Tags** tab.
 
-* Select any of the repository’s tags and click the `Fetch Tag` icon.
+* Locate the `4.0.0` tag and hover over the **Pull** (download arrow) icon on the right side of the row.
 
-image::repositories/fetchtagpre.png[]
+image::repositories/fetchtagpre.png[Pull Icon Hover]
 
-* From the *Image Format* drop-down menu, select `Podman Pull (by tag)` and click the `Copy Command` button.
+* From the flyout menu that appears:
+** Locate the **Podman Pull (by tag)** option.
+** Click the copy icon next to the command to copy it to your clipboard.
 
-image::repositories/fetchtag.png[]
+image::repositories/fetchtag.png[Pull Command Flyout Menu]
 
-* Switch to a terminal, paste the command you copied from the Quay UI, and execute it.  
-  Ensure that `Podman` is installed on your system. Since the repository was created as `Public`, no login is required to pull the image.
+* Open your terminal and run the copied command:
+
+[.lines_space]
+[.console-input]
+[source,bash,subs="+macros,+attributes"]
+----
+podman pull ${QUAY_HOSTNAME}/olleb/kafka:4.0.0
+----
+
+* Confirm that the image download completes successfully without requiring a login prompt.
 
 [#rollback]
 == Rolling Back an Image
 
-Quay provides a convenient way to review the history of tags associated with an image repository and to roll back to a previous version when needed.
+Red Hat Quay maintains a detailed history of tag modifications, allowing you to easily review changes and revert a tag to a previous manifest digest if an issue occurs.
 
-* Create a new image repository as previously explained. In this case, create a public repository named `olleb/rollback` on Quay.
+* Create a new public repository named `rollback` under the `olleb` organization.
 
-* Build an image, tag it, and push it.
+* Create a minimal base image, tag it as `latest`, and push it to Quay:
 
 [.lines_space]
 [.console-input]
-[source,bash, subs="+macros,+attributes"]
+[source,bash,subs="+macros,+attributes"]
 ----
 echo "FROM scratch" > Containerfile.rbk
 podman build . -t rollback:1.0 -f Containerfile.rbk
@@ -110,17 +137,17 @@ podman tag localhost/rollback:1.0 ${QUAY_HOSTNAME}/olleb/rollback:latest
 podman push ${QUAY_HOSTNAME}/olleb/rollback:latest
 ----
 
-* Verify that the image has been pushed to the Quay repository. Also, check the manifest digest and the layers.
+* In the Quay UI, navigate to **Repositories** > **olleb/rollback** > **Tags** to confirm the initial image push, noting its manifest digest and layer structure.
 
-image::repositories/rblatest1.png[]
+image::repositories/rblatest1.png[Initial Image Manifest]
 
-image::repositories/rblayers1.png[]
+image::repositories/rblayers1.png[Initial Image Layers]
 
-* Add a new layer to the `Containerfile`, rebuild the image, and *overwrite* the previous one by tagging and pushing it with the same remote tag.
+* Modify the `Containerfile.rbk` by adding a new layer, rebuild the image, and push it using the same `latest` tag to overwrite the remote reference:
 
 [.lines_space]
 [.console-input]
-[source,bash, subs="+macros,+attributes"]
+[source,bash,subs="+macros,+attributes"]
 ----
 echo "LABEL org.opencontainers.image.authors=angel@olleb.com" >> Containerfile.rbk
 podman build . -t rollback:2.0 -f Containerfile.rbk
@@ -129,41 +156,40 @@ podman tag localhost/rollback:2.0 ${QUAY_HOSTNAME}/olleb/rollback:latest
 podman push ${QUAY_HOSTNAME}/olleb/rollback:latest
 ----
 
-* Verify that the new image has been pushed to the Quay repository, and check its manifest digest and layers in the Quay UI.  
-  You should observe that the manifest digest and layers differ from the previous image.
+* In the Quay UI, refresh the **Tags** view and verify that the manifest digest and layer count for the `latest` tag have changed.
 
-image::repositories/rblatest2.png[]
+image::repositories/rblatest2.png[Updated Image Manifest]
 
-image::repositories/rblayers2.png[]
+image::repositories/rblayers2.png[Updated Image Layers]
 
-* To roll back the image to the previous version, navigate to the Quay UI and click the `Tag History` option for the repository.
+* To revert to the original version, select the **Tag History** tab in the repository menu.
 
-image::repositories/tagh.png[]
+image::repositories/tagh.png[Tag History View]
 
-* From there, select the tag of the previous image you want to restore, and click `Revert to ...`.
+* Locate the previous manifest entry for the `latest` tag and click **Revert to...**.
 
-image::repositories/revert.png[]
+image::repositories/revert.png[Revert Tag Action]
 
-* Click the `Restore Tag` button. This will restore the tag to reference the previous image.
+* Click **Restore Tag** in the confirmation dialog to point the `latest` tag back to the original manifest digest.
 
-image::repositories/restoretag.png[]
+image::repositories/restoretag.png[Restore Tag Confirmation]
 
-* To verify that the rollback was successful, go to the `Tag History` section in the Quay UI and confirm that the restored tag has the same manifest digest and layers as the previous image.
+* Return to the **Tags** view to verify that the `latest` tag now points back to the original manifest digest and layer state.
 
-image::repositories/restored.png[]
+image::repositories/restored.png[Restored Tag Verification]
 
 [#expiration]
 == Image Expiration
 
-To configure an image tag to expire in Quay at a specific time or date, follow these steps:
+Red Hat Quay allows you to configure expiration dates for image tags using container labels or via the web console. When a tag expires, it is automatically removed from the repository.
 
-* Create a new image repository as previously explained. In this example, create a public repository named `olleb/expiration`.
+* Create a new public repository named `expiration` under the `olleb` organization.
 
-* Build a `1.0` image, tag it, and push it to the `olleb/expiration` repository.
+* Build, tag, and push a base `1.0` image to the `olleb/expiration` repository:
 
 [.lines_space]
 [.console-input]
-[source,bash, subs="+macros,+attributes"]
+[source,bash,subs="+macros,+attributes"]
 ----
 echo "FROM scratch" > Containerfile.exp
 podman build . -t exp:1.0 -f Containerfile.exp
@@ -172,13 +198,11 @@ podman tag localhost/exp:1.0 ${QUAY_HOSTNAME}/olleb/expiration:1.0
 podman push ${QUAY_HOSTNAME}/olleb/expiration:1.0
 ----
 
-* The label `quay.expires-after` is used to specify the expiration time for a tag.  
-  The value can be defined in several formats, including a specific date and time, a relative time offset from image creation, or a relative time offset from tag creation.  
-  In this example, we use a relative time offset of `5m`, which means the image will expire 5 minutes after being tagged as `2.0` and `latest`.
+* Update `Containerfile.exp` to include the `quay.expires-after` label set to `5m` (5 minutes). Rebuild, tag as both `2.0` and `latest`, and push both tags to Quay:
 
 [.lines_space]
 [.console-input]
-[source,bash, subs="+macros,+attributes"]
+[source,bash,subs="+macros,+attributes"]
 ----
 echo "LABEL org.opencontainers.image.authors=angel@olleb.com" >> Containerfile.exp
 echo "LABEL quay.expires-after=5m" >> Containerfile.exp
@@ -191,55 +215,63 @@ podman tag localhost/exp:2.0 ${QUAY_HOSTNAME}/olleb/expiration:latest
 podman push ${QUAY_HOSTNAME}/olleb/expiration:latest
 ----
 
-* At this point, the `olleb/expiration` repository contains two images and three tags:  
-  - The `1.0` image has the `1.0` tag.  
-  - The `2.0` image has the `2.0` and `latest` tags.  
-  The `2.0` and `latest` tags are marked as expiring soon.
+* In the Quay UI, navigate to **Repositories** > **olleb/expiration** > **Tags**. Observe that the `2.0` and `latest` tags display an indicator showing they are scheduled to expire soon.
 
-image::repositories/exp1.png[]
+image::repositories/exp1.png[Expiring Tags Overview]
 
-After 5 minutes, both tags will be automatically removed from the repository.
+* After 5 minutes, refresh the page to confirm that both tags have been automatically removed. Check the **Tag History** tab to verify the automatic deletion event.
 
-image::repositories/exp2.png[]
+image::repositories/exp2.png[Tags Expired]
 
-image::repositories/taghistoryautodeleted.png[]
+image::repositories/taghistoryautodeleted.png[Tag History Auto Deletion Log]
 
-* To manually configure an expiration time, select the `1.0` tag.  
-  From the *Actions* drop-down list, select *Change Expiration*, and set the desired *Expiration Date*.
+* To set an expiration date manually from the web UI, select the checkbox for the `1.0` tag, click the **Actions** menu, and select **Set Expiration**. Set the desired expiration date and click **Change Expiration**.
 
-image::repositories/exp3.png[]
+image::repositories/exp3.png[Change Expiration Dialog]
 
-image::repositories/expirationdatetag.png[]
+image::repositories/expirationdatetag.png[Manual Expiration Set]
 
-TIP: Alternatively, you can set the expiration by clicking the *Options* icon and selecting *Change Expiration*.
+When a tag is close to expiring, Quay displays a warning status next to the tag:
 
-When a tag is about to expire, a warning message is displayed:
+image::repositories/abouttoexpire.png[Tag About To Expire Warning]
 
-image::repositories/abouttoexpire.png[]
+=== Time Machine and Garbage Collection
 
-NOTE: By default, the minimum expiration time is **one hour**, and the maximum is **104 weeks** (approximately two years).  
-If you need shorter or longer expiration limits, modify the `LABELED_EXPIRATION_MINIMUM` setting in the **Config Bundle Secret** of your registry instance.  
-This property accepts values such as `60s` (seconds), `5m` (minutes), `24h` (hours), `7d` (days), or `2w` (weeks).  
+When a tag expires or is deleted, its underlying image manifest and layers are not immediately purged from disk. Quay uses a retention mechanism called **Time Machine**:
 
-When a tag expires, it is deleted automatically.
+* Images whose tags have been deleted remain recoverable during the Time Machine retention window (by default, **14 days / 2 weeks**).
+* Once the Time Machine period passes, Quay's garbage collection worker permanently deletes the unreferenced manifests and layers.
 
-However, even after a tag is deleted, the corresponding image can still be restored.  
-When a tag is deleted and no other tags reference the same image, the image is not immediately removed — it is marked for **garbage collection**, which by default occurs after **14 days (`2w`)**.  
-Quay’s garbage collection worker runs periodically and removes expired images once the configured *Time Machine* retention period has passed.
+To inspect the current Time Machine settings for your organization, navigate to **Organizations** > **olleb** > **Settings** (or **Settings** within your user account for user-scoped repositories).
 
-Because the image was stored under the `olleb` organization, you can check that value by navigating to `/organization/olleb?tab=settings`.
+image::repositories/orgexptime.png[Organization Time Machine Settings]
 
-image::repositories/orgexptime.png[]
+The Time Machine options can be customized in Quay's configuration using the `TAG_EXPIRATION_OPTIONS` array property alongside `DEFAULT_TAG_EXPIRATION`:
 
-If the image was stored under a user account instead of an organization, the setting can be found under *User Settings*.
+image::repositories/expcfg.png[Custom Time Machine Configuration]
 
-The *Time Machine* retention period can be modified by changing the `TAG_EXPIRATION_OPTIONS` array property, which must include the default expiration value `DEFAULT_TAG_EXPIRATION` in its list.  
+Configuring these options updates the available retention periods in the UI:
 
-// TODO explain custom config (secret bundle)
-For example, with the following custom configuration:
+image::repositories/customtm.png[Custom Time Machine UI Dropdown]
 
-image::repositories/expcfg.png[]
+[#deleterepo]
+== Deleting or Archiving a Repository
 
-you will see:
+When a repository is no longer needed, Red Hat Quay allows you to change its operational state, modify its visibility, or permanently delete it.
 
-image::repositories/customtm.png[]
+* Navigate to **Repositories** > **olleb/kafka** and select **Settings** from the navigation menu.
+
+* Review the repository management options:
+** **User and Robot Permissions:** Manage access levels for individual users and robot accounts.
+** **Events and Notifications:** Configure webhooks or alerts triggered by repository events.
+** **Repository State:** Change the operational status between Normal, Read Only, or Mirroring.
+** **Repository Visibility:** Switch the repository accessibility between Public and Private.
+** **Delete Repository:** Permanently remove the repository and all its associated tag references.
+
+* To permanently remove the repository:
+** Click the **Delete Repository** section.
+** Click the **Delete Repository** button.
+** Enter the repository name `olleb/kafka` in the confirmation prompt.
+** Click **Delete** to finish.
+
+NOTE: Deleting a repository removes its tags immediately. The underlying image layers and manifests are permanently cleaned up by Quay's garbage collection worker after the Time Machine retention period expires.
