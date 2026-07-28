@@ -1,11 +1,11 @@
 * xref:setup.adoc[Prerequisites]
-** xref:setup.adoc#odf[ODF Operator]
-** xref:setup.adoc#storage[Creating the ODF Cluster]
+** xref:setup.adoc#storage[Object Storage Options]
+*** xref:setup.adoc#odf[Option A: OpenShift Data Foundation (MCG)]
+*** xref:setup.adoc#s3[Option B: AWS S3 Storage (Unmanaged)]
 ** xref:setup.adoc#quayoperator[Installing the Quay Operator]
 ** xref:setup.adoc#quayinstance[Deploying Quay]
 ** xref:setup.adoc#exportenvvar[Exporting Environment Variables]
 ** xref:setup.adoc#trustedca[Adding the Quay Certificate as a Trusted CA in OCP (Optional)]
-** xref:setup.adoc#keycloak[Installing Red Hat build of Keycloak (Optional)]
 
 * xref:quay-orgs.adoc[Users and Organizations]
 ** xref:quay-orgs.adoc#useraccounts[Creating User Accounts]
@@ -47,6 +47,7 @@
 * xref:quay-obs.adoc[Observability]
 
 * xref:quay-keycloak.adoc[Quay Integration with Keycloak (OpenID Connect)]
+** xref:setup.adoc#keycloak[Installing Red Hat build of Keycloak]
 ** xref:quay-keycloak.adoc#keycloakconfig[Configuring Keycloak for Quay]
 ** xref:quay-keycloak.adoc#quayconfig[Configuring Quay to Use Keycloak as an OpenID Provider]
 ** xref:quay-keycloak.adoc#testlogin[Testing OpenID Login]
