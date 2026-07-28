@@ -10,6 +10,8 @@
 * xref:quay-orgs.adoc[Users and Organizations]
 ** xref:quay-orgs.adoc#useraccounts[Creating User Accounts]
 ** xref:quay-orgs.adoc#orgaccounts[Creating Organization Accounts]
+** xref:quay-orgs.adoc#orgteams[Creating Teams and Assigning Roles]
+** xref:quay-orgs.adoc#serviceaccounts[Creating Robot Accounts for Automation]
 
 * xref:quay-repos.adoc[Repository Management]
 ** xref:quay-repos.adoc#imagerepo[Creating an Image Repository]
