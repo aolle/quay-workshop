@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Repositories :: Red Hat Quay Workshop</title>
+    <title>Repository Management :: Red Hat Quay Workshop</title>
     <link rel="canonical" href="https://olleb.com/quay-workshop/quay-repos.html">
     <link rel="prev" href="quay-orgs.html">
     <link rel="next" href="quay-mirror.html">
@@ -269,45 +269,61 @@
     <li><a href="quay-repos.html">Repository Management</a></li>
   </ul>
 </nav>
-  <div style="padding: 0 0.5rem 0 0.75rem;"><a href="https://olleb.com" target="_blank" rel="noopener noreferrer"> © 2025 - Àngel Ollé Blázquez</a></div>
+  <div style="padding: 0 0.5rem 0 0.75rem;"><a href="https://olleb.com" target="_blank" rel="noopener noreferrer"> © Àngel Ollé Blázquez</a></div>
 </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Repositories</h1>
+<h1 class="page">Repository Management</h1>
 <div class="sect1">
 <h2 id="imagerepo"><a class="anchor" href="#imagerepo"></a>Creating an Image Repository</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>On the main Quay landing page:</p>
+<p>To store container images in Red Hat Quay, you must create a repository inside a user account or an organization.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Click the <code>Create New Repository</code> button.</p>
+<p>From the left navigation menu, click <strong>Repositories</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Create Repository</strong>.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/create-repo.png" alt="create repo">
+<img src="_images/repositories/create-repo.png" alt="Create Repository Button">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Select the organization from the drop-down list, name the repository <code>kafka</code>, and set the visibility to <code>Public</code>.</p>
+<p>Configure the new repository:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Organization/Namespace:</strong> Select <code>olleb</code> from the drop-down menu.</p>
+</li>
+<li>
+<p><strong>Repository Name:</strong> Enter <code>kafka</code>.</p>
+</li>
+<li>
+<p><strong>Repository Visibility:</strong> Select <strong>Public</strong>.</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/repo-config.png" alt="repo config">
+<img src="_images/repositories/repo-config.png" alt="Repository Configuration Form">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Click <code>Create Public Repository</code>.</p>
+<p>Click <strong>Create</strong> to finish.</p>
 </li>
 </ul>
 </div>
@@ -316,10 +332,13 @@
 <div class="sect1">
 <h2 id="push"><a class="anchor" href="#push"></a>Pushing and Tagging an Image</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>In this section, you will download a sample container image, tag it for your Quay registry, and push it to your repository.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Pull an image from the public registry by running the <code>podman pull</code> command followed by the image name.</p>
+<p>Download the sample Kafka image from the upstream Quay repository:</p>
 </li>
 </ul>
 </div>
@@ -331,7 +350,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Tag the image with a name and version number using the <code>podman tag</code> command.</p>
+<p>Tag the downloaded image with your Quay registry hostname, organization name, repository, and a new tag:</p>
 </li>
 </ul>
 </div>
@@ -343,7 +362,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Sign in to your Quay repository using your account credentials, if you are not already signed in.</p>
+<p>Log in to your Quay registry using your credentials:</p>
 </li>
 </ul>
 </div>
@@ -355,7 +374,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Push the image to the Quay repository using the <code>podman push</code> command.</p>
+<p>Push the tagged image to your Quay repository:</p>
 </li>
 </ul>
 </div>
@@ -367,13 +386,13 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Verify that the image has been successfully pushed to your Quay repository by confirming that the image is listed.</p>
+<p>In the Quay web console, navigate to <strong>Repositories</strong> &gt; <strong>olleb/kafka</strong> and verify that the <code>4.0.0</code> tag appears in the <strong>Tags</strong> tab.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/image-pushed.png" alt="image pushed">
+<img src="_images/repositories/image-pushed.png" alt="Image Pushed to Quay">
 </div>
 </div>
 </div>
@@ -381,27 +400,62 @@
 <div class="sect1">
 <h2 id="imglayers"><a class="anchor" href="#imglayers"></a>Inspecting Image Layers</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Container images are composed of multiple read-only layers. Red Hat Quay provides full visibility into the image layers, software packages, and security vulnerability reports.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Navigate to the <code>olleb/kafka</code> repository.</p>
+<p>Inside the <code>olleb/kafka</code> repository, select the <strong>Tags</strong> tab.</p>
 </li>
 <li>
-<p>Click the <code>Tags</code> icon.</p>
-</li>
-<li>
-<p>Under the <code>MANIFEST</code> section of the <code>4.0.0</code> tag, click the <code>SHA256</code> value to open the image layers dashboard.</p>
+<p>Click directly on the <code>4.0.0</code> tag name to open the detailed view of the image manifest.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/image-pushed2.png" alt="image pushed2">
+<img src="_images/repositories/image-pushed2.png" alt="Tags List in Quay">
 </div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>In the top menu of the tag view, explore the available sections:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Details:</strong> Displays image metadata including tag name, digest, size, creation date, vulnerability summary, labels, and copyable pull commands.</p>
+</li>
+<li>
+<p><strong>Layers:</strong> Breakdown of individual filesystem layers, build commands, and sizes.</p>
+</li>
+<li>
+<p><strong>Security Report:</strong> Vulnerability assessment scan results for the image layers.</p>
+</li>
+<li>
+<p><strong>Packages:</strong> Complete inventory of software packages and dependencies detected inside the image.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="imageblock unresolved">
+<div class="content">
+<img src="repositories/imag-tag.png" alt="Img details">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click on the <strong>Layers</strong> tab to inspect the step-by-step construction of the container image.</p>
+</li>
+</ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/img-layers.png" alt="img layers">
+<img src="_images/repositories/img-layers.png" alt="Image Layers Breakdown">
 </div>
 </div>
 </div>
@@ -409,41 +463,62 @@
 <div class="sect1">
 <h2 id="pull"><a class="anchor" href="#pull"></a>Pulling an Image</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Because the <code>olleb/kafka</code> repository was created with <strong>Public</strong> visibility, any user can pull images from it without requiring authentication.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>From the Quay dashboard, locate and select the <code>olleb/kafka</code> repository.</p>
+<p>Navigate to <strong>Repositories</strong> &gt; <strong>olleb/kafka</strong> and select the <strong>Tags</strong> tab.</p>
 </li>
 <li>
-<p>Click the <code>Tags</code> tab.</p>
-</li>
-<li>
-<p>Select any of the repository’s tags and click the <code>Fetch Tag</code> icon.</p>
+<p>Locate the <code>4.0.0</code> tag and hover over the <strong>Pull</strong> (download arrow) icon on the right side of the row.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/fetchtagpre.png" alt="fetchtagpre">
+<img src="_images/repositories/fetchtagpre.png" alt="Pull Icon Hover">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>From the <strong>Image Format</strong> drop-down menu, select <code>Podman Pull (by tag)</code> and click the <code>Copy Command</code> button.</p>
+<p>From the flyout menu that appears:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Locate the <strong>Podman Pull (by tag)</strong> option.</p>
+</li>
+<li>
+<p>Click the copy icon next to the command to copy it to your clipboard.</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/fetchtag.png" alt="fetchtag">
+<img src="_images/repositories/fetchtag.png" alt="Pull Command Flyout Menu">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Switch to a terminal, paste the command you copied from the Quay UI, and execute it.
-Ensure that <code>Podman</code> is installed on your system. Since the repository was created as <code>Public</code>, no login is required to pull the image.</p>
+<p>Open your terminal and run the copied command:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman pull ${QUAY_HOSTNAME}/olleb/kafka:4.0.0</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Confirm that the image download completes successfully without requiring a login prompt.</p>
 </li>
 </ul>
 </div>
@@ -453,15 +528,15 @@ Ensure that <code>Podman</code> is installed on your system. Since the repositor
 <h2 id="rollback"><a class="anchor" href="#rollback"></a>Rolling Back an Image</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Quay provides a convenient way to review the history of tags associated with an image repository and to roll back to a previous version when needed.</p>
+<p>Red Hat Quay maintains a detailed history of tag modifications, allowing you to easily review changes and revert a tag to a previous manifest digest if an issue occurs.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Create a new image repository as previously explained. In this case, create a public repository named <code>olleb/rollback</code> on Quay.</p>
+<p>Create a new public repository named <code>rollback</code> under the <code>olleb</code> organization.</p>
 </li>
 <li>
-<p>Build an image, tag it, and push it.</p>
+<p>Create a minimal base image, tag it as <code>latest</code>, and push it to Quay:</p>
 </li>
 </ul>
 </div>
@@ -477,24 +552,24 @@ podman push ${QUAY_HOSTNAME}/olleb/rollback:latest</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Verify that the image has been pushed to the Quay repository. Also, check the manifest digest and the layers.</p>
+<p>In the Quay UI, navigate to <strong>Repositories</strong> &gt; <strong>olleb/rollback</strong> &gt; <strong>Tags</strong> to confirm the initial image push, noting its manifest digest and layer structure.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/rblatest1.png" alt="rblatest1">
+<img src="_images/repositories/rblatest1.png" alt="Initial Image Manifest">
 </div>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/rblayers1.png" alt="rblayers1">
+<img src="_images/repositories/rblayers1.png" alt="Initial Image Layers">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Add a new layer to the <code>Containerfile</code>, rebuild the image, and <strong>overwrite</strong> the previous one by tagging and pushing it with the same remote tag.</p>
+<p>Modify the <code>Containerfile.rbk</code> by adding a new layer, rebuild the image, and push it using the same <code>latest</code> tag to overwrite the remote reference:</p>
 </li>
 </ul>
 </div>
@@ -510,67 +585,66 @@ podman push ${QUAY_HOSTNAME}/olleb/rollback:latest</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Verify that the new image has been pushed to the Quay repository, and check its manifest digest and layers in the Quay UI.
-You should observe that the manifest digest and layers differ from the previous image.</p>
+<p>In the Quay UI, refresh the <strong>Tags</strong> view and verify that the manifest digest and layer count for the <code>latest</code> tag have changed.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/rblatest2.png" alt="rblatest2">
+<img src="_images/repositories/rblatest2.png" alt="Updated Image Manifest">
 </div>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/rblayers2.png" alt="rblayers2">
+<img src="_images/repositories/rblayers2.png" alt="Updated Image Layers">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>To roll back the image to the previous version, navigate to the Quay UI and click the <code>Tag History</code> option for the repository.</p>
+<p>To revert to the original version, select the <strong>Tag History</strong> tab in the repository menu.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/tagh.png" alt="tagh">
+<img src="_images/repositories/tagh.png" alt="Tag History View">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>From there, select the tag of the previous image you want to restore, and click <code>Revert to &#8230;&#8203;</code>.</p>
+<p>Locate the previous manifest entry for the <code>latest</code> tag and click <strong>Revert to&#8230;&#8203;</strong>.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/revert.png" alt="revert">
+<img src="_images/repositories/revert.png" alt="Revert Tag Action">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Click the <code>Restore Tag</code> button. This will restore the tag to reference the previous image.</p>
+<p>Click <strong>Restore Tag</strong> in the confirmation dialog to point the <code>latest</code> tag back to the original manifest digest.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/restoretag.png" alt="restoretag">
+<img src="_images/repositories/restoretag.png" alt="Restore Tag Confirmation">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>To verify that the rollback was successful, go to the <code>Tag History</code> section in the Quay UI and confirm that the restored tag has the same manifest digest and layers as the previous image.</p>
+<p>Return to the <strong>Tags</strong> view to verify that the <code>latest</code> tag now points back to the original manifest digest and layer state.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/restored.png" alt="restored">
+<img src="_images/repositories/restored.png" alt="Restored Tag Verification">
 </div>
 </div>
 </div>
@@ -579,15 +653,15 @@ You should observe that the manifest digest and layers differ from the previous 
 <h2 id="expiration"><a class="anchor" href="#expiration"></a>Image Expiration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To configure an image tag to expire in Quay at a specific time or date, follow these steps:</p>
+<p>Red Hat Quay allows you to configure expiration dates for image tags using container labels or via the web console. When a tag expires, it is automatically removed from the repository.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Create a new image repository as previously explained. In this example, create a public repository named <code>olleb/expiration</code>.</p>
+<p>Create a new public repository named <code>expiration</code> under the <code>olleb</code> organization.</p>
 </li>
 <li>
-<p>Build a <code>1.0</code> image, tag it, and push it to the <code>olleb/expiration</code> repository.</p>
+<p>Build, tag, and push a base <code>1.0</code> image to the <code>olleb/expiration</code> repository:</p>
 </li>
 </ul>
 </div>
@@ -603,9 +677,7 @@ podman push ${QUAY_HOSTNAME}/olleb/expiration:1.0</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>The label <code>quay.expires-after</code> is used to specify the expiration time for a tag.
-The value can be defined in several formats, including a specific date and time, a relative time offset from image creation, or a relative time offset from tag creation.
-In this example, we use a relative time offset of <code>5m</code>, which means the image will expire 5 minutes after being tagged as <code>2.0</code> and <code>latest</code>.</p>
+<p>Update <code>Containerfile.exp</code> to include the <code>quay.expires-after</code> label set to <code>5m</code> (5 minutes). Rebuild, tag as both <code>2.0</code> and <code>latest</code>, and push both tags to Quay:</p>
 </li>
 </ul>
 </div>
@@ -625,76 +697,152 @@ podman push ${QUAY_HOSTNAME}/olleb/expiration:latest</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>At this point, the <code>olleb/expiration</code> repository contains two images and three tags:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>The <code>1.0</code> image has the <code>1.0</code> tag.</p>
-</li>
-<li>
-<p>The <code>2.0</code> image has the <code>2.0</code> and <code>latest</code> tags.
-The <code>2.0</code> and <code>latest</code> tags are marked as expiring soon.</p>
-</li>
-</ul>
-</div>
+<p>In the Quay UI, navigate to <strong>Repositories</strong> &gt; <strong>olleb/expiration</strong> &gt; <strong>Tags</strong>. Observe that the <code>2.0</code> and <code>latest</code> tags display an indicator showing they are scheduled to expire soon.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/exp1.png" alt="exp1">
-</div>
-</div>
-<div class="paragraph">
-<p>After 5 minutes, both tags will be automatically removed from the repository.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/repositories/exp2.png" alt="exp2">
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/repositories/taghistoryautodeleted.png" alt="taghistoryautodeleted">
+<img src="_images/repositories/exp1.png" alt="Expiring Tags Overview">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>To manually configure an expiration time, select the <code>1.0</code> tag.
-From the <strong>Actions</strong> drop-down list, select <strong>Change Expiration</strong>, and set the desired <strong>Expiration Date</strong>.</p>
+<p>After 5 minutes, refresh the page to confirm that both tags have been automatically removed. Check the <strong>Tag History</strong> tab to verify the automatic deletion event.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/exp3.png" alt="exp3">
+<img src="_images/repositories/exp2.png" alt="Tags Expired">
 </div>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/expirationdatetag.png" alt="expirationdatetag">
+<img src="_images/repositories/taghistoryautodeleted.png" alt="Tag History Auto Deletion Log">
 </div>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Alternatively, you can set the expiration by clicking the <strong>Options</strong> icon and selecting <strong>Change Expiration</strong>.
-</td>
-</tr>
-</table>
+<div class="ulist">
+<ul>
+<li>
+<p>To set an expiration date manually from the web UI, select the checkbox for the <code>1.0</code> tag, click the <strong>Actions</strong> menu, and select <strong>Set Expiration</strong>. Set the desired expiration date and click <strong>Change Expiration</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/repositories/exp3.png" alt="Change Expiration Dialog">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/repositories/expirationdatetag.png" alt="Manual Expiration Set">
+</div>
 </div>
 <div class="paragraph">
-<p>When a tag is about to expire, a warning message is displayed:</p>
+<p>When a tag is close to expiring, Quay displays a warning status next to the tag:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/abouttoexpire.png" alt="abouttoexpire">
+<img src="_images/repositories/abouttoexpire.png" alt="Tag About To Expire Warning">
 </div>
+</div>
+<div class="sect2">
+<h3 id="_time_machine_and_garbage_collection"><a class="anchor" href="#_time_machine_and_garbage_collection"></a>Time Machine and Garbage Collection</h3>
+<div class="paragraph">
+<p>When a tag expires or is deleted, its underlying image manifest and layers are not immediately purged from disk. Quay uses a retention mechanism called <strong>Time Machine</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Images whose tags have been deleted remain recoverable during the Time Machine retention window (by default, <strong>14 days / 2 weeks</strong>).</p>
+</li>
+<li>
+<p>Once the Time Machine period passes, Quay&#8217;s garbage collection worker permanently deletes the unreferenced manifests and layers.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To inspect the current Time Machine settings for your organization, navigate to <strong>Organizations</strong> &gt; <strong>olleb</strong> &gt; <strong>Settings</strong> (or <strong>Settings</strong> within your user account for user-scoped repositories).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/repositories/orgexptime.png" alt="Organization Time Machine Settings">
+</div>
+</div>
+<div class="paragraph">
+<p>The Time Machine options can be customized in Quay&#8217;s configuration using the <code>TAG_EXPIRATION_OPTIONS</code> array property alongside <code>DEFAULT_TAG_EXPIRATION</code>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/repositories/expcfg.png" alt="Custom Time Machine Configuration">
+</div>
+</div>
+<div class="paragraph">
+<p>Configuring these options updates the available retention periods in the UI:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/repositories/customtm.png" alt="Custom Time Machine UI Dropdown">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="deleterepo"><a class="anchor" href="#deleterepo"></a>Deleting or Archiving a Repository</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When a repository is no longer needed, Red Hat Quay allows you to change its operational state, modify its visibility, or permanently delete it.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Navigate to <strong>Repositories</strong> &gt; <strong>olleb/kafka</strong> and select <strong>Settings</strong> from the navigation menu.</p>
+</li>
+<li>
+<p>Review the repository management options:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>User and Robot Permissions:</strong> Manage access levels for individual users and robot accounts.</p>
+</li>
+<li>
+<p><strong>Events and Notifications:</strong> Configure webhooks or alerts triggered by repository events.</p>
+</li>
+<li>
+<p><strong>Repository State:</strong> Change the operational status between Normal, Read Only, or Mirroring.</p>
+</li>
+<li>
+<p><strong>Repository Visibility:</strong> Switch the repository accessibility between Public and Private.</p>
+</li>
+<li>
+<p><strong>Delete Repository:</strong> Permanently remove the repository and all its associated tag references.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>To permanently remove the repository:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Click the <strong>Delete Repository</strong> section.</p>
+</li>
+<li>
+<p>Click the <strong>Delete Repository</strong> button.</p>
+</li>
+<li>
+<p>Enter the repository name <code>olleb/kafka</code> in the confirmation prompt.</p>
+</li>
+<li>
+<p>Click <strong>Delete</strong> to finish.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -703,50 +851,10 @@ Alternatively, you can set the expiration by clicking the <strong>Options</stron
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-By default, the minimum expiration time is <strong>one hour</strong>, and the maximum is <strong>104 weeks</strong> (approximately two years).
-If you need shorter or longer expiration limits, modify the <code>LABELED_EXPIRATION_MINIMUM</code> setting in the <strong>Config Bundle Secret</strong> of your registry instance.
-This property accepts values such as <code>60s</code> (seconds), <code>5m</code> (minutes), <code>24h</code> (hours), <code>7d</code> (days), or <code>2w</code> (weeks).
+Deleting a repository removes its tags immediately. The underlying image layers and manifests are permanently cleaned up by Quay&#8217;s garbage collection worker after the Time Machine retention period expires.
 </td>
 </tr>
 </table>
-</div>
-<div class="paragraph">
-<p>When a tag expires, it is deleted automatically.</p>
-</div>
-<div class="paragraph">
-<p>However, even after a tag is deleted, the corresponding image can still be restored.
-When a tag is deleted and no other tags reference the same image, the image is not immediately removed — it is marked for <strong>garbage collection</strong>, which by default occurs after <strong>14 days (<code>2w</code>)</strong>.
-Quay’s garbage collection worker runs periodically and removes expired images once the configured <strong>Time Machine</strong> retention period has passed.</p>
-</div>
-<div class="paragraph">
-<p>Because the image was stored under the <code>olleb</code> organization, you can check that value by navigating to <code>/organization/olleb?tab=settings</code>.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/repositories/orgexptime.png" alt="orgexptime">
-</div>
-</div>
-<div class="paragraph">
-<p>If the image was stored under a user account instead of an organization, the setting can be found under <strong>User Settings</strong>.</p>
-</div>
-<div class="paragraph">
-<p>The <strong>Time Machine</strong> retention period can be modified by changing the <code>TAG_EXPIRATION_OPTIONS</code> array property, which must include the default expiration value <code>DEFAULT_TAG_EXPIRATION</code> in its list.</p>
-</div>
-<div class="paragraph">
-<p>For example, with the following custom configuration:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/repositories/expcfg.png" alt="expcfg">
-</div>
-</div>
-<div class="paragraph">
-<p>you will see:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/repositories/customtm.png" alt="customtm">
-</div>
 </div>
 </div>
 </div>
