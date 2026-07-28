@@ -1,4 +1,4 @@
-= Red Hat Quay 3.15 Workshop
+= Red Hat Quay 3.17.3 Workshop
 :page-layout: home
 :!sectids:
 

@@ -34,11 +34,11 @@ Unlike a full Ceph deployment, MCG mode does not deploy a complete storage data 
 * From the **Core Platform** perspective, navigate to **Ecosystem** > **Software Catalog**.
 * In the search field, type `OpenShift Data Foundation`.
    
-   image::install/operatorhub-odf.png[ODF OperatorHub Search]
+image::install/operatorhub-odf.png[ODF OperatorHub Search]
 
 * Select the **Red Hat OpenShift Data Foundation** tile and click **Install**.
 
-   image::install/odf-install.png[ODF Install Tile]
+image::install/odf-install.png[ODF Install Tile]
 
 * On the **Install Operator** page:
    * Select the update channel corresponding to your OCP version (`stable-4.22`).
@@ -52,19 +52,19 @@ Unlike a full Ceph deployment, MCG mode does not deploy a complete storage data 
 * In the OpenShift console, navigate to **Storage** > **Object Storage**.
 * Click **Configure Data Foundation**.
 
-   image::install/odf1.png[Create StorageSystem]
+image::install/odf1.png[Create StorageSystem]
 
 * Select **Setup Multicloud Object Gateway**.
 
-  image::install/mcg.png[Create MCG]
+image::install/mcg.png[Create MCG]
 
 * On the **Backing storage**, select **Use an existing StorageClass** (`gp3-csi` or equivalent block storage class).
 
-   image::install/odf2.png[Backing Storage Selection]
+image::install/odf2.png[Backing Storage Selection]
 
 * Click **Next** through the remaining prompts and click **Create StorageSystem**.
 
-   image::install/odf3.png[StorageSystem Confirmation]
+image::install/odf3.png[StorageSystem Confirmation]
 
 NOTE: Wait until all ODF/MCG pods in the `openshift-storage` namespace are running before proceeding to the Quay installation.
 
