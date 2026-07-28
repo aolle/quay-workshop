@@ -62,10 +62,16 @@
     <a class="nav-link" href="setup.html">Prerequisites</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="setup.html#odf">ODF Operator</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="setup.html#storage">Object Storage Options</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="setup.html#odf">Option A: OpenShift Data Foundation (MCG)</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="setup.html#storage">Creating the ODF Cluster</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="setup.html#s3">Option B: AWS S3 Storage (Unmanaged)</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="setup.html#quayoperator">Installing the Quay Operator</a>
@@ -79,9 +85,6 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="setup.html#trustedca">Adding the Quay Certificate as a Trusted CA in OCP (Optional)</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="setup.html#keycloak">Installing Red Hat build of Keycloak (Optional)</a>
-  </li>
 </ul>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
@@ -93,6 +96,12 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="#orgaccounts">Creating Organization Accounts</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#orgteams">Creating Teams and Assigning Roles</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#serviceaccounts">Creating Robot Accounts for Automation</a>
   </li>
 </ul>
   </li>
@@ -215,6 +224,9 @@
     <a class="nav-link" href="quay-keycloak.html">Quay Integration with Keycloak (OpenID Connect)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="setup.html#keycloak">Installing Red Hat build of Keycloak</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="quay-keycloak.html#keycloakconfig">Configuring Keycloak for Quay</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -266,33 +278,14 @@
 <h2 id="useraccounts"><a class="anchor" href="#useraccounts"></a>Creating User Accounts</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To create a new user for your Red Hat Quay instance:</p>
+<p>To access and manage resources in Red Hat Quay, you need a user account. Proceed with the following steps to create your first user:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Open a browser window and log in to the Red Hat OpenShift Container Platform web console.</p>
-</li>
-<li>
-<p>From the <strong>Administrator</strong> perspective, click <code>Operators</code>, then <code>Installed Operators</code>. Select the <code>quay-workshop</code> project and the <code>Red Hat Quay</code> Operator.</p>
-</li>
-<li>
-<p>Select the <strong>Quay Registry</strong> tab and click the recently created registry.</p>
-</li>
-<li>
-<p>Open the <strong>Registry Endpoint</strong>.</p>
+<p>Open a new browser tab and navigate to your Red Hat Quay web console using the registry URL.</p>
 </li>
 </ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/organizations/quay-registries.png" alt="quay registries">
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/organizations/quay-endpoint.png" alt="quay endpoint">
-</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -301,7 +294,7 @@
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Alternatively, you can find the registry endpoint URL by navigating to <strong>Networking</strong> &gt; <strong>Routes</strong> in the Red Hat OpenShift Container Platform web console.
+If you do not have the URL handy, you can find it in the OpenShift web console under <strong>Core Platform</strong> &gt; <strong>Networking</strong> &gt; <strong>Routes</strong> in the <code>quay-workshop</code> namespace.
 </td>
 </tr>
 </table>
@@ -309,24 +302,31 @@ Alternatively, you can find the registry endpoint URL by navigating to <strong>N
 <div class="ulist">
 <ul>
 <li>
-<p>Click <code>Create Account</code>.</p>
+<p>Click <strong>Create Account</strong> on the Quay login page.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/organizations/quay-create-account.png" alt="quay create account">
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/organizations/quay-create-account2.png" alt="quay create account2">
+<img src="_images/organizations/quay-create-account.png" alt="Create Account Button">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Fill in the required information, create the account, and sign in.</p>
+<p>Enter the required user information (Username, Email, and Password).</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/organizations/quay-create-account2.png" alt="User Account Form">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click <strong>Create Account</strong> to finalize, and then log in using your new credentials.</p>
 </li>
 </ul>
 </div>
@@ -336,36 +336,175 @@ Alternatively, you can find the registry endpoint URL by navigating to <strong>N
 <h2 id="orgaccounts"><a class="anchor" href="#orgaccounts"></a>Creating Organization Accounts</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To create a new organization that allows sharing container image repositories:</p>
+<p>Organizations in Red Hat Quay allow you to group repositories, manage permissions, and share container images efficiently across teams.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>While logged in to Red Hat Quay, click <code>Create New Organization</code>.</p>
+<p>Log in to the Red Hat Quay web console if you are not already logged in.</p>
+</li>
+<li>
+<p>On the top navigation bar or dashboard, click <strong>Create Organization</strong>.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/organizations/quay-create-org.png" alt="quay create org">
+<img src="_images/organizations/quay-create-org.png" alt="Create Organization Button">
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Enter the name of the organization you want to create, and click <code>Create Organization</code>.</p>
+<p>Enter the desired <strong>Organization Name</strong>.</p>
 </li>
 </ul>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/organizations/org-create.png" alt="org create">
+<img src="_images/organizations/org-create.png" alt="Organization Creation Form">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click <strong>Create</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/organizations/org.png" alt="Organization Overview">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="orgteams"><a class="anchor" href="#orgteams"></a>Creating Teams and Assigning Roles</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Organizations use teams to manage group permissions across repositories efficiently.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Inside your newly created organization, click the <strong>Teams and Membership</strong> tab.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/organizations/teams.png" alt="Teams and Membership">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Click <strong>Create new team</strong>, enter <code>developers</code> as the team name.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/organizations/create-team.png" alt="Create team">
+</div>
+</div>
+<div class="paragraph">
+<p>and click <strong>Proceed</strong> to launch the creation wizard:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Name &amp; description:</strong> click <strong>Next</strong>.</p>
+</li>
+<li>
+<p><strong>Add to repository (optional):</strong> Skip this step for now by clicking <strong>Next</strong>.</p>
+</li>
+<li>
+<p><strong>Add team member (optional):</strong> Search for your user (or any secondary user account), add them to the team, and click <strong>Next</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/organizations/user.png" alt="Search user">
 </div>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/organizations/org.png" alt="org">
+<img src="_images/organizations/user2.png" alt="User">
 </div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Review and Finish:</strong> Review the team details and click the confirmation button to create the team.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="serviceaccounts"><a class="anchor" href="#serviceaccounts"></a>Creating Robot Accounts for Automation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Robot accounts are attached to an organization and are ideal for CI/CD pipelines and automated deployments. In this section, you will create a robot account that can be used for automated operations in later modules.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Select your organization and navigate to the <strong>Robot Accounts</strong> tab.</p>
+</li>
+<li>
+<p>Click <strong>Create Robot Account</strong> to open the wizard:</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/organizations/robot.png" alt="Create Robot Account">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Complete the wizard steps as follows:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Name:</strong> Enter <code>pipeline_builder</code> in the name field and click <strong>Next</strong>.</p>
+</li>
+<li>
+<p><strong>Add to team (optional):</strong> Skip this step for now and click <strong>Next</strong>.</p>
+</li>
+<li>
+<p><strong>Add to repository (optional):</strong> Skip this step for now and click <strong>Next</strong>.</p>
+</li>
+<li>
+<p><strong>Default permissions (optional):</strong> Leave the default selection as <strong>None</strong> (you can choose between <strong>None</strong>, <strong>Read</strong>, <strong>Write</strong>, or <strong>Admin</strong> when assigning repository access) and click <strong>Next</strong>.</p>
+</li>
+<li>
+<p><strong>Review and finish:</strong> Review the configuration and click the confirmation button to complete the creation.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Once created, click on the newly created <code>pipeline_builder</code> account to view its credentials.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You can view or regenerate the robot account&#8217;s token or download the Kubernetes secret configuration at any time. We will use these credentials in upcoming CI/CD and automation exercises.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>

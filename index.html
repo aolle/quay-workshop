@@ -61,10 +61,16 @@
     <a class="nav-link" href="setup.html">Prerequisites</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="setup.html#odf">ODF Operator</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="setup.html#storage">Object Storage Options</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="setup.html#odf">Option A: OpenShift Data Foundation (MCG)</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="setup.html#storage">Creating the ODF Cluster</a>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="setup.html#s3">Option B: AWS S3 Storage (Unmanaged)</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="setup.html#quayoperator">Installing the Quay Operator</a>
@@ -78,9 +84,6 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="setup.html#trustedca">Adding the Quay Certificate as a Trusted CA in OCP (Optional)</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="setup.html#keycloak">Installing Red Hat build of Keycloak (Optional)</a>
-  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -92,6 +95,12 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="quay-orgs.html#orgaccounts">Creating Organization Accounts</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-orgs.html#orgteams">Creating Teams and Assigning Roles</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-orgs.html#serviceaccounts">Creating Robot Accounts for Automation</a>
   </li>
 </ul>
   </li>
@@ -213,6 +222,9 @@
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="quay-keycloak.html">Quay Integration with Keycloak (OpenID Connect)</a>
 <ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="setup.html#keycloak">Installing Red Hat build of Keycloak</a>
+  </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="quay-keycloak.html#keycloakconfig">Configuring Keycloak for Quay</a>
   </li>
