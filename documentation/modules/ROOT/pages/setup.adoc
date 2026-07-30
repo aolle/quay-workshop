@@ -6,7 +6,7 @@ include::_attributes.adoc[]
 This tutorial was developed and tested with:
 
 * Red Hat OpenShift `4.22.5`
-* Red Hat Quay `3.17.3`
+* Red Hat Quay `3.18`
 ====
 
 The following tools are required to run the exercises in this tutorial. Please ensure that they are installed and properly configured before proceeding with any of the tutorial chapters.
@@ -18,8 +18,8 @@ include::partial$tools.adoc[]
 
 Red Hat Quay requires an S3-compatible object storage backend to store container images and artifacts. Depending on your environment, you can choose one of the following two storage deployment options:
 
-* **Option A: OpenShift Data Foundation (MCG)** – Recommended if you need a cluster-local, self-contained S3 gateway.
-* **Option B: External AWS S3 Bucket** – Recommended if your cluster is hosted on AWS and you prefer using cloud-native S3 storage directly.
+* **Option A: OpenShift Data Foundation (MCG)**: recommended if you need a cluster-local, self-contained S3 gateway.
+* **Option B: External AWS S3 Bucket**: recommended if your cluster is hosted on AWS and you prefer using cloud-native S3 storage directly.
 
 [#odf]
 === Option A: OpenShift Data Foundation (Multicloud Object Gateway)
@@ -30,39 +30,39 @@ Unlike a full Ceph deployment, MCG mode does not deploy a complete storage data 
 
 ==== Installing the ODF Operator
 
-* Log in to the Red Hat OpenShift Container Platform web console.
-* From the **Core Platform** perspective, navigate to **Ecosystem** > **Software Catalog**.
-* In the search field, type `OpenShift Data Foundation`.
-   
+. Log in to the Red Hat OpenShift Container Platform web console.
+. From the **Core Platform** perspective, navigate to **Ecosystem** > **Software Catalog**.
+. In the search field, type `OpenShift Data Foundation`.
++
 image::install/operatorhub-odf.png[ODF OperatorHub Search]
 
-* Select the **Red Hat OpenShift Data Foundation** tile and click **Install**.
-
+. Select the **Red Hat OpenShift Data Foundation** tile and click **Install**.
++
 image::install/odf-install.png[ODF Install Tile]
 
-* On the **Install Operator** page:
+. On the **Install Operator** page:
    * Select the update channel corresponding to your OCP version (`stable-4.22`).
    * Select **A specific namespace on the cluster** (`openshift-storage`).
    * Set **Update Approval** to **Automatic**.
    * Enable the **Console plugin**.
-* Click **Install** and wait for the installation to complete.
+. Click **Install** and wait for the installation to complete.
 
 ==== Creating the StorageSystem in MCG Mode
 
-* In the OpenShift console, navigate to **Storage** > **Object Storage**.
-* Click **Configure Data Foundation**.
-
+. In the OpenShift console, navigate to **Storage** > **Object Storage**.
+. Click **Configure Data Foundation**.
++
 image::install/odf1.png[Create StorageSystem]
 
-* Select **Setup Multicloud Object Gateway**.
-
+. Select **Setup Multicloud Object Gateway**.
++
 image::install/mcg.png[Create MCG]
-
-* On the **Backing storage**, select **Use an existing StorageClass** (`gp3-csi` or equivalent block storage class).
++
+. On the **Backing storage**, select **Use an existing StorageClass** (`gp3-csi` or equivalent block storage class).
 
 image::install/odf2.png[Backing Storage Selection]
-
-* Click **Next** through the remaining prompts and click **Create StorageSystem**.
++
+. Click **Next** through the remaining prompts and click **Create StorageSystem**.
 
 image::install/odf3.png[StorageSystem Confirmation]
 
@@ -88,49 +88,49 @@ NOTE: When deploying Quay with external S3 storage, you will supply these creden
 
 Subscribe to and deploy the `Red Hat Quay Operator`.
 
-* Open a browser window and log in to the Red Hat OpenShift Container Platform web console.
+. Open a browser window and log in to the Red Hat OpenShift Container Platform web console.
 
-* From the **Core Platform** perspective, navigate to **Ecosystem** > **Software Catalog**.
+. From the **Core Platform** perspective, navigate to **Ecosystem** > **Software Catalog**.
 
-* In the search field, type `Red Hat Quay`.
-    
+. In the search field, type `Red Hat Quay`.
++
 image::install/operatorhub-quay.png[Quay OperatorHub Search]
 
-* Select the **Red Hat Quay** tile and click **Install**.
-
+. Select the **Red Hat Quay** tile and click **Install**.
++
 image::install/quayoperator-install.png[Quay Install Tile]
 
-* On the **Install Operator** page:
+. On the **Install Operator** page:
 ** Select `stable-3.17` from the list of available **Update Channel** options.
 ** Choose **All namespaces on the cluster (default)** as the installation mode.
 ** Select **Automatic** for update approval.
-
++
 image::install/quayoperator-opts.png[Quay Installation Options]
 
-* Click **Install** and wait for the operator status to show as **Succeeded**.
+. Click **Install** and wait for the operator status to show as **Succeeded**.
 
 [#quayinstance]
 == Deploying Quay
 
-* Create a new project named `quay-workshop`.
+. Create a new project named `quay-workshop`.
 
-* From the **Core Platform** perspective, navigate to **Ecosystem** > **Installed Operators**.
+. From the **Core Platform** perspective, navigate to **Ecosystem** > **Installed Operators**.
 
-* Select the **quay-workshop** project from the Project drop-down menu at the top.
+. Select the **quay-workshop** project from the Project drop-down menu at the top.
 
-* Click on the **Red Hat Quay Operator**.
+. Click on the **Red Hat Quay Operator**.
 
-* Select the **QuayRegistry** tab and click **Create instance**.
-
+. Select the **QuayRegistry** tab and click **Create instance**.
++
 image::install/create-quay-instance.png[Create QuayRegistry Instance]
 
-* Configure the Quay instance:
+. Configure the Quay instance:
 ** **Default deployment (MCG/ODF Storage):** Leave the default settings (we will name the instance `registry` or modify it if desired) and click **Create**. The operator will automatically provision object storage using MCG.
 ** **AWS S3 / Unmanaged Storage:** If you are using external S3 storage, switch to the **YAML view**, locate the `components` section, set `objectstorage` to `managed: false`, and reference your configuration secret in `spec.configBundleSecret` before clicking **Create**.
-
++
 image::install/quay-create.png[Quay Instance Details]
 
-* Wait a few minutes until all Quay deployments are initialized and the registry status shows as **Ready**.
+. Wait a few minutes until all Quay deployments are initialized and the registry status shows as **Ready**.
 
 [#exportenvvar]
 == Exporting Environment Variables
@@ -150,8 +150,8 @@ QUAY_HOSTNAME=$(oc get route registry-quay -n quay-workshop -o jsonpath='{.spec.
 
 This step is recommended if your Quay registry uses a self-signed or internal CA certificate, allowing the OpenShift cluster nodes to trust the Quay registry.
 
-* Obtain the Quay registry certificate:
-
+. Obtain the Quay registry certificate:
++
 [.lines_space]
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
@@ -159,8 +159,8 @@ This step is recommended if your Quay registry uses a self-signed or internal CA
 echo -n | openssl s_client -showcerts -connect $QUAY_HOSTNAME:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > quay.crt
 ----
 
-* Create a ConfigMap containing the certificate in the `openshift-config` namespace:
-
+. Create a ConfigMap containing the certificate in the `openshift-config` namespace:
++
 [.lines_space]
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
@@ -168,8 +168,8 @@ echo -n | openssl s_client -showcerts -connect $QUAY_HOSTNAME:443 | sed -ne '/-B
 oc create -n openshift-config configmap quay-ca --from-file=$QUAY_HOSTNAME=quay.crt 
 ----
 
-* Verify that the ConfigMap was created properly:
-
+. Verify that the ConfigMap was created properly:
++
 [.lines_space]
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
@@ -177,8 +177,8 @@ oc create -n openshift-config configmap quay-ca --from-file=$QUAY_HOSTNAME=quay.
 oc get -n openshift-config configmap quay-ca -o yaml
 ----
 
-* Patch the cluster image configuration to add the CA as a trusted certificate source:
-
+. Patch the cluster image configuration to add the CA as a trusted certificate source:
++
 [.lines_space]
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
@@ -186,8 +186,8 @@ oc get -n openshift-config configmap quay-ca -o yaml
 oc patch image.config.openshift.io/cluster --type=merge -p '{"spec":{"additionalTrustedCA":{"name":"quay-ca"}}}'
 ----
 
-* Verify the cluster image configuration update:
-
+. Verify the cluster image configuration update:
++
 [.lines_space]
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
