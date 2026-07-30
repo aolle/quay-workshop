@@ -292,7 +292,7 @@
 <p>Red Hat OpenShift <code>4.22.5</code></p>
 </li>
 <li>
-<p>Red Hat Quay <code>3.17.3</code></p>
+<p>Red Hat Quay <code>3.18</code></p>
 </li>
 </ul>
 </div>
@@ -359,10 +359,10 @@
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Option A: OpenShift Data Foundation (MCG)</strong> – Recommended if you need a cluster-local, self-contained S3 gateway.</p>
+<p><strong>Option A: OpenShift Data Foundation (MCG)</strong>: recommended if you need a cluster-local, self-contained S3 gateway.</p>
 </li>
 <li>
-<p><strong>Option B: External AWS S3 Bucket</strong> – Recommended if your cluster is hosted on AWS and you prefer using cloud-native S3 storage directly.</p>
+<p><strong>Option B: External AWS S3 Bucket</strong>: recommended if your cluster is hosted on AWS and you prefer using cloud-native S3 storage directly.</p>
 </li>
 </ul>
 </div>
@@ -376,8 +376,8 @@
 </div>
 <div class="sect3">
 <h4 id="_installing_the_odf_operator"><a class="anchor" href="#_installing_the_odf_operator"></a>Installing the ODF Operator</h4>
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Log in to the Red Hat OpenShift Container Platform web console.</p>
 </li>
@@ -386,31 +386,24 @@
 </li>
 <li>
 <p>In the search field, type <code>OpenShift Data Foundation</code>.</p>
-</li>
-</ul>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/install/operatorhub-odf.png" alt="ODF OperatorHub Search">
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Select the <strong>Red Hat OpenShift Data Foundation</strong> tile and click <strong>Install</strong>.</p>
-</li>
-</ul>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/install/odf-install.png" alt="ODF Install Tile">
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>On the <strong>Install Operator</strong> page:</p>
-</li>
+<div class="ulist">
+<ul>
 <li>
 <p>Select the update channel corresponding to your OCP version (<code>stable-4.22</code>).</p>
 </li>
@@ -423,59 +416,51 @@
 <li>
 <p>Enable the <strong>Console plugin</strong>.</p>
 </li>
+</ul>
+</div>
+</li>
 <li>
 <p>Click <strong>Install</strong> and wait for the installation to complete.</p>
 </li>
-</ul>
+</ol>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_creating_the_storagesystem_in_mcg_mode"><a class="anchor" href="#_creating_the_storagesystem_in_mcg_mode"></a>Creating the StorageSystem in MCG Mode</h4>
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>In the OpenShift console, navigate to <strong>Storage</strong> &gt; <strong>Object Storage</strong>.</p>
 </li>
 <li>
 <p>Click <strong>Configure Data Foundation</strong>.</p>
-</li>
-</ul>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/install/odf1.png" alt="Create StorageSystem">
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Select <strong>Setup Multicloud Object Gateway</strong>.</p>
-</li>
-</ul>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/install/mcg.png" alt="Create MCG">
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>On the <strong>Backing storage</strong>, select <strong>Use an existing StorageClass</strong> (<code>gp3-csi</code> or equivalent block storage class).</p>
 </li>
-</ul>
+</ol>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/install/odf2.png" alt="Backing Storage Selection">
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Click <strong>Next</strong> through the remaining prompts and click <strong>Create StorageSystem</strong>.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>+
+. Click <strong>Next</strong> through the remaining prompts and click <strong>Create StorageSystem</strong>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -541,8 +526,8 @@ When deploying Quay with external S3 storage, you will supply these credentials 
 <div class="paragraph">
 <p>Subscribe to and deploy the <code>Red Hat Quay Operator</code>.</p>
 </div>
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Open a browser window and log in to the Red Hat OpenShift Container Platform web console.</p>
 </li>
@@ -551,28 +536,20 @@ When deploying Quay with external S3 storage, you will supply these credentials 
 </li>
 <li>
 <p>In the search field, type <code>Red Hat Quay</code>.</p>
-</li>
-</ul>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/install/operatorhub-quay.png" alt="Quay OperatorHub Search">
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Select the <strong>Red Hat Quay</strong> tile and click <strong>Install</strong>.</p>
-</li>
-</ul>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/install/quayoperator-install.png" alt="Quay Install Tile">
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>On the <strong>Install Operator</strong> page:</p>
 <div class="ulist">
@@ -585,31 +562,27 @@ When deploying Quay with external S3 storage, you will supply these credentials 
 </li>
 <li>
 <p>Select <strong>Automatic</strong> for update approval.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/install/quayoperator-opts.png" alt="Quay Installation Options">
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
+</ul>
+</div>
+</li>
 <li>
 <p>Click <strong>Install</strong> and wait for the operator status to show as <strong>Succeeded</strong>.</p>
 </li>
-</ul>
+</ol>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="quayinstance"><a class="anchor" href="#quayinstance"></a>Deploying Quay</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Create a new project named <code>quay-workshop</code>.</p>
 </li>
@@ -624,16 +597,12 @@ When deploying Quay with external S3 storage, you will supply these credentials 
 </li>
 <li>
 <p>Select the <strong>QuayRegistry</strong> tab and click <strong>Create instance</strong>.</p>
-</li>
-</ul>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/install/create-quay-instance.png" alt="Create QuayRegistry Instance">
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Configure the Quay instance:</p>
 <div class="ulist">
@@ -643,23 +612,19 @@ When deploying Quay with external S3 storage, you will supply these credentials 
 </li>
 <li>
 <p><strong>AWS S3 / Unmanaged Storage:</strong> If you are using external S3 storage, switch to the <strong>YAML view</strong>, locate the <code>components</code> section, set <code>objectstorage</code> to <code>managed: false</code>, and reference your configuration secret in <code>spec.configBundleSecret</code> before clicking <strong>Create</strong>.</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/install/quay-create.png" alt="Quay Instance Details">
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
+</ul>
+</div>
+</li>
 <li>
 <p>Wait a few minutes until all Quay deployments are initialized and the registry status shows as <strong>Ready</strong>.</p>
 </li>
-</ul>
+</ol>
 </div>
 </div>
 </div>
@@ -694,65 +659,49 @@ Ensure your Quay instance is fully deployed and the route is active before retri
 <div class="paragraph">
 <p>This step is recommended if your Quay registry uses a self-signed or internal CA certificate, allowing the OpenShift cluster nodes to trust the Quay registry.</p>
 </div>
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Obtain the Quay registry certificate:</p>
-</li>
-</ul>
-</div>
 <div class="listingblock lines_space console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo -n | openssl s_client -showcerts -connect $QUAY_HOSTNAME:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' &gt; quay.crt</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Create a ConfigMap containing the certificate in the <code>openshift-config</code> namespace:</p>
-</li>
-</ul>
-</div>
 <div class="listingblock lines_space console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc create -n openshift-config configmap quay-ca --from-file=$QUAY_HOSTNAME=quay.crt</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Verify that the ConfigMap was created properly:</p>
-</li>
-</ul>
-</div>
 <div class="listingblock lines_space console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get -n openshift-config configmap quay-ca -o yaml</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Patch the cluster image configuration to add the CA as a trusted certificate source:</p>
-</li>
-</ul>
-</div>
 <div class="listingblock lines_space console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc patch image.config.openshift.io/cluster --type=merge -p '{"spec":{"additionalTrustedCA":{"name":"quay-ca"}}}'</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Verify the cluster image configuration update:</p>
-</li>
-</ul>
-</div>
 <div class="listingblock lines_space console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get image.config.openshift.io/cluster -o yaml</code></pre>
 </div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
