@@ -17,7 +17,7 @@ asciidoc:
     release-version: main
     page-pagination: true
     openshift-version: '4.22.5'
-    quay-version: '3.17.3'
+    quay-version: '3.18.0'
   extensions:
     - ./lib/tab-block.js
     - ./lib/remote-include-processor.js
