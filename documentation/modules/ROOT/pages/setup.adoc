@@ -11,7 +11,33 @@ This tutorial was developed and tested with:
 
 The following tools are required to run the exercises in this tutorial. Please ensure that they are installed and properly configured before proceeding with any of the tutorial chapters.
 
-include::partial$tools.adoc[]
+|===
+|**Tool**|**Reference**
+
+| `podman`
+| https://podman.io/getting-started/installation[Podman Installation Instructions]
+
+| `skopeo`
+| https://github.com/containers/skopeo/blob/main/install.md[Installing Skopeo]
+
+| `Red Hat OpenShift CLI`
+| https://access.redhat.com/downloads/content/290[OpenShift Container Platform downloads page]
+
+| `helm`
+| https://helm.sh/docs/intro/install[Installing Helm]
+
+| `openssl`
+|
+
+| `cosign`
+| https://docs.sigstore.dev/cosign/system_config/installation/[cosign Installation]
+
+| `pgp`
+|
+
+|===
+
+Note: Some of these tools are also available through the web terminal provided by the operator.
 
 [#storage]
 == Object Storage Options
@@ -57,11 +83,11 @@ image::install/odf1.png[Create StorageSystem]
 . Select **Setup Multicloud Object Gateway**.
 +
 image::install/mcg.png[Create MCG]
-+
-. On the **Backing storage**, select **Use an existing StorageClass** (`gp3-csi` or equivalent block storage class).
 
-image::install/odf2.png[Backing Storage Selection]
+. On the **Backing storage**, select **Use an existing StorageClass** (`gp3-csi` or equivalent block storage class).
 +
+image::install/odf2.png[Backing Storage Selection]
+
 . Click **Next** through the remaining prompts and click **Create StorageSystem**.
 
 image::install/odf3.png[StorageSystem Confirmation]
@@ -132,30 +158,18 @@ image::install/quay-create.png[Quay Instance Details]
 
 . Wait a few minutes until all Quay deployments are initialized and the registry status shows as **Ready**.
 
-[#exportenvvar]
-== Exporting Environment Variables
-
-To simplify running subsequent CLI commands throughout this workshop, export the `QUAY_HOSTNAME` environment variable in your terminal.
-
-IMPORTANT: Ensure your Quay instance is fully deployed and the route is active before retrieving the hostname. You can also manually provide the hostname directly in commands if required.
-
-[.lines_space]
-[.console-input]
-[source,bash,subs="+macros,+attributes"]
-----
-QUAY_HOSTNAME=$(oc get route registry-quay -n quay-workshop -o jsonpath='{.spec.host}')
-----
 [#trustedca]
 == Adding the Quay Certificate as a Trusted CA in OCP (Optional)
 
 This step is recommended if your Quay registry uses a self-signed or internal CA certificate, allowing the OpenShift cluster nodes to trust the Quay registry.
 
-. Obtain the Quay registry certificate:
+. Export your Quay registry hostname to a local variable and extract the certificate:
 +
 [.lines_space]
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
+QUAY_HOSTNAME=$(oc get route registry-quay -n quay-workshop -o jsonpath='{.spec.host}')
 echo -n | openssl s_client -showcerts -connect $QUAY_HOSTNAME:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > quay.crt
 ----
 
