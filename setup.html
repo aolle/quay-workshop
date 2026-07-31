@@ -25,24 +25,6 @@
     </div>
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
-        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
-        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
-        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">More Tutorials</a>
-          <div class="navbar-dropdown">
-            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
-            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
-            <a class="navbar-item" href="https://redhat-developer-demos.github.io/kafka-tutorial/" target="_blank">Kafka</a>
-            <a class="navbar-item" href="https://devsecops-workshop.github.io/" target="_blank">DevSecOps</a>
-            <a class="navbar-item" href="https://acidonper.github.io/redhat-workshop-cicd-gitops/redhat-workshop-cicd-gitops/" target="_blank">CI/CD & GitOps</a>
-            <a class="navbar-item" href="https://atarazana.github.io/gramola-gitops-guide/gramola-gitops-guide/" target="_blank">Gramola GitOps Guide</a>
-            <a class="navbar-item" href="https://luisarizmendi.github.io/tutorial-secure-onboarding/" target="_blank">Secure Edge device onboarding with RHEL and FDO</a>
-            <a class="navbar-item" href="https://xbryan1.github.io/rhte-2023-acm-docs/" target="_blank">Multicluster Application Deployment with Advanced Cluster Management and GitOps</a>
-            <a class="navbar-item" href="https://redhat-scholars.github.io/java-inner-loop-dev-guide/java-inner-loop-dev-guide/index.html" target="_blank">Java Inner Loop Dev Guide</a>
-            <a class="navbar-item" href="https://atarazana.github.io/kitchensink-guide/" target="_blank">Deploying JBoss EAP applications on OpenShift</a>
-          </div>
-        </div>
       </div>
     </div>
   </nav>
@@ -146,10 +128,10 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-repo-notifications.html">Repository Notifications</a>
+    <a class="nav-link" href="#quay-repo-notifications.adoc">Repository Notifications</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-repo-notifications.html#pushnotif">Creating a Push-to-Repository Event Notification</a>
+    <a class="nav-link" href="#quay-repo-notifications.adoc#pushnotif">Creating a Push-to-Repository Event Notification</a>
   </li>
 </ul>
   </li>
@@ -450,17 +432,16 @@
 </li>
 <li>
 <p>On the <strong>Backing storage</strong>, select <strong>Use an existing StorageClass</strong> (<code>gp3-csi</code> or equivalent block storage class).</p>
-</li>
-</ol>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/install/odf2.png" alt="Backing Storage Selection">
 </div>
 </div>
-<div class="paragraph">
-<p>+
-. Click <strong>Next</strong> through the remaining prompts and click <strong>Create StorageSystem</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Next</strong> through the remaining prompts and click <strong>Create StorageSystem</strong>.</p>
+</li>
+</ol>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -629,31 +610,6 @@ When deploying Quay with external S3 storage, you will supply these credentials 
 </div>
 </div>
 <div class="sect1">
-<h2 id="exportenvvar"><a class="anchor" href="#exportenvvar"></a>Exporting Environment Variables</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To simplify running subsequent CLI commands throughout this workshop, export the <code>QUAY_HOSTNAME</code> environment variable in your terminal.</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-Ensure your Quay instance is fully deployed and the route is active before retrieving the hostname. You can also manually provide the hostname directly in commands if required.
-</td>
-</tr>
-</table>
-</div>
-<div class="listingblock lines_space console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">QUAY_HOSTNAME=$(oc get route registry-quay -n quay-workshop -o jsonpath='{.spec.host}')</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="trustedca"><a class="anchor" href="#trustedca"></a>Adding the Quay Certificate as a Trusted CA in OCP (Optional)</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -662,10 +618,11 @@ Ensure your Quay instance is fully deployed and the route is active before retri
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Obtain the Quay registry certificate:</p>
+<p>Export your Quay registry hostname to a local variable and extract the certificate:</p>
 <div class="listingblock lines_space console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo -n | openssl s_client -showcerts -connect $QUAY_HOSTNAME:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' &gt; quay.crt</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">QUAY_HOSTNAME=$(oc get route registry-quay -n quay-workshop -o jsonpath='{.spec.host}')
+echo -n | openssl s_client -showcerts -connect $QUAY_HOSTNAME:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' &gt; quay.crt</code></pre>
 </div>
 </div>
 </li>

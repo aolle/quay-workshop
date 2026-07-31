@@ -4,9 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Repository Notifications :: Red Hat Quay Workshop</title>
-    <link rel="canonical" href="https://olleb.com/quay-workshop/quay-repo-notifications.html">
-    <link rel="prev" href="quay-mirror.html">
-    <link rel="next" href="quay-oci.html">
+    <link rel="canonical" href="https://olleb.com/quay-workshop/quay-notifications.html">
     <meta name="generator" content="Antora 3.0.3">
     <link rel="stylesheet" href="./_/css/site.css">
 <link rel="icon" href="./_/img/favicon.ico" type="image/x-icon">
@@ -25,24 +23,6 @@
     </div>
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
-        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
-        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
-        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">More Tutorials</a>
-          <div class="navbar-dropdown">
-            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
-            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
-            <a class="navbar-item" href="https://redhat-developer-demos.github.io/kafka-tutorial/" target="_blank">Kafka</a>
-            <a class="navbar-item" href="https://devsecops-workshop.github.io/" target="_blank">DevSecOps</a>
-            <a class="navbar-item" href="https://acidonper.github.io/redhat-workshop-cicd-gitops/redhat-workshop-cicd-gitops/" target="_blank">CI/CD & GitOps</a>
-            <a class="navbar-item" href="https://atarazana.github.io/gramola-gitops-guide/gramola-gitops-guide/" target="_blank">Gramola GitOps Guide</a>
-            <a class="navbar-item" href="https://luisarizmendi.github.io/tutorial-secure-onboarding/" target="_blank">Secure Edge device onboarding with RHEL and FDO</a>
-            <a class="navbar-item" href="https://xbryan1.github.io/rhte-2023-acm-docs/" target="_blank">Multicluster Application Deployment with Advanced Cluster Management and GitOps</a>
-            <a class="navbar-item" href="https://redhat-scholars.github.io/java-inner-loop-dev-guide/java-inner-loop-dev-guide/index.html" target="_blank">Java Inner Loop Dev Guide</a>
-            <a class="navbar-item" href="https://atarazana.github.io/kitchensink-guide/" target="_blank">Deploying JBoss EAP applications on OpenShift</a>
-          </div>
-        </div>
       </div>
     </div>
   </nav>
@@ -144,12 +124,12 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-repo-notifications.html">Repository Notifications</a>
+    <a class="nav-link" href="#quay-repo-notifications.adoc">Repository Notifications</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#pushnotif">Creating a Push-to-Repository Event Notification</a>
+    <a class="nav-link" href="#quay-repo-notifications.adoc#pushnotif">Creating a Push-to-Repository Event Notification</a>
   </li>
 </ul>
   </li>
@@ -266,7 +246,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Red Hat Quay Workshop</a></li>
-    <li><a href="quay-repo-notifications.html">Repository Notifications</a></li>
+    <li><a href="quay-notifications.html">Repository Notifications</a></li>
   </ul>
 </nav>
   <div style="padding: 0 0.5rem 0 0.75rem;"><a href="https://olleb.com" target="_blank" rel="noopener noreferrer"> © Àngel Ollé Blázquez</a></div>
@@ -277,108 +257,228 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Quay supports adding notifications to a repository for various events that occur during the repository lifecycle, such as when a new image is pushed or a tag is deleted.</p>
+<p>In a collaborative DevOps environment, staying informed about registry activity is critical. Red Hat Quay supports event-driven notifications at the repository level, allowing administrators and automated systems to react instantly to changes during the repository lifecycle.</p>
+</div>
+<div class="paragraph">
+<p>You can configure Quay to listen for specific <strong>Events</strong> (such as a new image push, a tag deletion, or a vulnerability discovery) and respond with various <strong>Actions</strong> (such as internal UI alerts, Emails, Slack messages, or Webhooks to trigger external CI/CD pipelines).</p>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="pushnotif"><a class="anchor" href="#pushnotif"></a>Creating a Push-to-Repository Event Notification</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>From the Red Hat Quay Dashboard, navigate to the <code>olleb/kafka</code> repository. Recall from <a href="quay-repos.html" class="xref page">Repository Management</a> that this repository was previously created when we pushed the <code>strimzi/kafka</code> image.</p>
-</li>
-<li>
-<p>Click <code>Settings</code>.</p>
-</li>
-<li>
-<p>Click the <code>+ Create Notification</code> button.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/reponotifications/notifbutton.png" alt="notifbutton">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>In the <code>When this event occurs</code> drop-down menu, select <code>Push to Repository</code>.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/reponotifications/event-list.png" alt="event list">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Under the <code>Then issue a notification</code> drop-down menu, select <code>Red Hat Quay Notification</code>.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/reponotifications/notification-actions.png" alt="notification actions">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>In the <code>Recipient</code> drop-down menu, select <code>owners</code>.</p>
-</li>
-<li>
-<p>In the <code>Notification title</code> text field, enter <code>A new image has been pushed into the repository</code>.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/reponotifications/notifications-all.png" alt="notifications all">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Click <code>Create Notification</code>.</p>
-</li>
-</ul>
-</div>
 <div class="paragraph">
-<p>Push a new image or add a new tag to the existing one in the repository.</p>
+<p>In this first exercise, we will configure a simple internal notification that alerts the repository owners within the Quay UI whenever a new image is pushed.</p>
 </div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>From the Red Hat Quay Dashboard, navigate to the <code>olleb/kafka</code> repository.</p>
+<div class="paragraph">
+<p><em>(Recall from <a href="quay-repos.html" class="xref page">Repository Management</a> that this repository was previously created when we pushed the <code>strimzi/kafka</code> image).</em></p>
+</div>
+</li>
+<li>
+<p>On the top menu, click <strong>Settings</strong>.</p>
+</li>
+<li>
+<p>Scroll down to the <strong>Events and notifications</strong> section and click the <strong>+ Create Notification</strong> button.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/notifications/notifbutton.png" alt="Create Notification Button">
+</div>
+</div>
+</li>
+<li>
+<p>Configure the notification parameters:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>When this event occurs:</strong> Select <code>Push to Repository</code>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/notifications/event-list.png" alt="Event List">
+</div>
+</div>
+</li>
+<li>
+<p><strong>Then issue a notification:</strong> Select <code>Red Hat Quay Notification</code>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/notifications/notification-actions.png" alt="Notification Actions">
+</div>
+</div>
+</li>
+<li>
+<p><strong>Recipient:</strong> Select <code>owners</code>.</p>
+</li>
+<li>
+<p><strong>Notification title:</strong> Enter <code>A new image has been pushed into the repository</code>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/notifications/notifications-all.png" alt="Notification Configuration">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click <strong>Submit</strong> to save it.</p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="_triggering_the_notification"><a class="anchor" href="#_triggering_the_notification"></a>Triggering the Notification</h3>
+<div class="paragraph">
+<p>Let&#8217;s test the configuration by pushing a new image tag to the repository.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>UI Test Button vs. Real Push</strong><br>
+You might notice a <strong>Test Notification</strong> option in the Quay UI next to your newly created event. While clicking it is useful to quickly verify network connectivity to your webhook endpoint, it only sends a mock JSON payload. To validate the actual end-to-end flow and inspect a real event payload (with genuine image tags, timestamps, and metadata), we will perform a real image push from the terminal.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Pull an image, tag it, and push it to your registry:</p>
 <div class="listingblock lines_space console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman pull quay.io/strimzi/kafka:latest-kafka-3.0.0
 podman tag quay.io/strimzi/kafka:latest-kafka-3.0.0 ${QUAY_HOSTNAME}/olleb/kafka:3.0.0
+
 # Log in if you are not already authenticated
 podman login ${QUAY_HOSTNAME}
+
 podman push ${QUAY_HOSTNAME}/olleb/kafka:3.0.0</code></pre>
 </div>
 </div>
+</li>
+<li>
+<p>After a few moments, switch back to the Quay UI. A notification bell will appear at the top of the dashboard indicating the event.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/notifications/notifications.png" alt="Notification Details">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="webhooknotif"><a class="anchor" href="#webhooknotif"></a>Simulating a CI/CD Trigger with Webhooks</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>After a few moments, a notification will appear at the top of the dashboard indicating that a new image has been pushed to the repository.</p>
+<p>While internal UI notifications are useful for human administrators, modern automated workflows rely on external triggers. Red Hat Quay can send HTTP POST requests (Webhooks) containing rich JSON payloads to external endpoints. This is commonly used to trigger OpenShift Pipelines (Tekton), Jenkins builds, or ArgoCD syncs.</p>
+</div>
+<div class="paragraph">
+<p>In this exercise, we will use a free webhook testing service to capture and inspect the payload Quay sends.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open a new browser tab and navigate to <code><a href="https://webhook.site" class="bare">https://webhook.site</a></code>.</p>
+</li>
+<li>
+<p>The site will automatically generate a unique, temporary URL for you. Click <strong>Copy to clipboard</strong> next to <strong>Your unique URL</strong> (it should look like <code><a href="https://webhook.site/xxxx-xxxx-xxxx" class="bare">https://webhook.site/xxxx-xxxx-xxxx</a></code>).</p>
+</li>
+<li>
+<p>Return to the <strong>Red Hat Quay</strong> UI and navigate to the <strong>Settings</strong> &gt; <strong>Events and notifications</strong> of your <code>olleb/kafka</code> repository.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/notifications/notifbutton.png" alt="Create Notification Button">
+</div>
+</div>
+</li>
+<li>
+<p>Click <strong>+ Create Notification</strong> and configure it as follows:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>When this event occurs:</strong> <code>Push to Repository</code></p>
+</li>
+<li>
+<p><strong>Then issue a notification:</strong> <code>Webhook POST</code></p>
+</li>
+<li>
+<p><strong>Webhook URL:</strong> Paste the URL you copied from <code>webhook.site</code>.</p>
+</li>
+<li>
+<p><strong>POST JSON body template:</strong> Quay allows you to customize the payload to match the exact schema expected by external tools (like Slack or Tekton). Paste the following custom JSON template:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "event_source": "Red Hat Quay",
+  "alert": "New image pushed!",
+  "repository": "olleb/kafka",
+  "action_required": "Trigger CI/CD Pipeline"
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Title:</strong> <code>Automated CI/CD Trigger</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click <strong>Submit</strong>.</p>
+</li>
+</ol>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/reponotifications/notification.png" alt="notification">
+<img src="_images/notifications/webhook.png" alt="Create Notification Webhook">
 </div>
+</div>
+<div class="sect2">
+<h3 id="_inspecting_the_webhook_payload"><a class="anchor" href="#_inspecting_the_webhook_payload"></a>Inspecting the Webhook Payload</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>From your terminal, push a new tag to the repository to trigger this new webhook:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman tag ${QUAY_HOSTNAME}/olleb/kafka:3.0.0 ${QUAY_HOSTNAME}/olleb/kafka:3.0.1
+podman push ${QUAY_HOSTNAME}/olleb/kafka:3.0.1</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Switch back to your <code>webhook.site</code> browser tab.</p>
+</li>
+<li>
+<p>You should immediately see an incoming <code>POST</code> request appear on the left panel.</p>
+</li>
+<li>
+<p>Select the request and inspect the <strong>Raw Content</strong>.</p>
+</li>
+</ol>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/reponotifications/notifications.png" alt="notifications">
+<img src="_images/notifications/payload.png" alt="Webhook payload">
+</div>
+</div>
+<div class="paragraph">
+<p>_Notice that instead of Quay&#8217;s massive default payload, the webhook delivered your exact custom JSON template along with the title you specified. This powerful feature allows Quay to integrate natively with almost any third-party API without requiring middleware!_ca</p>
 </div>
 </div>
 </div>
 </div>
-<nav class="pagination">
-  <span class="prev"><a href="quay-mirror.html">Repository Mirroring</a></span>
-  <span class="next"><a href="quay-oci.html">OCI-Based Artifacts</a></span>
-</nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
