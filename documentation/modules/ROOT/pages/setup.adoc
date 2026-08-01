@@ -35,6 +35,9 @@ The following tools are required to run the exercises in this tutorial. Please e
 | `pgp`
 |
 
+| `syft`
+| https://github.com/anchore/syft#installation
+
 |===
 
 Note: Some of these tools are also available through the web terminal provided by the operator.
