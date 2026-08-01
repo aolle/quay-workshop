@@ -10,12 +10,15 @@ You can configure Quay to listen for specific **Events** (such as a new image pu
 
 In this first exercise, we will configure a simple internal notification that alerts the repository owners within the Quay UI whenever a new image is pushed.
 
-. From the Red Hat Quay Dashboard, navigate to the `olleb/kafka` repository. 
+. From the Red Hat Quay Dashboard, ensure you have a repository named `kafka` under your `olleb` organization. 
 +
-_(Recall from xref:quay-repos.adoc[Repository Management] that this repository was previously created when we pushed the `strimzi/kafka` image)._
+_(If it does not exist, click **Create Repository** in the top right, name it `kafka`, and click **Create**)._
+
+. Navigate to the `olleb/kafka` repository. 
 
 . On the top menu, click **Settings**.
-. Scroll down to the **Events and notifications** section and click the **+ Create Notification** button.
+
+. Scroll down to the **Events and notifications** section and click the **Create Notification** button.
 +
 image::notifications/notifbutton.png[Create Notification Button]
 
@@ -49,6 +52,8 @@ You might notice a **Test Notification** option in the Quay UI next to your newl
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
+export QUAY_HOSTNAME=$(oc get route registry-quay -n quay-workshop -o jsonpath='{.spec.host}')
+
 podman pull quay.io/strimzi/kafka:latest-kafka-3.0.0
 podman tag quay.io/strimzi/kafka:latest-kafka-3.0.0 ${QUAY_HOSTNAME}/olleb/kafka:3.0.0
 
@@ -76,7 +81,7 @@ In this exercise, we will use a free webhook testing service to capture and insp
 +
 image::notifications/notifbutton.png[Create Notification Button]
 
-. Click **+ Create Notification** and configure it as follows:
+. Click **Create Notification** and configure it as follows:
 ** **When this event occurs:** `Push to Repository`
 ** **Then issue a notification:** `Webhook POST`
 ** **Webhook URL:** Paste the URL you copied from `webhook.site`.
