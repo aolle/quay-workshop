@@ -26,7 +26,7 @@
   <nav class="navbar">
     <div class="navbar-brand">
       <span class="navbar-item" style="padding-right: 0;"></span>
-      <a class="navbar-item site-title" target="_blank" href="https://olleb.com/quay-workshop">Red Hat Quay Workshop</a>
+      <a class="navbar-item site-title" href="https://olleb.com/quay-workshop">Red Hat Quay Workshop</a>
     </div>
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
@@ -65,9 +65,6 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="setup.html#quayinstance">Deploying Quay</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="setup.html#exportenvvar">Exporting Environment Variables</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="setup.html#trustedca">Adding the Quay Certificate as a Trusted CA in OCP (Optional)</a>
@@ -114,29 +111,41 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="quay-repos.html#expiration">Image Expiration</a>
   </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-mirror.html">Repository Mirroring</a>
-<ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-mirror.html#imagerepo">Creating a Mirrored Repository</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-mirror.html#usage">Repository Usage Logs, Tags, and Tag History</a>
-  </li>
-</ul>
+    <a class="nav-link" href="quay-repos.html#deleterepo">Deleting or Archiving a Repository</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="#quay-repo-notifications.adoc">Repository Notifications</a>
+    <a class="nav-link" href="quay-mirror.html">Image Distribution and Replication</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#quay-repo-notifications.adoc#pushnotif">Creating a Push-to-Repository Event Notification</a>
+    <a class="nav-link" href="quay-mirror.html#repomirror">Creating a Mirrored Repository</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-mirror.html#proxycache">Configuring Proxy Cache</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-mirror.html#qbo-integration">Automating Image Consumption with Quay Bridge Operator</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-mirror.html#hub-spoke">Architecture: Hub and Spoke Topologies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-mirror.html#georep">Understanding Geo-Replication</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="quay-notifications.html">Repository Notifications</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-notifications.html#pushnotif">Creating a Push-to-Repository Event Notification</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-notifications.html#webhooknotif">Simulating a CI/CD Trigger with Webhooks</a>
   </li>
 </ul>
   </li>
@@ -169,6 +178,9 @@
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="quay-oci.html#pgp">Encrypting Container Images with PGP (RFC4880)</a>
   </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="quay-oci.html#sbom-oci">Securing the Supply Chain: Attaching an SBOM</a>
+  </li>
 </ul>
   </li>
 </ul>
@@ -182,9 +194,6 @@
     <a class="nav-link" href="quay-clair.html#cve">Exploring Vulnerability Data (CVEs)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-clair.html#secscan">Performing a Security Scan</a>
-  </li>
-  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="quay-clair.html#packages">Viewing Packages</a>
   </li>
 </ul>
@@ -193,22 +202,25 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-cso.html">Container Security Operator (CSO)</a>
+    <a class="nav-link" href="quay-obs.html">Observability and Day-2 Operations</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-cso.html#install">Installing the Quay CSO Operator</a>
+    <a class="nav-link" href="quay-obs.html#gen-traffic">Generating Registry Traffic</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-cso.html#vulncheck">Checking Image Vulnerabilities from the OpenShift Web Console</a>
+    <a class="nav-link" href="quay-obs.html#dashboards">Analyzing the Quay Dashboard</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-obs.html#raw-metrics">Exploring Raw Prometheus Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-obs.html#promql">Advanced: Querying Raw Metrics (PromQL)</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="quay-obs.html">Observability</a>
-  </li>
-  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-keycloak.html">Quay Integration with Keycloak (OpenID Connect)</a>
+    <a class="nav-link" href="quay-keycloak.html">Quay Integration with Keycloak (OpenID Connect) (Pending Update)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="setup.html#keycloak">Installing Red Hat build of Keycloak</a>
@@ -221,21 +233,6 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="quay-keycloak.html#testlogin">Testing OpenID Login</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-troubleshooting.html">Troubleshooting and Tips</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-troubleshooting.html#tls">TLS and Insecure Registry Configuration</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-troubleshooting.html#cosign">cosign and Registry Trust Issues</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-troubleshooting.html#gpg">GPG Key Cleanup</a>
   </li>
 </ul>
   </li>
@@ -299,36 +296,28 @@ If you do not have the URL handy, you can find it in the OpenShift web console u
 </tr>
 </table>
 </div>
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Click <strong>Create Account</strong> on the Quay login page.</p>
-</li>
-</ul>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/organizations/quay-create-account.png" alt="Create Account Button">
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Enter the required user information (Username, Email, and Password).</p>
-</li>
-</ul>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/organizations/quay-create-account2.png" alt="User Account Form">
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Click <strong>Create Account</strong> to finalize, and then log in using your new credentials.</p>
 </li>
-</ul>
+</ol>
 </div>
 </div>
 </div>
@@ -338,44 +327,36 @@ If you do not have the URL handy, you can find it in the OpenShift web console u
 <div class="paragraph">
 <p>Organizations in Red Hat Quay allow you to group repositories, manage permissions, and share container images efficiently across teams.</p>
 </div>
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Log in to the Red Hat Quay web console if you are not already logged in.</p>
 </li>
 <li>
 <p>On the top navigation bar or dashboard, click <strong>Create Organization</strong>.</p>
-</li>
-</ul>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/organizations/quay-create-org.png" alt="Create Organization Button">
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Enter the desired <strong>Organization Name</strong>.</p>
-</li>
-</ul>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/organizations/org-create.png" alt="Organization Creation Form">
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Click <strong>Create</strong>.</p>
-</li>
-</ul>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/organizations/org.png" alt="Organization Overview">
 </div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -385,29 +366,25 @@ If you do not have the URL handy, you can find it in the OpenShift web console u
 <div class="paragraph">
 <p>Organizations use teams to manage group permissions across repositories efficiently.</p>
 </div>
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Inside your newly created organization, click the <strong>Teams and Membership</strong> tab.</p>
-</li>
-</ul>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/organizations/teams.png" alt="Teams and Membership">
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Click <strong>Create new team</strong>, enter <code>developers</code> as the team name.</p>
-</li>
-</ul>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/organizations/create-team.png" alt="Create team">
 </div>
+</div>
+</li>
+</ol>
 </div>
 <div class="paragraph">
 <p>and click <strong>Proceed</strong> to launch the creation wizard:</p>
@@ -450,23 +427,19 @@ If you do not have the URL handy, you can find it in the OpenShift web console u
 <div class="paragraph">
 <p>Robot accounts are attached to an organization and are ideal for CI/CD pipelines and automated deployments. In this section, you will create a robot account that can be used for automated operations in later modules.</p>
 </div>
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
 <p>Select your organization and navigate to the <strong>Robot Accounts</strong> tab.</p>
 </li>
 <li>
 <p>Click <strong>Create Robot Account</strong> to open the wizard:</p>
-</li>
-</ul>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/organizations/robot.png" alt="Create Robot Account">
 </div>
 </div>
-<div class="ulist">
-<ul>
+</li>
 <li>
 <p>Complete the wizard steps as follows:</p>
 <div class="ulist">
@@ -492,7 +465,7 @@ If you do not have the URL handy, you can find it in the OpenShift web console u
 <li>
 <p>Once created, click on the newly created <code>pipeline_builder</code> account to view its credentials.</p>
 </li>
-</ul>
+</ol>
 </div>
 <div class="admonitionblock note">
 <table>

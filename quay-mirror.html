@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Repository Mirroring :: Red Hat Quay Workshop</title>
+    <title>Image Distribution and Replication :: Red Hat Quay Workshop</title>
     <link rel="canonical" href="https://olleb.com/quay-workshop/quay-mirror.html">
     <link rel="prev" href="quay-repos.html">
-    <link rel="next" href="#quay-repo-notifications.adoc">
+    <link rel="next" href="quay-notifications.html">
     <meta name="generator" content="Antora 3.0.3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,7 +26,7 @@
   <nav class="navbar">
     <div class="navbar-brand">
       <span class="navbar-item" style="padding-right: 0;"></span>
-      <a class="navbar-item site-title" target="_blank" href="https://olleb.com/quay-workshop">Red Hat Quay Workshop</a>
+      <a class="navbar-item site-title" href="https://olleb.com/quay-workshop">Red Hat Quay Workshop</a>
     </div>
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
@@ -65,9 +65,6 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="setup.html#quayinstance">Deploying Quay</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="setup.html#exportenvvar">Exporting Environment Variables</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="setup.html#trustedca">Adding the Quay Certificate as a Trusted CA in OCP (Optional)</a>
@@ -114,29 +111,41 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="quay-repos.html#expiration">Image Expiration</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-repos.html#deleterepo">Deleting or Archiving a Repository</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-mirror.html">Repository Mirroring</a>
+    <a class="nav-link" href="quay-mirror.html">Image Distribution and Replication</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="#imagerepo">Creating a Mirrored Repository</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="#usage">Repository Usage Logs, Tags, and Tag History</a>
+    <a class="nav-link" href="#repomirror">Creating a Mirrored Repository</a>
   </li>
-</ul>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#proxycache">Configuring Proxy Cache</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#qbo-integration">Automating Image Consumption with Quay Bridge Operator</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#hub-spoke">Architecture: Hub and Spoke Topologies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#georep">Understanding Geo-Replication</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="#quay-repo-notifications.adoc">Repository Notifications</a>
+    <a class="nav-link" href="quay-notifications.html">Repository Notifications</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#quay-repo-notifications.adoc#pushnotif">Creating a Push-to-Repository Event Notification</a>
+    <a class="nav-link" href="quay-notifications.html#pushnotif">Creating a Push-to-Repository Event Notification</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-notifications.html#webhooknotif">Simulating a CI/CD Trigger with Webhooks</a>
   </li>
 </ul>
   </li>
@@ -169,6 +178,9 @@
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="quay-oci.html#pgp">Encrypting Container Images with PGP (RFC4880)</a>
   </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="quay-oci.html#sbom-oci">Securing the Supply Chain: Attaching an SBOM</a>
+  </li>
 </ul>
   </li>
 </ul>
@@ -182,9 +194,6 @@
     <a class="nav-link" href="quay-clair.html#cve">Exploring Vulnerability Data (CVEs)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-clair.html#secscan">Performing a Security Scan</a>
-  </li>
-  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="quay-clair.html#packages">Viewing Packages</a>
   </li>
 </ul>
@@ -193,22 +202,25 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-cso.html">Container Security Operator (CSO)</a>
+    <a class="nav-link" href="quay-obs.html">Observability and Day-2 Operations</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-cso.html#install">Installing the Quay CSO Operator</a>
+    <a class="nav-link" href="quay-obs.html#gen-traffic">Generating Registry Traffic</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-cso.html#vulncheck">Checking Image Vulnerabilities from the OpenShift Web Console</a>
+    <a class="nav-link" href="quay-obs.html#dashboards">Analyzing the Quay Dashboard</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-obs.html#raw-metrics">Exploring Raw Prometheus Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-obs.html#promql">Advanced: Querying Raw Metrics (PromQL)</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="quay-obs.html">Observability</a>
-  </li>
-  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-keycloak.html">Quay Integration with Keycloak (OpenID Connect)</a>
+    <a class="nav-link" href="quay-keycloak.html">Quay Integration with Keycloak (OpenID Connect) (Pending Update)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="setup.html#keycloak">Installing Red Hat build of Keycloak</a>
@@ -221,21 +233,6 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="quay-keycloak.html#testlogin">Testing OpenID Login</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-troubleshooting.html">Troubleshooting and Tips</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-troubleshooting.html#tls">TLS and Insecure Registry Configuration</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-troubleshooting.html#cosign">cosign and Registry Trust Issues</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-troubleshooting.html#gpg">GPG Key Cleanup</a>
   </li>
 </ul>
   </li>
@@ -266,73 +263,83 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Red Hat Quay Workshop</a></li>
-    <li><a href="quay-mirror.html">Repository Mirroring</a></li>
+    <li><a href="quay-mirror.html">Image Distribution and Replication</a></li>
   </ul>
 </nav>
   <div style="padding: 0 0.5rem 0 0.75rem;"><a href="https://olleb.com" target="_blank" rel="noopener noreferrer"> © Àngel Ollé Blázquez</a></div>
 </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Repository Mirroring</h1>
+<h1 class="page">Image Distribution and Replication</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Quay repository mirroring allows you to replicate container images from external or local registries into your Quay cluster.</p>
+<p>In modern enterprise architectures, container registries must serve workloads distributed across multiple cloud regions, remote datacenters, and edge environments. Red Hat Quay offers robust mechanisms for image replication, distribution, and caching to guarantee high availability, minimize pull latencies, and maintain compliance across environments.</p>
+</div>
+<div class="paragraph">
+<p>Whether you need to synchronize repositories between independent registries, implement a Hub-and-Spoke distribution model, configure geo-distributed storage, or cache upstream images locally, Red Hat Quay provides flexible controls to manage container image movement efficiently.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="imagerepo"><a class="anchor" href="#imagerepo"></a>Creating a Mirrored Repository</h2>
+<h2 id="repomirror"><a class="anchor" href="#repomirror"></a>Creating a Mirrored Repository</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Repository Mirroring allows Red Hat Quay to automatically pull and synchronize container images from an external public registry (such as Docker Hub or Quay.io) or a remote internal registry.</p>
+</div>
+<div class="paragraph">
+<p>In this exercise, you will create a repository configured to mirror specific tags of the official <code>httpd</code> image from Docker Hub.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to <strong>Repositories</strong> and click <strong>Create New Repository</strong>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mirror/create-repo.png" alt="Create New Repository">
+</div>
+</div>
+</li>
+<li>
+<p>Configure the new repository settings:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Click <code>Create New Repository</code>.</p>
+<p><strong>Organization:</strong> Select <code>olleb</code> (or your target organization).</p>
+</li>
+<li>
+<p><strong>Repository Name:</strong> Enter <code>httpd-mirror</code>.</p>
+</li>
+<li>
+<p><strong>Repository Visibility:</strong> Select <strong>Public</strong>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mirror/mirror-cfg.png" alt="Mirror Repository Configuration">
+</div>
+</div>
 </li>
 </ul>
 </div>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+</li>
+<li>
+<p>Click the newly created repository <code>olleb/httpd-mirror</code>, select <strong>Settings</strong>.</p>
+</li>
+<li>
+<p>Locate the <strong>Repository State</strong> section and change the state to <strong>Mirror</strong>.</p>
 <div class="imageblock">
 <div class="content">
-<img src="_images/repositories/create-repo.png" alt="create repo">
+<img src="_images/mirror/repo-state.png" alt="Set Repository State to Mirror">
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>In the drop-down list, select the organization, name the repository <code>apache/httpd-mirror</code>, and set its visibility to <code>Public</code>.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/mirror/mirror-cfg.png" alt="mirror cfg">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Click <code>Create Public Repository</code>.</p>
 </li>
 <li>
-<p>Click the <code>Settings</code> icon.</p>
+<p>Click <strong>Submit</strong>.</p>
 </li>
 <li>
-<p>Change the <code>Repository State</code> to <code>Mirror</code>.</p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/mirror/repo-state.png" alt="repo state">
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Click the <code>Mirroring</code> icon.</p>
-</li>
-<li>
-<p>Fill in the fields with the following values:</p>
+<p>Select <strong>Mirroring</strong> from the top navigation menu and fill in the following parameters:</p>
 <div class="ulist">
 <ul>
 <li>
@@ -342,77 +349,902 @@
 <p><strong>Tags:</strong> <code>2.4.53, 2.4.48*</code></p>
 </li>
 <li>
-<p><strong>Start Date:</strong> set to the current date and time</p>
+<p><strong>Start Date:</strong> Select the current date and time.</p>
 </li>
 <li>
-<p><strong>Sync Interval:</strong> <code>1 minute</code></p>
+<p><strong>Sync Interval:</strong> <code>1 minute</code> <strong>(Set short for demo purposes)</strong>.</p>
 </li>
 <li>
 <p><strong>Skopeo Timeout Interval:</strong> <code>300</code></p>
 </li>
 <li>
-<p><strong>Robot User:</strong> <code>Create robot account</code></p>
+<p><strong>Robot User:</strong> Select <strong>Create robot account</strong> and set the name.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mirror/create-robot-acc.png" alt="Create Robot Account Option">
+</div>
+</div>
 </li>
 </ul>
 </div>
 </li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mirror/robot-acc.png" alt="Robot Account Details">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Click <strong>Next</strong> four times and <strong>Review and Finish</strong>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><em>(Note: Creating it directly from this Mirroring screen automatically grants this local robot the Write permissions needed to save images into the repository).</em></p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mirror/mirror-all.png" alt="Mirroring Configuration Summary">
+</div>
+</div>
+</li>
 </ul>
 </div>
+</li>
+<li>
+<p>Click <strong>Enable Mirror</strong> to save the configuration and click <strong>Sync Now</strong> to trigger the synchronization schedule.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>After enabling mirroring, you can monitor the synchronization progress and inspect the mirrored repository details through the <strong>Logs</strong>, <strong>Tag History</strong>, and <strong>Tags</strong> views.</p>
+</div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/mirror/create-robot-acc.png" alt="create robot acc">
+<img src="_images/mirror/usagelogs.png" alt="Repository Usage Logs">
 </div>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/mirror/robot-acc.png" alt="robot acc">
+<img src="_images/mirror/tag-history.png" alt="Tag History View">
 </div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mirror/tags.png" alt="Mirrored Tags Overview">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="proxycache"><a class="anchor" href="#proxycache"></a>Configuring Proxy Cache</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>While Repository Mirroring is a <strong>proactive</strong> approach (images are synced on a scheduled basis regardless of whether they are needed right now), the <strong>Proxy Cache</strong> feature is a <strong>reactive</strong>, pull-through caching mechanism.</p>
+</div>
+<div class="paragraph">
+<p>When a user or a Kubernetes node requests an image through a Proxy Cache organization, Quay checks if it already has a local copy. If not, it seamlessly fetches the image from the upstream registry, serves it to the user, and keeps a cached copy for future requests based on a configurable Time-To-Live (TTL).</p>
+</div>
+<div class="sect2">
+<h3 id="_enabling_the_proxy_cache_feature"><a class="anchor" href="#_enabling_the_proxy_cache_feature"></a>Enabling the Proxy Cache Feature</h3>
+<div class="paragraph">
+<p>By default, the Quay Operator may not enable the Proxy Cache feature. We must inject the <code>FEATURE_PROXY_CACHE</code> flag into the Quay configuration secret before configuring it in the UI.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>First, locate your Quay configuration secret in the quay-workshop namespace:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get secret -n quay-workshop | grep config-bundle</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Note the exact name of the secret (e.g., <code>registry-config-bundle-xxxx</code>).</strong></p>
+</div>
+</li>
+<li>
+<p>Extract the current <code>config.yaml</code>, append the feature flag, and update the secret:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># 1. Extract the file
+oc get secret &lt;your-config-secret-name&gt; -n quay-workshop -o jsonpath="{.data['config\.yaml']}" | base64 --decode &gt; config.yaml
+
+# 2. Append the feature flag
+echo "FEATURE_PROXY_CACHE: true" &gt;&gt; config.yaml
+
+# 3. Update the secret in OpenShift
+oc set data secret/&lt;your-config-secret-name&gt; --from-file=config.yaml=config.yaml -n quay-workshop</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Watch the Quay pods recreate to apply the new configuration. Wait until the new <code>quay-app</code> pods are in a <code>Running</code> state:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get pods -n quay-workshop -w</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuring_the_proxy_cache_organization"><a class="anchor" href="#_configuring_the_proxy_cache_organization"></a>Configuring the Proxy Cache Organization</h3>
+<div class="paragraph">
+<p>Now that the feature is enabled globally, we can configure an Organization to act as our cache for a public upstream registry.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Log in to your <strong>quay-registry</strong> UI as an administrator.</p>
+</li>
+<li>
+<p>In the left navigation pane, click <strong>Organizations</strong>, then click <strong>Create organization</strong>.</p>
+</li>
+<li>
+<p>Name it <code>cache_quayio</code> and click <strong>Create</strong>.</p>
+</li>
+<li>
+<p>Navigate into the newly created <code>cache_quayio</code> organization.</p>
+</li>
+<li>
+<p>On the top menu, select <strong>Settings</strong>.</p>
+</li>
+<li>
+<p>Scroll down to the newly available <strong>Proxy Cache</strong> section.</p>
+</li>
+<li>
+<p>Fill in the upstream registry details:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Remote Registry:</strong> <code>quay.io</code>.</p>
+</li>
+<li>
+<p><strong>Note: For a public registry like <code>quay.io</code>, leave the credentials blank.</strong></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click <strong>Save</strong> to apply the configuration.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_testing_the_pull_through_cache"><a class="anchor" href="#_testing_the_pull_through_cache"></a>Testing the Pull-Through Cache</h3>
+<div class="paragraph">
+<p>Now, let&#8217;s simulate a developer or an OpenShift node pulling an image that doesn&#8217;t exist in our registry yet.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open your terminal and attempt to pull an image, but <strong>prefix the image path with your Quay URL and the proxy organization name</strong>.</p>
+<div class="paragraph">
+<p>For example, to pull <code>quay.io/argoproj/argocd:latest</code> through our cache, run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">QUAY_HOSTNAME=$(oc get route quay-registry-quay -n quay-workshop -o jsonpath='{.spec.host}')
+podman pull $QUAY_HOSTNAME/cache_quayio/argoproj/argocd:latest</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Notice that the first pull might take a few seconds as your registry is reaching out to the public <code>quay.io</code> registry, downloading the layers, and storing them.</strong></p>
+</div>
+</li>
+<li>
+<p>Delete the local image from your machine to simulate a fresh pull (or move to a different node):</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman rmi $QUAY_HOSTNAME/cache_quayio/argoproj/argocd:latest</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Pull the image again:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman pull $QUAY_HOSTNAME/cache_quayio/argoproj/argocd:latest</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>This second pull should be noticeably faster because the image is now being served directly from your local Quay Spoke cache.</strong></p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_verifying_the_cache_in_the_ui"><a class="anchor" href="#_verifying_the_cache_in_the_ui"></a>Verifying the Cache in the UI</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go back to the <strong>quay-registry</strong> UI and navigate to the <code>cache_quayio</code> organization.</p>
+</li>
+<li>
+<p>Click on <strong>Repositories</strong> in the left menu.</p>
+</li>
+<li>
+<p>You will see that a new repository named <code>cache_quayio/argoproj/argocd</code> has been automatically created.</p>
+</li>
+<li>
+<p>If you click on the repository and go to the <strong>Tags</strong> tab, you will see the <code>latest</code> tag, along with a special icon or label indicating that this tag is heavily managed by the Proxy Cache and will expire based on your TTL settings.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="qbo-integration"><a class="anchor" href="#qbo-integration"></a>Automating Image Consumption with Quay Bridge Operator</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>While Repository Mirroring and Proxy Cache solve the problem of <strong>image availability</strong> (ensuring the right images are physically present in the local registry), administrators still face the challenge of <strong>image consumption</strong>. In a large-scale Kubernetes or multi-tenant edge environment, manually creating Robot Accounts in the registry and distributing their corresponding credentials (Secrets) to dozens of OpenShift namespaces is unmanageable, prone to human error, and insecure.</p>
+</div>
+<div class="paragraph">
+<p>To solve this, Red Hat provides the <strong>Quay Bridge Operator (QBO)</strong>. When deployed on the compute cluster (the OpenShift cluster pulling the images), QBO acts as a bridge. Whenever a developer creates a new namespace, QBO automatically:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Click <code>Create Robot Account</code>.</p>
+<p>Connects to the registry.</p>
 </li>
-</ul>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/mirror/mirror-all.png" alt="mirror all">
-</div>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p>Click <code>Enable Mirror</code>.</p>
+<p>Creates an Organization mapped to the namespace.</p>
+</li>
+<li>
+<p>Provisions a Robot Account with the correct permissions.</p>
+</li>
+<li>
+<p>Injects the authentication Secret directly into the OpenShift namespace.</p>
 </li>
 </ul>
 </div>
 <div class="sect2">
-<h3 id="usage"><a class="anchor" href="#usage"></a>Repository Usage Logs, Tags, and Tag History</h3>
+<h3 id="_generating_an_oauth_token_on_the_quay_registry"><a class="anchor" href="#_generating_an_oauth_token_on_the_quay_registry"></a>Generating an OAuth Token on the Quay Registry</h3>
 <div class="paragraph">
-<p>After enabling mirroring, you can view the <code>Tag History</code>, <code>Tags</code>, and <code>Usage Logs</code> as shown below.</p>
+<p>To allow the OpenShift cluster to configure the Quay Registry automatically, we must provide QBO with an administrative token. In Red Hat Quay, OAuth tokens must belong to an Organization.</p>
 </div>
-<div class="imageblock">
+<div class="paragraph">
+<p><em>Note: Although we already have the <code>internal-apps</code> organization, it is a best practice to create a dedicated administrative organization for cluster integrations. This isolates infrastructure credentials from application workloads.</em></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Log in to your registry UI as your superuser/administrator.</p>
+</li>
+<li>
+<p>In the left navigation pane, click <strong>Organizations</strong>, then click the <strong>Create organization</strong> button.</p>
+</li>
+<li>
+<p>Name it <code>openshift-system</code> and click <strong>Create</strong>.</p>
+</li>
+<li>
+<p>Once inside the <code>openshift-system</code> organization view, select <strong>OAuth Applications</strong> from the top menu.</p>
+</li>
+<li>
+<p>Click <strong>Create new application</strong>, name it <code>quay-bridge-operator</code>, and save it.</p>
+</li>
+<li>
+<p>Click on the newly created application name. You will see a section stating that the generated token will act on behalf of your user.</p>
+</li>
+<li>
+<p>Select the necessary permissions by checking the boxes. <strong>Crucial:</strong> You must select <strong>Super User Access</strong>, <strong>Administer Organization</strong>, and most importantly, <strong>Administer User</strong>. The 'Administer User' scope is what grants the Operator the rights to create entirely new organizations on your behalf across the registry.</p>
+</li>
+<li>
+<p>Scroll down to the bottom of the permissions list and click <strong>Generate Token</strong>.</p>
+</li>
+<li>
+<p>Authorize the application if prompted, and copy the provided alphanumeric token string to your clipboard.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuring_the_quayintegration"><a class="anchor" href="#_configuring_the_quayintegration"></a>Configuring the QuayIntegration</h3>
+<div class="paragraph">
+<p>Assuming the Quay Bridge Operator is already installed from the OperatorHub, we now configure it to point to our registry.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>First, retrieve your main Quay URL so you can use it in the configuration:</p>
+<div class="listingblock">
 <div class="content">
-<img src="_images/mirror/usagelogs.png" alt="usagelogs">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export QUAY_HOSTNAME=$(oc get route quay-registry -n quay-workshop -o jsonpath='{.spec.host}')
+echo $QUAY_HOSTNAME</code></pre>
 </div>
 </div>
-<div class="imageblock">
+</li>
+<li>
+<p>Create a Secret in OpenShift containing the OAuth token:</p>
+<div class="listingblock">
 <div class="content">
-<img src="_images/mirror/tag-history.png" alt="tag history">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: v1
+kind: Secret
+metadata:
+  name: quay-token
+  namespace: openshift-operators
+type: Opaque
+stringData:
+  token: "&lt;OAUTH_TOKEN&gt;"</code></pre>
 </div>
 </div>
-<div class="imageblock">
+</li>
+<li>
+<p>Create the <code>QuayIntegration</code> Custom Resource. This tells the operator which Quay registry to talk to. Replace <strong>&lt;YOUR_QUAY_URL_HERE&gt;</strong> with the output from the echo command above:</p>
+<div class="listingblock">
 <div class="content">
-<img src="_images/mirror/tags.png" alt="tags">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: quay.redhat.com/v1
+kind: QuayIntegration
+metadata:
+  name: registry-integration
+spec:
+  clusterID: "edge-compute-01"
+  credentialsSecret:
+    name: quay-token
+    namespace: openshift-operators
+  quayHostname: &lt;YOUR_QUAY_URL_HERE&gt;
+  insecureRegistry: false</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p><em>Note: Apply both YAMLs using the OpenShift Console or <code>oc apply -f</code>.</em></p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_verifying_the_automated_synchronization"><a class="anchor" href="#_verifying_the_automated_synchronization"></a>Verifying the Automated Synchronization</h3>
+<div class="paragraph">
+<p>Now we simulate a developer requesting a new workspace on the edge cluster.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>From your terminal, create a brand new, empty OpenShift project:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc new-project edge-frontend-dev</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Check the Secrets in this new namespace:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get secrets -n edge-frontend-dev</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Notice that QBO has instantly injected three new pull secrets (e.g., <code>default-quay-edge-compute-01</code>, <code>builder-quay-edge-compute-01</code>, and <code>deployer-quay-edge-compute-01</code>). It has also automatically patched the OpenShift ServiceAccounts to use them.</strong></p>
+</div>
+</li>
+<li>
+<p>Switch back to the <strong>quay-registry</strong> UI and navigate to the Organizations list.</p>
+<div class="paragraph">
+<p><strong>You will see <code>edge-compute-01_edge-frontend-dev</code> alongside several other organizations. Let&#8217;s understand why.</strong></p>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Understanding QBO&#8217;s Automatic Synchronization:</strong>
+When the Quay Bridge Operator connects to the registry, it syncs the OpenShift cluster&#8217;s state with the Quay registry, both proactively and retroactively.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>1 Namespace = 1 Organization:</strong> QBO maps every user namespace in OpenShift to a Quay Organization using the naming convention <code>&lt;clusterID&gt;_&lt;namespace&gt;</code>. This is why you see organizations created for existing namespaces.</p>
+</li>
+<li>
+<p><strong>ServiceAccounts = Robot Accounts:</strong> Inside each Organization, QBO creates three Robot Accounts corresponding to the standard OpenShift ServiceAccounts (<code>builder</code>, <code>default</code>, <code>deployer</code>).</p>
+</li>
+<li>
+<p><strong>Automated Permissions:</strong> The <code>builder</code> robot is granted <strong>Write</strong> access so OpenShift builds (s2i) can push images to Quay. The <code>default</code> and <code>deployer</code> robots are granted <strong>Read</strong> access to pull images for running pods.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_testing_the_end_to_end_image_pull"><a class="anchor" href="#_testing_the_end_to_end_image_pull"></a>Testing the End-to-End Image Pull</h3>
+<div class="paragraph">
+<p>To prove that our automation works, we will push a sample image to the newly created Organization in the registry and deploy it to our OpenShift namespace.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>From your terminal, pull a lightweight generic image (like <code>busybox</code>) and tag it for your registry, specifically targeting the Organization QBO just created:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman pull busybox:latest
+podman tag busybox:latest QUAY_HOSTNAME/edge-compute-01_edge-frontend-dev/busybox:latest</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Log in to the registry from your CLI. You can use your admin user credentials (or extract the <code>builder</code> robot credentials):</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman login QUAY_HOSTNAME</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Push the image to the registry:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman push QUAY_HOSTNAME/edge-compute-01_edge-frontend-dev/busybox:latest</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Now, deploy a pod in OpenShift using that exact image. Notice that <strong>we do not specify any imagePullSecrets</strong> in this command:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc run edge-test-pod --image=QUAY_HOSTNAME/edge-compute-01_edge-frontend-dev/busybox:latest -n edge-frontend-dev</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Check the pod&#8217;s status to verify the image was pulled successfully:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get pods -n edge-frontend-dev</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>You should see the pod in a <code>Running</code> state. If you inspect the pod&#8217;s events (<code>oc describe pod edge-test-pod</code>), you will see that OpenShift successfully authenticated against the registry using the pull secret that QBO automatically attached to the <code>default</code> ServiceAccount.</strong></p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="hub-spoke"><a class="anchor" href="#hub-spoke"></a>Architecture: Hub and Spoke Topologies</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In distributed environments—such as hybrid clouds, multi-datacenter deployments, or edge computing—transferring container images directly from a single central registry can introduce high network latency, bandwidth bottlenecks, and single points of failure.</p>
+</div>
+<div class="paragraph">
+<p>To address these challenges, Red Hat Quay supports a <strong>Hub and Spoke</strong> distribution pattern:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Hub Registry (Central):</strong> Serves as the primary source of truth. Developers, CI/CD pipelines, and automated builds push images here. It centralizes security scanning, governance, and access policies.</p>
+</li>
+<li>
+<p><strong>Spoke Registries (Regional/Remote):</strong> Deployed closer to compute workloads (such as regional cloud clusters, local datacenters, or remote edge sites). Spoke registries pull and synchronize required repositories from the Hub.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_benefits_of_hub_and_spoke"><a class="anchor" href="#_benefits_of_hub_and_spoke"></a>Benefits of Hub and Spoke</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Reduced Latency:</strong> Applications and OpenShift nodes pull images locally from their designated Spoke registry, significantly speeding up container deployments.</p>
+</li>
+<li>
+<p><strong>Bandwidth Optimization:</strong> Images are transferred once over the WAN from the Hub to the Spoke, rather than being pulled individually by dozens or hundreds of worker nodes.</p>
+</li>
+<li>
+<p><strong>High Availability &amp; Resilience:</strong> If the network link between a remote site and the central Hub fails, local workloads can continue pulling images without disruption from their regional Spoke registry.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_multi_registry_architecture"><a class="anchor" href="#_multi_registry_architecture"></a>Multi-Registry Architecture</h3>
+<div class="paragraph">
+<p>To demonstrate this capability without the complexity of managing multiple physical clusters, our lab environment uses two fully isolated Red Hat Quay instances deployed on the same OpenShift cluster:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>quay-hub</code>:</strong> Deployed in its own namespace, backed by a dedicated PostgreSQL database and its own storage backend (an S3-compatible NooBaa bucket).</p>
+</li>
+<li>
+<p><strong><code>quay-spoke</code>:</strong> Deployed in a separate namespace with completely independent database and storage resources (a separate NooBaa bucket).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Although both registries run on the same infrastructure for demonstration purposes, they communicate strictly over HTTPS via distinct OpenShift Routes (<code>quay-hub.apps&#8230;&#8203;</code> and <code>quay-spoke.apps&#8230;&#8203;</code>). This mirrors the exact network topology and authentication flow of a multi-site production environment.</p>
+</div>
+<div class="sect3">
+<h4 id="_deploying_the_hub_and_spoke_registries"><a class="anchor" href="#_deploying_the_hub_and_spoke_registries"></a>Deploying the Hub and Spoke Registries</h4>
+<div class="paragraph">
+<p>With NooBaa configured earlier in this workshop (Prerequisites &gt; Object Storage Options &gt; Option A: OpenShift Data Foundation (MCG)), we can now deploy our Quay instances. The Quay Operator natively integrates with NooBaa; when the objectstorage component is set to managed: true, the Operator automatically creates independent ObjectBucketClaims (OBCs) for each registry.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Resource Optimization for Lab Environments</strong><br>
+In the deployment manifests below, you will notice that we explicitly configure <code>overrides</code> to limit CPU/memory requests and set <code>replicas: 1</code> for core components (Quay, Clair, and Mirror). Additionally, we disabled the Horizontal Pod Autoscaler (<code>horizontalpodautoscaler: managed: false</code>).</p>
+</div>
+<div class="paragraph">
+<p>We do this intentionally to minimize the resource footprint on the OpenShift cluster, as deploying two complete registries (Hub and Spoke) can be resource-intensive. In a real-world <strong>production environment</strong>, you should remove these limits, enable the HPA, and deploy multiple replicas to ensure High Availability (HA) and performance at scale.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Apply the following manifests to deploy both environments:</p>
+</div>
+<div class="paragraph">
+<p><strong>Hub Registry Deployment:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: v1
+kind: Namespace
+metadata:
+  name: quay-hub-onprem
+---
+apiVersion: quay.redhat.com/v1
+kind: QuayRegistry
+metadata:
+  name: quay-hub
+  namespace: quay-hub-onprem
+spec:
+  components:
+    - kind: quay
+      managed: true
+      overrides:
+        replicas: 1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+    - kind: clair
+      managed: true
+      overrides:
+        replicas: 1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+    - kind: mirror
+      managed: true
+      overrides:
+        replicas: 1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+    - kind: postgres
+      managed: true
+    - kind: clairpostgres
+      managed: true
+    - kind: redis
+      managed: true
+    - kind: objectstorage
+      managed: true
+    - kind: route
+      managed: true
+    - kind: tls
+      managed: true
+    - kind: horizontalpodautoscaler
+      managed: false</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Spoke Registry Deployment:</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: v1
+kind: Namespace
+metadata:
+  name: quay-spoke-aws
+---
+apiVersion: quay.redhat.com/v1
+kind: QuayRegistry
+metadata:
+  name: quay-spoke
+  namespace: quay-spoke-aws
+spec:
+  components:
+    - kind: quay
+      managed: true
+      overrides:
+        replicas: 1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+    - kind: clair
+      managed: true
+      overrides:
+        replicas: 1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+    - kind: mirror
+      managed: true
+      overrides:
+        replicas: 1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+    - kind: postgres
+      managed: true
+    - kind: clairpostgres
+      managed: true
+    - kind: redis
+      managed: true
+    - kind: objectstorage
+      managed: true
+    - kind: route
+      managed: true
+    - kind: tls
+      managed: true
+    - kind: horizontalpodautoscaler
+      managed: false</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once the Operator finishes, you will have two distinct Quay routes and independent NooBaa buckets ready for the demo.</p>
+</div>
+<div class="paragraph">
+<p>Now that both the Hub and Spoke registries are deploying, export their route hostnames to your terminal. We will use these variables to easily interact with both registries in the following steps.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export QUAY_HUB=$(oc get route quay-hub -n quay-hub-onprem -o jsonpath='{.spec.host}')
+export QUAY_SPOKE=$(oc get route quay-spoke -n quay-spoke-aws -o jsonpath='{.spec.host}')</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Wait a few minutes until both Quay instances are fully initialized before proceeding.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_implementing_hub_to_spoke_synchronization"><a class="anchor" href="#_implementing_hub_to_spoke_synchronization"></a>Implementing Hub to Spoke Synchronization</h3>
+<div class="paragraph">
+<p>In this practical demonstration, we will use Quay&#8217;s <strong>Repository Mirroring</strong> feature to synchronize an internal application from our central Hub to our regional Spoke.</p>
+</div>
+<div class="sect3">
+<h4 id="_pushing_an_image_to_the_hub"><a class="anchor" href="#_pushing_an_image_to_the_hub"></a>Pushing an Image to the Hub</h4>
+<div class="paragraph">
+<p>First, we act as a developer pushing a new application release to the central repository.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Log in to the <strong>quay-hub</strong> UI.</p>
+</li>
+<li>
+<p>Create a new Organization named <code>internal-apps</code>.</p>
+</li>
+<li>
+<p>Inside the organization, create a new <code>Private</code> repository named <code>frontend-ui</code>.</p>
+</li>
+<li>
+<p>From your terminal, tag and push an image to this new Hub repository:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman login $QUAY_HUB
+podman pull docker.io/library/nginx:alpine
+podman tag docker.io/library/nginx:alpine $QUAY_HUB/internal-apps/frontend-ui:v1.0
+podman push $QUAY_HUB/internal-apps/frontend-ui:v1.0</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_generating_credentials_on_the_hub"><a class="anchor" href="#_generating_credentials_on_the_hub"></a>Generating Credentials on the Hub</h4>
+<div class="paragraph">
+<p>Because the <code>frontend-ui</code> repository is private, the Spoke registry needs authentication credentials to read from it.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Still in the <strong>quay-hub</strong> UI, navigate to the <code>internal-apps</code> organization settings.</p>
+</li>
+<li>
+<p>Click the <strong>Robot Accounts</strong> tab and create a new robot named <code>spoke_sync</code>.</p>
+</li>
+<li>
+<p><strong>Crucial Step:</strong> Grant this robot account <strong>Read</strong> access to the <code>frontend-ui</code> repository. If you skip this, the Spoke will be denied access during synchronization.</p>
+</li>
+<li>
+<p>Click on the newly created robot account to view its credentials. Copy the <strong>Username</strong> (e.g., <code>internal-apps+spoke-sync</code>) and <strong>Token</strong> (password).</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuring_the_mirror_on_the_spoke"><a class="anchor" href="#_configuring_the_mirror_on_the_spoke"></a>Configuring the Mirror on the Spoke</h4>
+<div class="paragraph">
+<p>Now, we switch to our regional edge environment to configure the synchronization.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Log in to the <strong>quay-spoke</strong> UI.</p>
+</li>
+<li>
+<p>Create a matching Organization (<code>internal-apps</code>) and a repository (<code>frontend-ui</code>).</p>
+</li>
+<li>
+<p>Navigate to the <code>Settings</code> icon of the <code>frontend-ui</code> repository and change the <strong>Repository State</strong> to <strong>Mirror</strong>.</p>
+</li>
+<li>
+<p>Click the <strong>Mirroring</strong> icon and fill in the configuration to point to our Hub:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Registry Location:</strong> <code>quay-hub.apps.&lt;your-cluster-domain&gt;/internal-apps/frontend-ui</code> <strong>(Do not include https://)</strong></p>
+</li>
+<li>
+<p><strong>Tags:</strong> <code><strong></code> *(This wildcard will sync all tags, such as our v1.0)</strong></p>
+</li>
+<li>
+<p><strong>Start Date:</strong> Set to the current date and time.</p>
+</li>
+<li>
+<p><strong>Sync Interval:</strong> <code>1 minute</code> <strong>(Set short for demo purposes)</strong>.</p>
+</li>
+<li>
+<p><strong>Robot User:</strong> Select <code>Create robot account</code> from the dropdown. A dialog box will appear:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Name:</strong> Type <code>spoke_writer</code>.</p>
+</li>
+<li>
+<p>Click <strong>Next</strong> until you reach the <strong>Default permissions (optional)</strong> page.</p>
+</li>
+<li>
+<p>In the <strong>Permission</strong> drop-down menu, select <strong>Write</strong>. Click <strong>Next</strong>.</p>
+</li>
+<li>
+<p><em>(Note: Even if left as default <strong>None</strong>, creating the robot directly from this Mirroring screen automatically grants it the Write permissions needed to save images into this specific Spoke repository).</em></p>
+</li>
+<li>
+<p>Click <strong>Review and Finish</strong>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>External Registry Username:</strong> Paste the Hub robot username from the Hub Registry (<code>internal-apps+spoke-sync</code>).</p>
+</li>
+<li>
+<p><strong>External Registry Password:</strong> Paste the Hub robot token the Hub Registry.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click <strong>Enable Mirror</strong>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_triggering_and_verifying_the_spoke"><a class="anchor" href="#_triggering_and_verifying_the_spoke"></a>Triggering and Verifying the Spoke</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the <code>quay-spoke</code> Mirroring tab, click <strong>Sync Now</strong>.</p>
+</li>
+<li>
+<p>Wait a few moments, then click the <strong>Tags</strong> icon in the <code>quay-spoke</code> repository. You should see the <code>v1.0</code> tag successfully replicated from the Hub.</p>
+</li>
+<li>
+<p>To verify the Spoke is fully serving the image locally from its own storage backend, pull the image directly from the Spoke registry:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman pull $QUAY_SPOKE/internal-apps/frontend-ui:v1.0</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="georep"><a class="anchor" href="#georep"></a>Understanding Geo-Replication</h3>
+<div class="paragraph">
+<p>Red Hat Quay offers a native <strong>Geo-Replication</strong> feature, which is fundamentally different from the Hub and Spoke (Repository Mirroring) architecture we explored earlier.</p>
+</div>
+<div class="paragraph">
+<p>While Hub and Spoke consists of completely independent Quay deployments talking to each other, Geo-Replication creates a <strong>single, globally distributed Quay registry</strong> that spans multiple datacenters.</p>
+</div>
+<div class="sect3">
+<h4 id="_how_geo_replication_works_architecturally"><a class="anchor" href="#_how_geo_replication_works_architecturally"></a>How Geo-Replication Works Architecturally</h4>
+<div class="paragraph">
+<p>In a Geo-Replicated setup, all geographically dispersed Quay instances act as a single logical registry:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Shared Global Database:</strong> All Quay nodes across all datacenters connect to a single, highly available global database (e.g., PostgreSQL). This means metadata (users, organizations, tags, repository names, RBAC) is instantly consistent across all sites.</p>
+</li>
+<li>
+<p><strong>Localized Storage with Asynchronous Blob Sync:</strong> Each datacenter has its own local object storage (e.g., AWS S3, local Ceph, or NooBaa). When a developer pushes an image to Site A, the metadata is written to the global DB, and the image layers (blobs) are written to Site A&#8217;s local storage. In the background, Quay automatically synchronizes those blobs to the storage backends of Site B and Site C.</p>
+</li>
+<li>
+<p><strong>Local Pulls:</strong> When a user or OpenShift cluster in Site B requests the image, Quay serves the image layers from Site B&#8217;s local storage, ensuring low-latency downloads and saving WAN bandwidth.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_geo_replication_vs_hub_spoke"><a class="anchor" href="#_geo_replication_vs_hub_spoke"></a>Geo-Replication vs. Hub &amp; Spoke</h4>
+<div class="paragraph">
+<p>Choosing between Geo-Replication and Hub &amp; Spoke depends entirely on your network reliability and edge constraints.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Geo-Replication</th>
+<th class="tableblock halign-left valign-top">Hub &amp; Spoke (Repository Mirroring)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Single Control Plane:</strong> One UI, one set of credentials, one global database.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Independent Registries:</strong> Each registry has its own DB, UI, and user management.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Network Dependent:</strong> Requires a highly reliable, low-latency connection to the shared global database. If the WAN goes down, remote sites cannot authenticate or push/pull images.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Air-Gap / Edge Friendly:</strong> Spoke registries are fully autonomous. If the network to the Hub drops, the Edge continues to operate normally with its local images.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>All-or-Nothing Sync:</strong> Blobs are automatically replicated across all configured storage backends for the entire namespace/registry.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Granular Control:</strong> You can define exactly which specific repositories, tags, or patterns are mirrored to which specific Spoke.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Use Case:</strong> Active-Active datacenters with enterprise-grade WAN links.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Use Case:</strong> Multi-tenant environments, disconnected Edge computing, or low-bandwidth retail locations.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="quay-repos.html" class="query-params-link">Repository Management</a></span>
-  <span class="next"><a href="#quay-repo-notifications.adoc" class="query-params-link">Repository Notifications</a></span>
+  <span class="next"><a href="quay-notifications.html" class="query-params-link">Repository Notifications</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Observability :: Red Hat Quay Workshop</title>
+    <title>Observability and Day-2 Operations :: Red Hat Quay Workshop</title>
     <link rel="canonical" href="https://olleb.com/quay-workshop/quay-obs.html">
-    <link rel="prev" href="quay-cso.html">
+    <link rel="prev" href="quay-clair.html">
     <link rel="next" href="quay-keycloak.html">
     <meta name="generator" content="Antora 3.0.3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,7 +26,7 @@
   <nav class="navbar">
     <div class="navbar-brand">
       <span class="navbar-item" style="padding-right: 0;"></span>
-      <a class="navbar-item site-title" target="_blank" href="https://olleb.com/quay-workshop">Red Hat Quay Workshop</a>
+      <a class="navbar-item site-title" href="https://olleb.com/quay-workshop">Red Hat Quay Workshop</a>
     </div>
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
@@ -65,9 +65,6 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="setup.html#quayinstance">Deploying Quay</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="setup.html#exportenvvar">Exporting Environment Variables</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="setup.html#trustedca">Adding the Quay Certificate as a Trusted CA in OCP (Optional)</a>
@@ -114,29 +111,41 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="quay-repos.html#expiration">Image Expiration</a>
   </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-mirror.html">Repository Mirroring</a>
-<ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-mirror.html#imagerepo">Creating a Mirrored Repository</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-mirror.html#usage">Repository Usage Logs, Tags, and Tag History</a>
-  </li>
-</ul>
+    <a class="nav-link" href="quay-repos.html#deleterepo">Deleting or Archiving a Repository</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="#quay-repo-notifications.adoc">Repository Notifications</a>
+    <a class="nav-link" href="quay-mirror.html">Image Distribution and Replication</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#quay-repo-notifications.adoc#pushnotif">Creating a Push-to-Repository Event Notification</a>
+    <a class="nav-link" href="quay-mirror.html#repomirror">Creating a Mirrored Repository</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-mirror.html#proxycache">Configuring Proxy Cache</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-mirror.html#qbo-integration">Automating Image Consumption with Quay Bridge Operator</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-mirror.html#hub-spoke">Architecture: Hub and Spoke Topologies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-mirror.html#georep">Understanding Geo-Replication</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="quay-notifications.html">Repository Notifications</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-notifications.html#pushnotif">Creating a Push-to-Repository Event Notification</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-notifications.html#webhooknotif">Simulating a CI/CD Trigger with Webhooks</a>
   </li>
 </ul>
   </li>
@@ -169,6 +178,9 @@
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="quay-oci.html#pgp">Encrypting Container Images with PGP (RFC4880)</a>
   </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="quay-oci.html#sbom-oci">Securing the Supply Chain: Attaching an SBOM</a>
+  </li>
 </ul>
   </li>
 </ul>
@@ -182,33 +194,33 @@
     <a class="nav-link" href="quay-clair.html#cve">Exploring Vulnerability Data (CVEs)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-clair.html#secscan">Performing a Security Scan</a>
-  </li>
-  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="quay-clair.html#packages">Viewing Packages</a>
   </li>
 </ul>
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-cso.html">Container Security Operator (CSO)</a>
+    <a class="nav-link" href="quay-obs.html">Observability and Day-2 Operations</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-cso.html#install">Installing the Quay CSO Operator</a>
+    <a class="nav-link" href="#gen-traffic">Generating Registry Traffic</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-cso.html#vulncheck">Checking Image Vulnerabilities from the OpenShift Web Console</a>
+    <a class="nav-link" href="#dashboards">Analyzing the Quay Dashboard</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#raw-metrics">Exploring Raw Prometheus Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#promql">Advanced: Querying Raw Metrics (PromQL)</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="quay-obs.html">Observability</a>
-  </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-keycloak.html">Quay Integration with Keycloak (OpenID Connect)</a>
+    <a class="nav-link" href="quay-keycloak.html">Quay Integration with Keycloak (OpenID Connect) (Pending Update)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="setup.html#keycloak">Installing Red Hat build of Keycloak</a>
@@ -221,21 +233,6 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="quay-keycloak.html#testlogin">Testing OpenID Login</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-troubleshooting.html">Troubleshooting and Tips</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-troubleshooting.html#tls">TLS and Insecure Registry Configuration</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-troubleshooting.html#cosign">cosign and Registry Trust Issues</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-troubleshooting.html#gpg">GPG Key Cleanup</a>
   </li>
 </ul>
   </li>
@@ -266,43 +263,214 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Red Hat Quay Workshop</a></li>
-    <li><a href="quay-obs.html">Observability</a></li>
+    <li><a href="quay-obs.html">Observability and Day-2 Operations</a></li>
   </ul>
 </nav>
   <div style="padding: 0 0.5rem 0 0.75rem;"><a href="https://olleb.com" target="_blank" rel="noopener noreferrer"> © Àngel Ollé Blázquez</a></div>
 </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Observability</h1>
+<h1 class="page">Observability and Day-2 Operations</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>Red Hat OpenShift provides built-in observability tools for monitoring the health and performance of the system. The Quay Operator adds an embedded Quay Dashboard to the OpenShift console, where we can monitor the health, rates, latency, and more of our Quay registry.</p>
+<p>In a production environment, your container registry is a Tier-1 critical service. If Red Hat Quay goes down or becomes slow, your CI/CD pipelines stop, and your developers cannot deploy code.</p>
 </div>
-<div class="ulist">
-<ul>
+<div class="paragraph">
+<p>The Quay Operator natively integrates with the OpenShift Prometheus stack, automatically exposing dozens of critical metrics and deploying pre-configured Grafana dashboards directly into the OpenShift Web Console.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="gen-traffic"><a class="anchor" href="#gen-traffic"></a>Generating Registry Traffic</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Dashboards are boring when a system is idle. Before we look at the metrics, let&#8217;s act like a busy CI/CD pipeline and generate a sudden spike of traffic against our registry to see how the observability stack reacts.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>Open a web browser and log in to the Red Hat OpenShift Container Platform web console.</p>
+<p>Open your terminal and run the following bash loop. This script will pull a tiny image (Alpine) and push it to your registry 30 times in a row, tagging it differently each time:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">echo "Starting CI/CD load simulation..."
+for i in {1..30}; do
+  podman pull docker.io/library/alpine:latest --quiet
+  podman tag docker.io/library/alpine:latest ${QUAY_HOSTNAME}/olleb/load-test:$i
+  podman push ${QUAY_HOSTNAME}/olleb/load-test:$i --quiet
+  echo "Pushed tag: $i"
+done
+echo "Load test complete!"</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="dashboards"><a class="anchor" href="#dashboards"></a>Analyzing the Quay Dashboard</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that we have created a traffic spike, let&#8217;s investigate how OpenShift captured it.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open a web browser and log in to the <strong>Red Hat OpenShift Container Platform</strong> web console.</p>
 </li>
 <li>
-<p>From the Administrator perspective, click on <code>Observe</code>, then <code>Dashboards</code>.</p>
+<p>On the left navigation menu, go to <strong>Observe</strong> &#8594; <strong>Dashboards</strong>.</p>
 </li>
 <li>
-<p>In the <code>Dashboard</code> drop-down menu, select <code>Quay - quay-workshop - registry</code>.</p>
+<p>In the <strong>Dashboard</strong> drop-down menu, select <code>quay-workshop</code> namespace.</p>
 </li>
-</ul>
+</ol>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/obs/obs1.png" alt="obs1">
+<img src="_images/obs/obs1.png" alt="Quay Dashboard Selection">
 </div>
+</div>
+<div class="imageblock unresolved">
+<div class="content">
+<img src="obs/obs11.png" alt="Quay Dashboard Selection">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Adjust the <strong>Time Range</strong> at the top right of the dashboard (set it to <code>Last 30 minutes</code> or <code>Last 5 minutes</code>) to zoom in on the traffic spike you just created.</p>
+</li>
+</ol>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/obs/obs2.png" alt="obs2">
+<img src="_images/obs/obs2.png" alt="Quay Traffic Spike">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="raw-metrics"><a class="anchor" href="#raw-metrics"></a>Exploring Raw Prometheus Metrics</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>While graphical dashboards are great for humans, automated alerting systems and external scrapers need raw data. Quay natively exposes all its internal telemetry in the standard Prometheus text format.</p>
+</div>
+<div class="paragraph">
+<p>For security reasons, Quay does not expose telemetry to the public internet. Instead, it serves metrics on a dedicated internal port (9091). Let&#8217;s act as an SRE and use a Kubernetes tunnel to securely read this data.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Open a temporary port-forward session in the background to access the internal metrics service:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">QUAY_POD=$(oc get pod -n quay-workshop -l quay-component=quay-app -o jsonpath='{.items[0].metadata.name}')
+oc port-forward $QUAY_POD 9091:9091 -n quay-workshop &gt; /dev/null 2&gt;&amp;1 &amp;
+sleep 2</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Now, use <code>curl</code> against your local tunnel to fetch the raw metrics. We will use <code>head</code> to see the first few lines of the output:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -s <a href="http://localhost:9091/metrics" class="bare">http://localhost:9091/metrics</a> | head -n 15</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>You will see an output containing standard Prometheus text metrics, typically starting with Go and Process telemetry:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text"># HELP go_gc_duration_seconds A summary of the wall-time pause...
+# TYPE go_gc_duration_seconds summary
+go_gc_duration_seconds{quantile="0"} 4.3415e-05
+...</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><em>Architecture Note: Quay is a Python application with ephemeral workers. To expose metrics reliably, it pushes them to a local <code>pushgateway</code> sidecar (which is written in Go). This sidecar acts as a buffer, aggregating the application metrics and exposing them on port 9091 for OpenShift&#8217;s monitoring stack to scrape.</em></p>
+</div>
+</li>
+<li>
+<p>Clean up by terminating the background port-forward process:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kill %1</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Universal Observability:</strong> Because Red Hat Quay uses the standard OpenMetrics format, you can point any enterprise monitoring tool (like Datadog, Dynatrace, or an external Prometheus) to this internal port to instantly ingest Quay&#8217;s telemetry into your corporate dashboards.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="promql"><a class="anchor" href="#promql"></a>Advanced: Querying Raw Metrics (PromQL)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Behind the scenes, the OpenShift monitoring stack is powered by Prometheus. You can query the raw data directly to build custom alerts or investigate specific infrastructure behavior.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Still in the OpenShift console, navigate to <strong>Observe</strong> &#8594; <strong>Metrics</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Expression</strong> box, enter the following PromQL query to analyze the rate of incoming network traffic for each pod in our Quay namespace:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-promql hljs" data-lang="promql">sum(irate(container_network_receive_bytes_total{namespace='quay-workshop'}[2h])) by (pod)</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Press <strong>Enter</strong> (or click <strong>Run Queries</strong>).</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You will see a raw graph showing the network bytes received by each individual pod over time. Because we just pushed an image 30 times in a row during our load test, you should see a massive, distinct spike in the network traffic hitting the Quay application pods.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/obs/metrics.png" alt="Quay Metrics">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Infrastructure vs. Application:</strong> This query demonstrates how SREs correlate operations. Even if application-level metrics are delayed, the underlying Kubernetes network metrics immediately reveal the exact pods absorbing the heavy CI/CD load.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="quay-cso.html" class="query-params-link">Container Security Operator (CSO)</a></span>
-  <span class="next"><a href="quay-keycloak.html" class="query-params-link">Quay Integration with Keycloak (OpenID Connect)</a></span>
+  <span class="prev"><a href="quay-clair.html" class="query-params-link">Security Scanning (Clair)</a></span>
+  <span class="next"><a href="quay-keycloak.html" class="query-params-link">Quay Integration with Keycloak (OpenID Connect) (Pending Update)</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

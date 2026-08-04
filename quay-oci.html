@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>OCI-Based Artifacts :: Red Hat Quay Workshop</title>
     <link rel="canonical" href="https://olleb.com/quay-workshop/quay-oci.html">
-    <link rel="prev" href="#quay-repo-notifications.adoc#pushnotif">
+    <link rel="prev" href="quay-notifications.html">
     <link rel="next" href="quay-clair.html">
     <meta name="generator" content="Antora 3.0.3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,7 +26,7 @@
   <nav class="navbar">
     <div class="navbar-brand">
       <span class="navbar-item" style="padding-right: 0;"></span>
-      <a class="navbar-item site-title" target="_blank" href="https://olleb.com/quay-workshop">Red Hat Quay Workshop</a>
+      <a class="navbar-item site-title" href="https://olleb.com/quay-workshop">Red Hat Quay Workshop</a>
     </div>
     <div id="topbar-nav" class="navbar-menu">
       <div class="navbar-end">
@@ -65,9 +65,6 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="setup.html#quayinstance">Deploying Quay</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="setup.html#exportenvvar">Exporting Environment Variables</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="setup.html#trustedca">Adding the Quay Certificate as a Trusted CA in OCP (Optional)</a>
@@ -114,29 +111,41 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="quay-repos.html#expiration">Image Expiration</a>
   </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-mirror.html">Repository Mirroring</a>
-<ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-mirror.html#imagerepo">Creating a Mirrored Repository</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-mirror.html#usage">Repository Usage Logs, Tags, and Tag History</a>
-  </li>
-</ul>
+    <a class="nav-link" href="quay-repos.html#deleterepo">Deleting or Archiving a Repository</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="#quay-repo-notifications.adoc">Repository Notifications</a>
+    <a class="nav-link" href="quay-mirror.html">Image Distribution and Replication</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#quay-repo-notifications.adoc#pushnotif">Creating a Push-to-Repository Event Notification</a>
+    <a class="nav-link" href="quay-mirror.html#repomirror">Creating a Mirrored Repository</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-mirror.html#proxycache">Configuring Proxy Cache</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-mirror.html#qbo-integration">Automating Image Consumption with Quay Bridge Operator</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-mirror.html#hub-spoke">Architecture: Hub and Spoke Topologies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-mirror.html#georep">Understanding Geo-Replication</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="quay-notifications.html">Repository Notifications</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-notifications.html#pushnotif">Creating a Push-to-Repository Event Notification</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-notifications.html#webhooknotif">Simulating a CI/CD Trigger with Webhooks</a>
   </li>
 </ul>
   </li>
@@ -169,6 +178,9 @@
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="#pgp">Encrypting Container Images with PGP (RFC4880)</a>
   </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#sbom-oci">Securing the Supply Chain: Attaching an SBOM</a>
+  </li>
 </ul>
   </li>
 </ul>
@@ -182,9 +194,6 @@
     <a class="nav-link" href="quay-clair.html#cve">Exploring Vulnerability Data (CVEs)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="quay-clair.html#secscan">Performing a Security Scan</a>
-  </li>
-  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="quay-clair.html#packages">Viewing Packages</a>
   </li>
 </ul>
@@ -193,22 +202,25 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-cso.html">Container Security Operator (CSO)</a>
+    <a class="nav-link" href="quay-obs.html">Observability and Day-2 Operations</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-cso.html#install">Installing the Quay CSO Operator</a>
+    <a class="nav-link" href="quay-obs.html#gen-traffic">Generating Registry Traffic</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-cso.html#vulncheck">Checking Image Vulnerabilities from the OpenShift Web Console</a>
+    <a class="nav-link" href="quay-obs.html#dashboards">Analyzing the Quay Dashboard</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-obs.html#raw-metrics">Exploring Raw Prometheus Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quay-obs.html#promql">Advanced: Querying Raw Metrics (PromQL)</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="quay-obs.html">Observability</a>
-  </li>
-  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-keycloak.html">Quay Integration with Keycloak (OpenID Connect)</a>
+    <a class="nav-link" href="quay-keycloak.html">Quay Integration with Keycloak (OpenID Connect) (Pending Update)</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="setup.html#keycloak">Installing Red Hat build of Keycloak</a>
@@ -221,21 +233,6 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="quay-keycloak.html#testlogin">Testing OpenID Login</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="quay-troubleshooting.html">Troubleshooting and Tips</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-troubleshooting.html#tls">TLS and Insecure Registry Configuration</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-troubleshooting.html#cosign">cosign and Registry Trust Issues</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="quay-troubleshooting.html#gpg">GPG Key Cleanup</a>
   </li>
 </ul>
   </li>
@@ -277,75 +274,70 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Quay can be used to store OCI-based artifacts like Helm charts, encrypted container images, signed images, zstd compressed images, etc.</p>
+<p>Historically, container registries were strictly designed to store Docker image formats. However, Red Hat Quay fully supports the <strong>Open Container Initiative (OCI)</strong> artifact specification. This means Quay acts as a universal artifact repository, allowing you to store, secure, and distribute Helm charts, encrypted containers, digital signatures, and compressed images side-by-side with your standard container workloads.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="helm"><a class="anchor" href="#helm"></a>Working with Helm Charts</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Login to the Quay registry with helm.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>Helm 3 introduced native support for storing and pulling charts directly from OCI-compliant registries. In this exercise, we will download an existing Helm chart from a public web repository and push it to our local Quay registry as an OCI artifact.</p>
 </div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>First, authenticate your Helm CLI with your Quay registry. Use your standard Quay user credentials:</p>
 <div class="listingblock lines_space console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">helm registry login ${QUAY_HOSTNAME}</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export QUAY_HOSTNAME=$(oc get route quay-registry-quay -n quay-workshop -o jsonpath='{.spec.host}')
+
+helm registry login ${QUAY_HOSTNAME}</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Pull a chart.</p>
 </li>
-</ul>
-</div>
+<li>
+<p>Download a sample Helm chart locally. We will use the Quarkus chart from the Red Hat Developer repository:</p>
 <div class="listingblock lines_space console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">helm pull <a href="https://redhat-developer.github.io/redhat-helm-charts/charts/quarkus-0.0.3.tgz" class="bare">https://redhat-developer.github.io/redhat-helm-charts/charts/quarkus-0.0.3.tgz</a></code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Push the chart into the Quay repository.</p>
 </li>
-</ul>
-</div>
+<li>
+<p>Push the downloaded chart into your Quay organization (in this example, <code>olleb</code>). Helm will automatically communicate with Quay using the OCI protocol:</p>
 <div class="listingblock lines_space console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">helm push quarkus-0.0.3.tgz oci://${QUAY_HOSTNAME}/olleb/helm</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Open the Quay Dashboard and navigate to the <code>olleb/helm/quarkus</code> repository. Then, go to <code>Tags</code>.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p><strong>(Note: By pushing to <code>olleb/helm</code>, Helm automatically appends the chart name, resulting in the creation of the <code>olleb/helm/quarkus</code> repository in Quay).</strong></p>
 </div>
+</li>
+<li>
+<p>Open the <strong>Red Hat Quay</strong> UI and navigate to the newly created <code>olleb/helm/quarkus</code> repository.</p>
+</li>
+<li>
+<p>Click on the <strong>Tags</strong> tab.</p>
 <div class="imageblock">
 <div class="content">
-<img src="_images/oci/helmrepo.png" alt="helmrepo">
+<img src="_images/oci/helmrepo.png" alt="Helm Chart as OCI Image">
 </div>
 </div>
 <div class="paragraph">
-<p>The Helm chart is published to Quay as an OCI image.</p>
+<p><em>Notice that the Helm chart is published and managed by Quay exactly like a standard container image, complete with metadata and OCI manifests.</em></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>The Helm chart can now be installed directly from the repository.</p>
 </li>
-</ul>
-</div>
+<li>
+<p>Finally, to prove the chart is fully functional, you can deploy the application to your Kubernetes cluster directly from your Quay OCI repository:</p>
 <div class="listingblock lines_space console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">helm install quarkus oci://${QUAY_HOSTNAME}/olleb/helm/quarkus --version=0.0.3</code></pre>
 </div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -353,123 +345,169 @@
 <h2 id="signed"><a class="anchor" href="#signed"></a>Signed Container Images</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Image signing ensures the integrity and authenticity of image deployments. Quay stores the signature as an OCI artifact.</p>
+<p>Image signing ensures the integrity and authenticity of container deployments, preventing malicious actors from tampering with your workloads. Red Hat Quay natively supports storing digital signatures alongside the images as OCI artifacts.</p>
 </div>
 <div class="sect2">
 <h3 id="cosign"><a class="anchor" href="#cosign"></a>Signing Container Images with Cosign</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Generate a key pair.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>Cosign (part of the Sigstore project) has become the industry standard for container signing. It creates a signature and pushes it directly to the registry as an OCI object attached to the image digest.</p>
 </div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>First, generate a Cosign key pair. This will create a <code>cosign.key</code> (private key) and <code>cosign.pub</code> (public key) in your current directory:</p>
 <div class="listingblock lines_space console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cosign generate-key-pair</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Sign an image and push it to Quay.</p>
+<div class="paragraph">
+<p><em>(Note: You will be prompted to enter a password to encrypt the private key. Remember this password, as you will need it later to sign the image).</em></p>
+</div>
 </li>
-</ul>
+<li>
+<p>Export your registry hostname and authenticate your Podman CLI. When prompted, use your standard Quay user credentials:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export QUAY_HOSTNAME=$(oc get route quay-registry-quay -n quay-workshop -o jsonpath='{.spec.host}')
+podman login ${QUAY_HOSTNAME}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Pull a sample image, tag it for your local registry, and push it:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman pull quay.io/fedora/httpd-24-micro:2.4
+podman tag quay.io/fedora/httpd-24-micro:2.4 ${QUAY_HOSTNAME}/olleb/httpd-24-micro:2.4
+podman push ${QUAY_HOSTNAME}/olleb/httpd-24-micro:2.4</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Authenticate the Cosign CLI. Cosign requires its own login session.</p>
+<div class="paragraph">
+<p><strong>Important: Replace <code>&lt;YOUR_QUAY_USERNAME&gt;</code> with your actual Quay username before running this command.</strong></p>
 </div>
 <div class="listingblock lines_space console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Pull the image
-podman pull quay.io/fedora/httpd-24-micro:2.4
-
-# Tag and push the image
-podman tag quay.io/fedora/httpd-24-micro:2.4 ${QUAY_HOSTNAME}/olleb/httpd-24-micro:2.4
-
-# Log in
-podman login ${QUAY_HOSTNAME}
-
-# Push the image
-podman push ${QUAY_HOSTNAME}/olleb/httpd-24-micro:2.4
-
-# Log in with cosign
-DOCKER_CONFIG="${XDG_RUNTIME_DIR}/containers/" cosign login ${QUAY_HOSTNAME} -u &lt;USER&gt;
-
-# Sign and push the signature
-DIGEST=$(podman inspect --format '{{.Digest}}' "${QUAY_HOSTNAME}/olleb/httpd-24-micro:2.4")
-
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">DOCKER_CONFIG="${XDG_RUNTIME_DIR}/containers/" cosign login ${QUAY_HOSTNAME} -u &lt;YOUR_QUAY_USERNAME&gt;</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Retrieve the exact SHA256 digest of the image you just pushed, and use Cosign to sign that digest:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">DIGEST=$(podman inspect --format '{{.Digest}}' "${QUAY_HOSTNAME}/olleb/httpd-24-micro:2.4")
 cosign sign --key cosign.key "${QUAY_HOSTNAME}/olleb/httpd-24-micro@$DIGEST" --tlog-upload=false</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Navigate to the Quay Dashboard and open the <code>olleb/httpd-24-micro</code> repository.</p>
-</li>
-<li>
-<p>Click <code>Tags</code>.</p>
-</li>
-</ul>
-</div>
 <div class="paragraph">
-<p>You should now see the signature stored in the repository.</p>
+<p><em>(Note: You will be prompted to enter the password you set in Step 1. The <code>--tlog-upload=false</code> flag disables uploading the signature to the public Sigstore transparency log, which is the standard practice for private enterprise registries).</em></p>
 </div>
+</li>
+<li>
+<p>Navigate to the <strong>Red Hat Quay Dashboard</strong> and open the <code>olleb/httpd-24-micro</code> repository.</p>
+</li>
+<li>
+<p>Click on the <strong>Tags</strong> tab.</p>
 <div class="imageblock">
 <div class="content">
-<img src="_images/oci/signature.png" alt="signature">
+<img src="_images/oci/signature.png" alt="Cosign Signature in Quay">
 </div>
+</div>
+<div class="paragraph">
+<p><em>You should now see the Cosign signature automatically stored in the repository alongside your image. Quay recognizes the OCI artifact type and links it visually to the signed image tag.</em></p>
+</div>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect2">
 <h3 id="signpgp"><a class="anchor" href="#signpgp"></a>Signing Container Images with PGP (RFC4880)</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Generate PGP keys.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>While Cosign is a newer standard, <strong>PGP (Pretty Good Privacy)</strong> remains a widely used, traditional method for signing container images. It is natively supported by container engines like Podman and Skopeo without requiring external plugins.</p>
 </div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>First, generate a new PGP key pair. We will use a batch script to automate the creation without interactive prompts:</p>
 <div class="listingblock lines_space console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">gpg --batch --gen-key &lt;&lt;EOF
 Key-Type: RSA
 Key-Length: 4096
-Name-Real: Angel
-Name-Email: <a href="mailto:angel@olleb.com">angel@olleb.com</a>
+Name-Real: Quay Signer
+Name-Email: <a href="mailto:pgp-signer@olleb.com">pgp-signer@olleb.com</a>
 Expire-Date: 0
 %commit
 EOF</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Sign the image and push it to Quay.</p>
 </li>
-</ul>
-</div>
+<li>
+<p>Tag the existing image with a new <code>-pgp</code> suffix so we can easily distinguish it in the Quay UI from our previous Cosign exercise:</p>
 <div class="listingblock lines_space console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman push --sign-by <a href="mailto:angel@olleb.com">angel@olleb.com</a> ${QUAY_HOSTNAME}/olleb/httpd-24-micro:2.4 --tls-verify=false</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman tag quay.io/fedora/httpd-24-micro:2.4 ${QUAY_HOSTNAME}/olleb/httpd-24-micro:2.4-pgp</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>The signature can be verified with:</p>
-</div>
+</li>
+<li>
+<p>Push the image using the <code>--sign-by</code> flag. This instructs Podman to cryptographically sign the image payload using your specific GPG key during the push process:</p>
 <div class="listingblock lines_space console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">gpg --verify ~/.local/share/containers/sigstore/olleb/httpd-24-micro@sha256=&lt;SHA&gt;/signature-1</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman push --sign-by <a href="mailto:pgp-signer@olleb.com">pgp-signer@olleb.com</a> ${QUAY_HOSTNAME}/olleb/httpd-24-micro:2.4-pgp</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<code>skopeo</code> can also be used for signing and moving images between registries.
-</td>
-</tr>
-</table>
+</li>
+<li>
+<p>By default, Podman stores this PGP signature locally in your user&#8217;s sigstore. To verify the signature, you must first extract the exact SHA256 digest of the image:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">DIGEST=$(podman inspect --format '{{.Digest}}' "${QUAY_HOSTNAME}/olleb/httpd-24-micro:2.4-pgp")
+HASH=$(echo $DIGEST | cut -d':' -f2)</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Now, verify the cryptographic signature using the <code>gpg</code> CLI, passing the extracted hash into the sigstore path:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">gpg --verify ~/.local/share/containers/sigstore/olleb/httpd-24-micro@sha256=$HASH/signature-1</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>By default, PGP signatures are stored locally. To instruct our tooling to upload the signature directly to Quay, we create a temporary local configuration overriding the default behavior:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mkdir -p local-registries
+cat &lt;&lt;EOF &gt; local-registries/default.yaml
+default-docker:
+  use-sigstore-attachments: true
+EOF</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Use <code>skopeo</code> with this custom configuration to copy the image back to itself, which forces the signature to be uploaded as an OCI artifact to Quay:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">skopeo copy --registries.d ./local-registries \
+  --sign-by <a href="mailto:pgp-signer@olleb.com">pgp-signer@olleb.com</a> \
+  docker://${QUAY_HOSTNAME}/olleb/httpd-24-micro:2.4-pgp \
+  docker://${QUAY_HOSTNAME}/olleb/httpd-24-micro:2.4-pgp</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/oci/pgp.png" alt="PGP Signature in Quay">
+</div>
 </div>
 </div>
 </div>
@@ -478,103 +516,55 @@ EOF</code></pre>
 <h2 id="encrypted"><a class="anchor" href="#encrypted"></a>Encrypted Container Images</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>An image can be encrypted using one or more keys. You can encrypt the entire image layers or specific layers. In any case, the container image can be stored in Quay.</p>
+<p>Container image encryption allows you to encrypt the image layers themselves before pushing them to a registry. Unlike TLS (which encrypts the network connection) or disk encryption (which encrypts the storage backend), image encryption ensures that even if a malicious actor gains access to the registry storage, they cannot read the image contents without the decryption keys.</p>
 </div>
 <div class="paragraph">
-<p>Encrypted images are used to protect private and sensitive content in your images, for example, in case the registry is compromised.</p>
-</div>
-<div class="paragraph">
-<p>Typically, the image decryption key is stored in a secret on the OCP cluster master node.</p>
+<p>Red Hat Quay natively supports storing these encrypted OCI artifacts. Typically, the image decryption key is stored as a Secret on the OpenShift cluster nodes, allowing the cluster to decrypt and run the workloads seamlessly.</p>
 </div>
 <div class="sect2">
 <h3 id="jwe"><a class="anchor" href="#jwe"></a>Encrypting Container Images with JSON Web Encryption (JWE) (RFC7516)</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Generate RSA encryption keys using OpenSSL.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>JWE uses standard RSA key pairs to encrypt the image layers.</p>
 </div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>First, generate an RSA private and public key pair using OpenSSL:</p>
 <div class="listingblock lines_space console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Private key
-openssl genrsa --out private-key.pem 2048
-
-# Public key
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">openssl genrsa -out private-key.pem 2048
 openssl rsa -in private-key.pem -pubout -out public-key.pem</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Pull the image you want to encrypt.</p>
 </li>
-</ul>
-</div>
+<li>
+<p>Pull a sample image and tag it for your local registry:</p>
 <div class="listingblock lines_space console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Pull the image
-podman pull quay.io/fedora/mysql-80:80
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export QUAY_HOSTNAME=$(oc get route quay-registry-quay -n quay-workshop -o jsonpath='{.spec.host}')
 
-# Tag and push the image
+podman pull quay.io/fedora/mysql-80:80
 podman tag quay.io/fedora/mysql-80:80 ${QUAY_HOSTNAME}/olleb/mysql-80:jwe</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Encrypt and push the image.</p>
 </li>
-</ul>
-</div>
+<li>
+<p>Push the image, providing the public key to encrypt the layers. Podman will encrypt the image locally before sending it to Quay:</p>
 <div class="listingblock lines_space console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman push --encryption-key jwe:public-key.pem ${QUAY_HOSTNAME}/olleb/mysql-80:jwe</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Navigate to the Quay Dashboard and open the <code>olleb/mysql-80</code> repository.</p>
 </li>
 <li>
-<p>Click <code>Tags</code>.</p>
+<p>Navigate to the <strong>Quay Dashboard</strong> and open the <code>olleb/mysql-80</code> repository. Go to the <strong>Tags</strong> tab to verify the image was pushed.</p>
 </li>
-</ul>
+</ol>
 </div>
-<div class="paragraph">
-<p>You will see the encrypted image stored in the repository.</p>
-</div>
-<div class="listingblock lines_space console-input">
+<div class="imageblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman inspect ${QUAY_HOSTNAME}/olleb/mysql-80:jwe</code></pre>
+<img src="_images/oci/encr1.png" alt="Encrypted image">
 </div>
-</div>
-<div class="paragraph">
-<p>Try pulling it with:</p>
-</div>
-<div class="listingblock lines_space console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Remove the local image if it exists
-podman rmi ${QUAY_HOSTNAME}/olleb/mysql-80:jwe
-
-# Pull
-podman pull ${QUAY_HOSTNAME}/olleb/mysql-80:jwe</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You will get an error like <code>Error: writing blob: layer 0 (blob "sha256:&#8230;&#8203;</code>.</p>
-</div>
-<div class="paragraph">
-<p>Now, pull the image providing the private key for decryption:</p>
-</div>
-<div class="listingblock lines_space console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman pull --decryption-key private-key.pem ${QUAY_HOSTNAME}/olleb/mysql-80:jwe</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The image will be pulled without issues.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -583,73 +573,234 @@ podman pull ${QUAY_HOSTNAME}/olleb/mysql-80:jwe</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<code>skopeo</code> can also be used to perform the same steps.
+<div class="paragraph">
+<p><strong>UI Visibility:</strong> Currently, the Red Hat Quay web interface does not display a dedicated visual badge for encrypted images in the Tags view. The registry transparently stores the encrypted layers as OCI artifacts. To verify encryption status, administrators must inspect the image manifest (either via the UI&#8217;s raw manifest view or using CLI tools like <code>skopeo inspect</code>, looking for the <code>+encrypted</code> media type).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Security Scanning of Encrypted Images:</strong> If you check the <strong>Security</strong> column in the Quay UI for your encrypted images, you will notice it says <code>unsupported</code>. This is expected and correct behavior. Clair (Quay&#8217;s internal vulnerability scanner) cannot inspect the packages inside the image because the layers are cryptographically locked, and the registry does not possess your private decryption key.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Let&#8217;s inspect the OCI manifest directly in the registry using <code>skopeo</code>. Notice that the <code>mediaType</code> of the layers explicitly indicates they are encrypted:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">skopeo inspect --raw docker://${QUAY_HOSTNAME}/olleb/mysql-80:jwe | jq '.layers[] | .mediaType'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><em>(You should see outputs like <code>application/vnd.oci.image.layer.v1.tar+gzip+encrypted</code>).</em></p>
+</div>
+</li>
+<li>
+<p>Delete your local unencrypted copy, and try to pull the encrypted image from Quay without providing the key:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman rmi ${QUAY_HOSTNAME}/olleb/mysql-80:jwe
+podman pull ${QUAY_HOSTNAME}/olleb/mysql-80:jwe</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>You will get a layer decoding error (<code>Error: writing blob&#8230;&#8203;</code>) because Podman cannot decrypt the content.</strong></p>
+</div>
+</li>
+<li>
+<p>Now, pull the image again, this time providing the private key for decryption:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman pull --decryption-key private-key.pem ${QUAY_HOSTNAME}/olleb/mysql-80:jwe</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>The image will be pulled and decrypted successfully.</strong></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pgp"><a class="anchor" href="#pgp"></a>Encrypting Container Images with PGP (RFC4880)</h3>
+<div class="paragraph">
+<p>While JWE is the modern standard for container encryption, you can also use PGP. To ensure compatibility with Podman&#8217;s internal encryption engine, we will generate an unencrypted key and export it in pure binary format.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create an isolated GPG directory and generate a single-purpose PGP key pair:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export GNUPGHOME=$(mktemp -d)
+
+gpg --batch --gen-key &lt;&lt;EOF
+Key-Type: RSA
+Key-Length: 4096
+Key-Usage: sign, encrypt
+Name-Real: Quay Encrypter
+Name-Email: <a href="mailto:pgp-encrypter@olleb.com">pgp-encrypter@olleb.com</a>
+Expire-Date: 0
+%no-protection
+%commit
+EOF</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Pull a sample image and tag it:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman pull quay.io/fedora/postgresql-16:16
+podman tag quay.io/fedora/postgresql-16:16 ${QUAY_HOSTNAME}/olleb/postgresql-16:pgp</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Encrypt and push the image. Podman will query our isolated GPG keyring to lock the image layers before uploading them to Quay:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman push --encryption-key pgp:pgp-encrypter@olleb.com ${QUAY_HOSTNAME}/olleb/postgresql-16:pgp</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Delete the local unencrypted image so we can test the decryption:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman rmi ${QUAY_HOSTNAME}/olleb/postgresql-16:pgp</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>To decrypt a PGP-encrypted image with Podman, export your secret key to a <strong>pure binary file</strong> (avoiding ASCII armor, which the OCI parser can misidentify) and pass it to the pull command:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Export the private key in binary format (no --armor)
+gpg --export-secret-keys <a href="mailto:pgp-encrypter@olleb.com">pgp-encrypter@olleb.com</a> &gt; pgp-private.bin
+
+# Pull and decrypt the image
+podman pull --decryption-key ./pgp-private.bin ${QUAY_HOSTNAME}/olleb/postgresql-16:pgp
+
+# Clean up the temporary GPG directory
+unset GNUPGHOME</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>JWE vs PGP Decryption:</strong> When configuring automated decryption in an OpenShift or Kubernetes cluster, <strong>JWE is the industry standard</strong>. While Podman can encrypt images using native PGP keys, the tooling ecosystems (<code>ocicrypt</code> and <code>containers/image</code>) heavily favor JWE for decryption workflows. Native PGP decryption in CLI tools can be highly sensitive to key formats (such as armored ASCII vs binary keyrings) and subkey architecture.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Both encryption methods demonstrate how Red Hat Quay acts as a transparent, secure storage layer for OCI artifacts. The encryption and decryption operations happen entirely client-side (via Podman or Skopeo), ensuring a zero-trust model where the registry never sees your unencrypted data.</p>
+</div>
 </td>
 </tr>
 </table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="pgp"><a class="anchor" href="#pgp"></a>Encrypting Container Images with PGP (RFC4880)</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Generate PGP keys.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock lines_space console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">gpg --batch --gen-key &lt;&lt;EOF
-Key-Type: RSA
-Key-Length: 4096
-Name-Real: Angel
-Name-Email: <a href="mailto:angel@olleb.com">angel@olleb.com</a>
-Expire-Date: 0
-%commit
-EOF</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Pull the image you want to encrypt.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock lines_space console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># pull the image
-podman pull quay.io/fedora/postgresql-16:16
-
-# tag and push the image
-podman tag quay.io/fedora/postgresql-16:16 ${QUAY_HOSTNAME}/olleb/postgresql-16:pgp</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Encrypt and push the image.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock lines_space console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman push --encryption-key pgp:angel@olleb.com ${QUAY_HOSTNAME}/olleb/postgresql-16:pgp</code></pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Navigate to the Quay Dashboard and open the <code>olleb/postgresql-16</code> repository.</p>
-</li>
-<li>
-<p>Click <code>Tags</code>.</p>
-</li>
-</ul>
+<h3 id="sbom-oci"><a class="anchor" href="#sbom-oci"></a>Securing the Supply Chain: Attaching an SBOM</h3>
+<div class="paragraph">
+<p>A Software Bill of Materials (SBOM) is a comprehensive inventory of all software components, libraries, and dependencies included in your container image. Attaching an SBOM to your images is a critical step in modern DevSecOps and supply chain security (SLSA).</p>
 </div>
 <div class="paragraph">
-<p>You will see the encrypted image stored in the repository.</p>
+<p>Red Hat Quay acts as a true OCI registry, meaning it can store not just container layers, but also attached metadata like signatures and SBOMs.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ensure the <code>olleb/kafka</code> repository exists in your registry. If you skipped previous exercises or need to recreate it, you can quickly bootstrap it by running:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">podman pull quay.io/strimzi/kafka:latest-kafka-4.0.0
+podman tag quay.io/strimzi/kafka:latest-kafka-4.0.0 ${QUAY_HOSTNAME}/olleb/kafka:latest
+podman push ${QUAY_HOSTNAME}/olleb/kafka:latest</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>We will use <code>syft</code> to scan our image and generate an SBOM in the industry-standard SPDX JSON format:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">syft scan ${QUAY_HOSTNAME}/olleb/kafka:latest -o spdx-json &gt; sbom-kafka.json</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Inspect the generated file. You will see a detailed inventory of every package installed inside the Kafka image:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">head -n 20 sbom-kafka.json</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Modern DevSecOps standards require attestations to be tied to an immutable <strong>digest</strong> (<code>sha256:&#8230;&#8203;</code>), not a mutable tag (like <code>latest</code>). Let&#8217;s retrieve the exact image digest from our registry using <code>skopeo</code>:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">IMAGE_DIGEST=$(skopeo inspect --format '{{.Digest}}' docker://${QUAY_HOSTNAME}/olleb/kafka:latest)
+echo $IMAGE_DIGEST</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Now, we will create an <strong>Attestation</strong>. We will use <code>cosign</code> and the private key you generated in previous exercises (<code>cosign.key</code>) to sign the SBOM and push it directly to Red Hat Quay:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cosign attest --yes --tlog-upload=false --predicate sbom-kafka.json --type spdxjson --key cosign.key ${QUAY_HOSTNAME}/olleb/kafka:latest</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><em>Note: You may be prompted to enter the password for your <code>cosign.key</code>.</em></p>
+</div>
+</li>
+<li>
+<p>Navigate back to the <strong>Red Hat Quay Dashboard</strong> and open the <code>olleb/kafka</code> repository.</p>
+<div class="paragraph">
+<p>Go to the <strong>Tags</strong> tab. You will notice a new tag ending in <code>.att</code> (or an attestation icon, depending on your Quay UI version). This demonstrates that Quay natively stores the in-toto attestation as an OCI artifact intimately linked to the original container.</p>
+</div>
+</li>
+<li>
+<p>To verify the attestation and read the SBOM, any user can now run the verification command using your public key:</p>
+<div class="listingblock lines_space console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cosign verify-attestation --type spdxjson --key cosign.pub --insecure-ignore-tlog ${QUAY_HOSTNAME}/olleb/kafka@${IMAGE_DIGEST} | jq '.payload | @base64d | fromjson'</code></pre>
+</div>
+</div>
+</li>
+</ol>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -658,7 +809,37 @@ podman tag quay.io/fedora/postgresql-16:16 ${QUAY_HOSTNAME}/olleb/postgresql-16:
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<code>skopeo</code> can also be used to perform the same steps.
+<div class="paragraph">
+<p><strong>The Power of OCI Attestations in the Real World:</strong>
+Notice how we didn&#8217;t push a new container image; we attached a cryptographically signed proof (an in-toto statement) to an existing, immutable digest. Quay stores these relationships transparently.</p>
+</div>
+<div class="paragraph">
+<p>In a real-world CI/CD pipeline, your build system would automatically generate and sign this SBOM right after the <code>podman push</code> step. Later, Kubernetes admission controllers (like Red Hat Advanced Cluster Security or Kyverno) can be configured to automatically block any container deployment that lacks a valid, signed SBOM attestation from your trusted registry.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="title">Alternative: Scanning a local tarball</div>
+<div class="paragraph">
+<p>In some air-gapped CI/CD pipelines, you might need to scan an image locally <strong>before</strong> pushing it to a registry, and the <code>podman:</code> prefix might not be available. You can achieve this by exporting the local image to a tarball and pointing <code>syft</code> to the file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Export the local image to a tar archive
+podman save -o kafka.tar ${QUAY_HOSTNAME}/olleb/kafka:latest
+
+# Scan the offline tarball
+syft scan kafka.tar -o spdx-json &gt; sbom-kafka.json</code></pre>
+</div>
+</div>
 </td>
 </tr>
 </table>
@@ -667,7 +848,7 @@ podman tag quay.io/fedora/postgresql-16:16 ${QUAY_HOSTNAME}/olleb/postgresql-16:
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="#quay-repo-notifications.adoc#pushnotif" class="query-params-link">Creating a Push-to-Repository Event Notification</a></span>
+  <span class="prev"><a href="quay-notifications.html" class="query-params-link">Repository Notifications</a></span>
   <span class="next"><a href="quay-clair.html" class="query-params-link">Security Scanning (Clair)</a></span>
 </nav>
 </article>
