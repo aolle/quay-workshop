@@ -4,7 +4,6 @@
 *** xref:setup.adoc#s3[Option B: AWS S3 Storage (Unmanaged)]
 ** xref:setup.adoc#quayoperator[Installing the Quay Operator]
 ** xref:setup.adoc#quayinstance[Deploying Quay]
-** xref:setup.adoc#exportenvvar[Exporting Environment Variables]
 ** xref:setup.adoc#trustedca[Adding the Quay Certificate as a Trusted CA in OCP (Optional)]
 
 * xref:quay-orgs.adoc[Users and Organizations]
@@ -20,13 +19,18 @@
 ** xref:quay-repos.adoc#pull[Pulling an Image]
 ** xref:quay-repos.adoc#rollback[Rolling Back an Image]
 ** xref:quay-repos.adoc#expiration[Image Expiration]
+** xref:quay-repos.adoc#deleterepo[Deleting or Archiving a Repository]
 
-* xref:quay-mirror.adoc[Repository Mirroring]
-** xref:quay-mirror.adoc#imagerepo[Creating a Mirrored Repository]
-*** xref:quay-mirror.adoc#usage[Repository Usage Logs, Tags, and Tag History]
+* xref:quay-mirror.adoc[Image Distribution and Replication]
+** xref:quay-mirror.adoc#repomirror[Creating a Mirrored Repository]
+** xref:quay-mirror.adoc#proxycache[Configuring Proxy Cache]
+** xref:quay-mirror.adoc#qbo-integration[Automating Image Consumption with Quay Bridge Operator]
+** xref:quay-mirror.adoc#hub-spoke[Architecture: Hub and Spoke Topologies]
+** xref:quay-mirror.adoc#georep[Understanding Geo-Replication]
 
-* xref:quay-repo-notifications.adoc[Repository Notifications]
-** xref:quay-repo-notifications.adoc#pushnotif[Creating a Push-to-Repository Event Notification]
+* xref:quay-notifications.adoc[Repository Notifications]
+** xref:quay-notifications.adoc#pushnotif[Creating a Push-to-Repository Event Notification]
+** xref:quay-notifications.adoc#webhooknotif[Simulating a CI/CD Trigger with Webhooks]
 
 * xref:quay-oci.adoc[OCI-Based Artifacts]
 ** xref:quay-oci.adoc#helm[Working with Helm Charts]
@@ -36,25 +40,27 @@
 ** xref:quay-oci.adoc#encrypted[Encrypted Container Images]
 *** xref:quay-oci.adoc#jwe[Encrypting Container Images with JSON Web Encryption (JWE) (RFC7516)]
 *** xref:quay-oci.adoc#pgp[Encrypting Container Images with PGP (RFC4880)]
+*** xref:quay-oci.adoc#sbom-oci[Securing the Supply Chain: Attaching an SBOM]
 
 * xref:quay-clair.adoc[Security Scanning (Clair)]
 ** xref:quay-clair.adoc#cve[Exploring Vulnerability Data (CVEs)]
-*** xref:quay-clair.adoc#secscan[Performing a Security Scan]
 *** xref:quay-clair.adoc#packages[Viewing Packages]
 
-* xref:quay-cso.adoc[Container Security Operator (CSO)]
-** xref:quay-cso.adoc#install[Installing the Quay CSO Operator]
-** xref:quay-cso.adoc#vulncheck[Checking Image Vulnerabilities from the OpenShift Web Console]
+* xref:quay-obs.adoc[Observability and Day-2 Operations]
+** xref:quay-obs.adoc#gen-traffic[Generating Registry Traffic]
+** xref:quay-obs.adoc#dashboards[Analyzing the Quay Dashboard]
+** xref:quay-obs.adoc#raw-metrics[Exploring Raw Prometheus Metrics]
+** xref:quay-obs.adoc#promql[Advanced: Querying Raw Metrics (PromQL)]
 
-* xref:quay-obs.adoc[Observability]
 
-* xref:quay-keycloak.adoc[Quay Integration with Keycloak (OpenID Connect)]
+* xref:quay-keycloak.adoc[Quay Integration with Keycloak (OpenID Connect) (Pending Update)]
 ** xref:setup.adoc#keycloak[Installing Red Hat build of Keycloak]
 ** xref:quay-keycloak.adoc#keycloakconfig[Configuring Keycloak for Quay]
 ** xref:quay-keycloak.adoc#quayconfig[Configuring Quay to Use Keycloak as an OpenID Provider]
 ** xref:quay-keycloak.adoc#testlogin[Testing OpenID Login]
 
-* xref:quay-troubleshooting.adoc[Troubleshooting and Tips]
-** xref:quay-troubleshooting.adoc#tls[TLS and Insecure Registry Configuration]
-** xref:quay-troubleshooting.adoc#cosign[cosign and Registry Trust Issues]
-** xref:quay-troubleshooting.adoc#gpg[GPG Key Cleanup]
+// TODO: Update Keycloak
+// TODO: Add keycloak Installation steps 
+// TODO: builders / build images with quay
+// TODO: keyless use case
+// TODO: infra nodes
