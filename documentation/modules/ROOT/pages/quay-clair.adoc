@@ -1,7 +1,7 @@
 = Security Scanning (Clair)
 include::_attributes.adoc[]
 
-Quay integrates with Clair to perform vulnerability scanning of container images associated with various Linux operating systems.
+Red Hat Quay integrates seamlessly with **Clair**, an open-source static vulnerability scanner. Clair inspects your container images layer-by-layer, identifying known CVEs (Common Vulnerabilities and Exposures) in the underlying operating system and application packages.
 
 [#cve]
 == Exploring Vulnerability Data (CVEs)
@@ -9,56 +9,68 @@ Quay integrates with Clair to perform vulnerability scanning of container images
 [#secscan]
 === Performing a Security Scan
 
-Push a vulnerable image into the repository.
+To see Clair in action, we will push an older, intentionally vulnerable image into our repository.
 
+. Pull a legacy Node image and push it to your Quay registry:
++
 [.lines_space]
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-podman pull quay.io/wildfly/wildfly:23.0.2.Final
-podman tag quay.io/wildfly/wildfly:23.0.2.Final ${QUAY_HOSTNAME}/olleb/wildfly:23.0.2.Final
+podman pull docker.io/library/node:26.5.1-bullseye
+podman tag docker.io/library/node:26.5.1-bullseye ${QUAY_HOSTNAME}/olleb/vulnerable-app:latest
 
-# Log in if not already logged in
-podman login ${QUAY_HOSTNAME}
-
-podman push ${QUAY_HOSTNAME}/olleb/wildfly:23.0.2.Final
+podman push ${QUAY_HOSTNAME}/olleb/vulnerable-app:latest
 ----
 
-* Navigate to the `olleb/wildfly` repository in Quay.
+. Navigate to the **Red Hat Quay Dashboard** and open the `olleb/vulnerable-app` repository.
 
-image::clair/repo.png[]
+image::clair/scanr.png[]
 
-* Click the `Security Scan` icon to view the Quay Security Scanner Dashboard.
+. Go to the **Tags** tab. 
++
+_Note: You might briefly see the Security column displaying **"Queued"** or **"Scanning..."**. Clair scans images asynchronously in the background. Wait a few moments and refresh the page._
 
-image::clair/secscan-icon.png[]
+. Once the scan is complete, the Security column will display a text indicating the highest severity found (e.g., **Critical** or **High**). Click on this text to open the **Security Scan** dashboard.
 
 image::clair/security-scanner-dashboard.png[]
 
-The Security Scan dashboard provides detailed information about detected vulnerabilities:
+The Security Scan dashboard provides detailed, actionable information about detected vulnerabilities:
 
-- **Advisory**: Link to the CVE or security advisory describing the vulnerability.
-- **Severity**: Level of risk associated with the vulnerability (e.g., Low, Medium, High, Critical).
-- **Package**: Name of the affected software package.
-- **Version**: Current version of the package in the image.
-- **Fixed Version**: Version of the package where the vulnerability has been resolved.
-- **Introduced in Layer**: The image layer where the vulnerable package was added.
+- **Advisory**: A direct link to the CVE (Common Vulnerabilities and Exposures) database or Red Hat Security Advisory database for in-depth reading.
+- **Severity**: The level of risk associated with the vulnerability (Critical, High, Medium, Low).
+- **Package**: The name of the affected software package installed in the container.
+- **Current Version**: The vulnerable version of the package currently in the image.
+- **Fixed In Version**: The package version where the maintainers have resolved the vulnerability. *(This is the most important column for remediation!)*
 
-CVE detailed description:
-
-image::clair/cve.png[]
+Clicking on any specific CVE will reveal a detailed description of the exploit and its potential impact.
 
 [#packages]
 === Viewing Packages
 
-* Click the `Packages` icon to view the Quay Security Scanner Packages Dashboard.
+Understanding your vulnerabilities is only half the battle; knowing your entire software inventory is equally important.
+
+. While inside the tag details view, switch to the **Packages** tab (located next to the Security Scan tab).
 
 image::clair/packages.png[]
 
-The Packages dashboard provides information about each installed package and its vulnerabilities:
+The Packages dashboard acts as an internal inventory of your container, displaying every detected library and package, even the safe ones:
 
-- **Package Name**: Name of the installed package.
-- **Version**: Current version of the package in the image.
-- **Vuln**: Number of known vulnerabilities affecting this package.
-- **Remaining After Upgrade**: Vulnerabilities that would still exist after upgrading the package to the latest fixed version.
-- **Upgrade Impact**: Potential impact of performing the upgrade (e.g., dependency conflicts or breakage).
-- **Introduced in Layer**: The image layer where the package was added.
+- **Package Name**: Name of the installed OS or language-level package.
+- **Package Version**: Current version of the package in the image.
+- **Vulnerabilities**: Number of known vulnerabilities affecting this specific package.
+- **Remaining After Upgrade**: Vulnerabilities that would still exist even if you upgrade this package to the latest available version.
+- **Introduced In Layer**: The image layer where the package was added.
+
+[NOTE]
+====
+**DevSecOps in Practice:** The combination of Clair's Security Scan and the SBOMs we attached in previous exercises provides a complete, 360-degree view of your software supply chain security. You not only know what's inside your container, but exactly which components need immediate patching before deploying to production.
+====
+
+[TIP]
+.DevSecOps Automation: Vulnerability Alerts
+====
+Remember the repository notifications we configured in the previous exercises? You can apply that exact same automation to security scanning! 
+
+By navigating to the repository **Settings** > **Events and notifications**, you can create an alert triggered by the **Vulnerability Detected** event. This allows you to automatically notify your security team via Slack, or trigger a webhook to halt a deployment pipeline the moment Clair detects a new Critical or High vulnerability in your images.
+====
