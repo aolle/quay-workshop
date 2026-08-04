@@ -130,7 +130,7 @@ image::install/operatorhub-quay.png[Quay OperatorHub Search]
 image::install/quayoperator-install.png[Quay Install Tile]
 
 . On the **Install Operator** page:
-** Select `stable-3.17` from the list of available **Update Channel** options.
+** Select `stable-3.18` from the list of available **Update Channel** options.
 ** Choose **All namespaces on the cluster (default)** as the installation mode.
 ** Select **Automatic** for update approval.
 +
@@ -172,7 +172,7 @@ This step is recommended if your Quay registry uses a self-signed or internal CA
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
-QUAY_HOSTNAME=$(oc get route registry-quay -n quay-workshop -o jsonpath='{.spec.host}')
+QUAY_HOSTNAME=$(oc get route quay-registry-quay -n quay-workshop -o jsonpath='{.spec.host}')
 echo -n | openssl s_client -showcerts -connect $QUAY_HOSTNAME:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > quay.crt
 ----
 
