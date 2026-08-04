@@ -42,9 +42,9 @@
 *** xref:quay-oci.adoc#pgp[Encrypting Container Images with PGP (RFC4880)]
 *** xref:quay-oci.adoc#sbom-oci[Securing the Supply Chain: Attaching an SBOM]
 
-* xref:quay-clair.adoc[Security Scanning (Clair)]
+* xref:quay-clair.adoc[Security Scanning]
 ** xref:quay-clair.adoc#cve[Exploring Vulnerability Data (CVEs)]
-*** xref:quay-clair.adoc#packages[Viewing Packages]
+//*** xref:quay-clair.adoc#packages[Viewing Packages]
 
 * xref:quay-obs.adoc[Observability and Day-2 Operations]
 ** xref:quay-obs.adoc#gen-traffic[Generating Registry Traffic]
