@@ -1,4 +1,4 @@
-= Security Scanning (Clair)
+= Security Scanning
 include::_attributes.adoc[]
 
 Red Hat Quay integrates seamlessly with **Clair**, an open-source static vulnerability scanner. Clair inspects your container images layer-by-layer, identifying known CVEs (Common Vulnerabilities and Exposures) in the underlying operating system and application packages.
