@@ -41,6 +41,7 @@ podman pull quay.io/strimzi/kafka:latest-kafka-4.0.0
 [.console-input]
 [source,bash,subs="+macros,+attributes"]
 ----
+export QUAY_HOSTNAME=$(oc get route quay-registry-quay -n quay-workshop -o jsonpath='{.spec.host}')
 podman tag quay.io/strimzi/kafka:latest-kafka-4.0.0 ${QUAY_HOSTNAME}/olleb/kafka:4.0.0
 ----
 
