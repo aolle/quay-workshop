@@ -10,33 +10,33 @@ To access and manage resources in Red Hat Quay, you need a user account. Proceed
 
 NOTE: If you do not have the URL handy, you can find it in the OpenShift web console under **Core Platform** > **Networking** > **Routes** in the `quay-workshop` namespace.
 
-* Click **Create Account** on the Quay login page.
-
+. Click **Create Account** on the Quay login page.
++
 image::organizations/quay-create-account.png[Create Account Button]
 
-* Enter the required user information (Username, Email, and Password).
-
+. Enter the required user information (Username, Email, and Password).
++
 image::organizations/quay-create-account2.png[User Account Form]
 
-* Click **Create Account** to finalize, and then log in using your new credentials.
+. Click **Create Account** to finalize, and then log in using your new credentials.
 
 [#orgaccounts]
 == Creating Organization Accounts
 
 Organizations in Red Hat Quay allow you to group repositories, manage permissions, and share container images efficiently across teams.
 
-* Log in to the Red Hat Quay web console if you are not already logged in.
+. Log in to the Red Hat Quay web console if you are not already logged in.
 
-* On the top navigation bar or dashboard, click **Create Organization**.
-
+. On the top navigation bar or dashboard, click **Create Organization**.
++
 image::organizations/quay-create-org.png[Create Organization Button]
 
-* Enter the desired **Organization Name**.
-
+. Enter the desired **Organization Name**.
++
 image::organizations/org-create.png[Organization Creation Form]
 
-* Click **Create**.
-
+. Click **Create**.
++
 image::organizations/org.png[Organization Overview]
 
 [#orgteams]
@@ -44,12 +44,12 @@ image::organizations/org.png[Organization Overview]
 
 Organizations use teams to manage group permissions across repositories efficiently.
 
-* Inside your newly created organization, click the **Teams and Membership** tab.
-
+. Inside your newly created organization, click the **Teams and Membership** tab.
++
 image::organizations/teams.png[Teams and Membership]
 
-* Click **Create new team**, enter `developers` as the team name.
-
+. Click **Create new team**, enter `developers` as the team name.
++
 image::organizations/create-team.png[Create team]
 
 and click **Proceed** to launch the creation wizard:
@@ -69,19 +69,19 @@ image::organizations/user2.png[User]
 
 Robot accounts are attached to an organization and are ideal for CI/CD pipelines and automated deployments. In this section, you will create a robot account that can be used for automated operations in later modules.
 
-* Select your organization and navigate to the **Robot Accounts** tab.
+. Select your organization and navigate to the **Robot Accounts** tab.
 
-* Click **Create Robot Account** to open the wizard:
-
+. Click **Create Robot Account** to open the wizard:
++
 image::organizations/robot.png[Create Robot Account]
 
-* Complete the wizard steps as follows:
+. Complete the wizard steps as follows:
 ** **Name:** Enter `pipeline_builder` in the name field and click **Next**.
 ** **Add to team (optional):** Skip this step for now and click **Next**.
 ** **Add to repository (optional):** Skip this step for now and click **Next**.
 ** **Default permissions (optional):** Leave the default selection as **None** (you can choose between **None**, **Read**, **Write**, or **Admin** when assigning repository access) and click **Next**.
 ** **Review and finish:** Review the configuration and click the confirmation button to complete the creation.
 
-* Once created, click on the newly created `pipeline_builder` account to view its credentials. 
+. Once created, click on the newly created `pipeline_builder` account to view its credentials. 
 
 NOTE: You can view or regenerate the robot account's token or download the Kubernetes secret configuration at any time. We will use these credentials in upcoming CI/CD and automation exercises.
