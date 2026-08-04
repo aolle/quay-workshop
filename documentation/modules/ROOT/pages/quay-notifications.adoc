@@ -52,7 +52,7 @@ You might notice a **Test Notification** option in the Quay UI next to your newl
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-export QUAY_HOSTNAME=$(oc get route registry-quay -n quay-workshop -o jsonpath='{.spec.host}')
+export QUAY_HOSTNAME=$(oc get route quay-registry-quay -n quay-workshop -o jsonpath='{.spec.host}')
 
 podman pull quay.io/strimzi/kafka:latest-kafka-3.0.0
 podman tag quay.io/strimzi/kafka:latest-kafka-3.0.0 ${QUAY_HOSTNAME}/olleb/kafka:3.0.0
